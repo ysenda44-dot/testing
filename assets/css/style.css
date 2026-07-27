@@ -811,6 +811,39 @@ ul,ol{ list-style:none; padding:0; margin:0; }
   background:rgba(255,252,245,.12);
 }
 .form select{ appearance:none; background-image:linear-gradient(45deg, transparent 50%, #d4be80 50%), linear-gradient(135deg, #d4be80 50%, transparent 50%); background-position:calc(100% - 18px) center, calc(100% - 13px) center; background-size:5px 5px; background-repeat:no-repeat; }
+/* The opened option list is drawn by the OS on its own (usually white)
+   background, so it does not inherit the field's translucent dark styling --
+   only the near-white text. Set both explicitly or the choices are invisible. */
+.form select option{
+  background:var(--moss-dk);
+  color:var(--paper);
+}
+.form select option:disabled{ color:rgba(255,252,245,.5); }
+
+/* Submission feedback. Hidden until it has something to say, so the layout
+   does not reserve an empty gap. */
+.form__status{
+  grid-column:1 / -1;
+  margin:0;
+  font-size:14px;
+  line-height:1.7;
+  padding:12px 14px;
+  border-radius:2px;
+  border:1px solid transparent;
+}
+.form__status:empty{ display:none; }
+.form__status--ok{
+  color:#e8f0dd;
+  background:rgba(120,160,90,.18);
+  border-color:rgba(200,225,170,.45);
+}
+.form__status--error{
+  color:#ffe6d8;
+  background:rgba(184,106,61,.22);
+  border-color:rgba(230,160,120,.5);
+}
+.form__status a{ color:inherit; text-decoration:underline; }
+.form__submit[disabled]{ opacity:.55; cursor:progress; }
 .form__submit{
   margin-top:8px;
   padding:18px;

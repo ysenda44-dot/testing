@@ -94,6 +94,77 @@
     reveals.forEach(el => el.classList.add('is-visible'));
   }
 
+  /* ---------- Booking form submission ----------
+     Set BOOKING_ENDPOINT to the URL that should receive reservations (a form
+     service such as Formspree, or your own handler). It must accept a POST of
+     multipart/form-data and reply 2xx on success.
+
+     While it is empty the form deliberately refuses to claim success and
+     points the visitor at email instead. That is the whole point of this
+     block: the previous version showed a thank-you alert and promised an
+     autoreply while sending nothing anywhere, so real bookings were lost
+     silently and the visitor had no way to know. An honest failure is
+     recoverable; a fake success is not. */
+  const BOOKING_ENDPOINT = '';
+  const BOOKING_EMAIL = 'hello@example.com';
+
+  const form = $('#booking-form');
+  const status = $('#booking-status');
+
+  if (form && status) {
+    const submitBtn = form.querySelector('.form__submit');
+    const mailLink = `<a href="mailto:${BOOKING_EMAIL}">${BOOKING_EMAIL}</a>`;
+
+    const say = (kind, html) => {
+      status.className = 'form__status form__status--' + kind;
+      status.innerHTML = html;
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      // Let the browser do the field-level validation and messaging.
+      if (!form.reportValidity()) return;
+
+      if (!BOOKING_ENDPOINT) {
+        say('error',
+          `申し訳ありません。ただいまオンライン受付を準備中です。` +
+          `お手数ですが ${mailLink} 宛に、ご希望日・プラン・人数をお送りください。`);
+        return;
+      }
+
+      const original = submitBtn ? submitBtn.textContent : '';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = '送信中…';
+      }
+      say('ok', '送信しています…');
+
+      try {
+        const response = await fetch(BOOKING_ENDPOINT, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' }
+        });
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+
+        form.reset();
+        say('ok',
+          'お申し込みありがとうございます。24時間以内に担当者よりご連絡いたします。' +
+          '自動返信メールが届かない場合は、迷惑メールフォルダもご確認ください。');
+      } catch (error) {
+        say('error',
+          `送信できませんでした。通信環境をご確認のうえ、もう一度お試しください。` +
+          `解決しない場合は ${mailLink} までご連絡ください。`);
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = original;
+        }
+      }
+    });
+  }
+
   /* ---------- Hide fixed CTA when booking form is in view ---------- */
   const fixedCta = $('.fixed-cta');
   const booking = $('#booking');

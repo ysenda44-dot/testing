@@ -303,7 +303,7 @@
         <p class="sec-en">Booking</p>
         <h2 class="sec-title">畑が、あなたを待っています。</h2>
         <p class="booking__lead">下のフォームから、ご希望の日程をお選びください。<br>受付完了後、24時間以内にお返事いたします。</p>
-        <form class="form" onsubmit="event.preventDefault();alert('お申し込みありがとうございます。担当者よりご連絡いたします。');">
+        <form class="form" id="booking-form">
           <label><span>お名前</span><input type="text" name="name" required placeholder="山田 花子"></label>
           <label><span>メールアドレス</span><input type="email" name="email" required placeholder="example@mail.com"></label>
           <label><span>ご希望日</span><input type="date" name="date" required></label>
@@ -323,7 +323,8 @@
           </label>
           <label class="form__full"><span>ご質問など（任意）</span><textarea name="message" rows="4" placeholder="アレルギーやご要望があれば"></textarea></label>
           <button type="submit" class="btn btn--primary form__submit">この内容で申し込む</button>
-          <p class="form__note">※ 送信後、自動返信メールが届きます。30分経っても届かない場合はお手数ですがメールにてご連絡ください。</p>
+          <p class="form__status" id="booking-status" role="status" aria-live="polite"></p>
+          <p class="form__note">※ お申し込み内容は送信ボタンを押した時点で受け付けます。24時間以内にご連絡がない場合は、お手数ですが <a href="mailto:hello@example.com">hello@example.com</a> までご連絡ください。</p>
         </form>
       </div>
     </section>
