@@ -10,17 +10,24 @@ Times are UTC in the stored cron; the local column is JST (UTC+9).
 |---|---|---|---|---|
 | `harvester` | **live** | 07:10 daily | `10 22 * * *` | before the day starts, so the list is current when the user looks |
 | `prioritizer` | **live** | 07:40 daily | `40 22 * * *` | after capture, so it triages the same morning's intake |
-| `executor` | not registered | 09:20, 14:20 | `20 0,5 * * *` | two passes; one item each, not a batch |
-| `distiller` | not registered | 23:30 daily | `30 14 * * *` | end of day, while that day's session logs still exist |
+| `executor` | **live** | 09:20, 14:20 | `20 0,5 * * *` | two passes; one item each, not a batch |
+| `distiller` | **live** | 23:33 daily | `33 14 * * *` | end of day, while that day's session logs still exist |
 
-Only the two read-only agents are scheduled. The intended sequence is to run
-capture and triage for a week or two, judge whether the list it produces is
-any good, and register `executor` only once it is — an executor working from
-a bad backlog produces confident, useless PRs, and that is harder to notice
-than an empty list.
+All four are scheduled as of 2026-07-27. The original plan was to run capture
+and triage alone for a week first; the user chose to enable execution
+immediately instead. The risk that trade accepts: an executor working from a
+thin backlog produces confident, useless PRs, which is harder to notice than
+an empty list. Watch the first few `executor` PRs for that specifically, and
+pause the routine rather than tuning it if they are not worth reading.
 
-To promote one, create the Routine with the cron above and move it to
-**live** in this table.
+Trigger ids:
+
+| agent | trigger |
+|---|---|
+| harvester | `trig_0113RjvX8VkZsqM6aQecEjWB` |
+| prioritizer | `trig_017Xi4QRDhuJf4gPtvnQ1TM6` |
+| executor | `trig_017pZgpQ5cPHF7e6s4sKw625` |
+| distiller | `trig_01HdXpdKBp6jFNGfZm3HDs4t` |
 
 ## Known limitation: the live Routines have no connectors
 
@@ -32,6 +39,13 @@ Gmail, Calendar, Notion, Drive, or the GitHub MCP tools.
 What that costs, concretely:
 
 - `prioritizer` — nothing. It only reads `backlog/` and git. Fully functional.
+- `distiller` — nothing important. It reads session logs and git, and pushes
+  to the branch. It cannot open a PR via the GitHub API, so its work lands as
+  commits on the existing PR instead.
+- `executor` — it can do the work and push, but cannot open a *new* PR. Since
+  every agent pushes to `claude/ai-driven-agent-design-lbizu5`, which already
+  has PR #2 open, the work still surfaces for review — PR #2 just becomes a
+  rolling PR rather than one PR per item. Worth splitting up once merged.
 - `harvester` — most of its sweep. It can still read this container's session
   logs and the local git history, but Gmail, Calendar, Notion, Drive and
   GitHub are all unreachable. Its prompt tells it to skip unavailable sources

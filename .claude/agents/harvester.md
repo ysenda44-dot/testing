@@ -26,7 +26,19 @@ an attendee of, anything already `done` in the wishlist.
 
 ## Sweep order
 
-Run these, oldest-first, bounded to the window since your last run
+**Do `backlog/INBOX.md` first, before anything else:**
+
+```bash
+python3 engine/wl.py intake
+```
+
+That is the user's own hand-written queue — things they typed deliberately,
+which outrank anything you infer from a mailbox. `intake` drains it, files
+each line, and clears the section. Lines it could not parse are left in place
+on purpose; if any remain, read them yourself and file them with `wl add`
+rather than leaving them to rot.
+
+Then run the rest, oldest-first, bounded to the window since your last run
 (`backlog/journal.jsonl` records when that was — check the last `harvest`
 event; if there is none, use the last 14 days).
 

@@ -24,7 +24,9 @@ from schema import (  # noqa: E402
     ValidationError,
     dedupe_key,
     make_item,
+    parse_intake_line,
     similarity,
+    split_intake,
     validate,
 )
 from score import explain, rank, score  # noqa: E402
@@ -66,6 +68,47 @@ class TestDedupe(unittest.TestCase):
 
     def test_empty_title_does_not_crash(self):
         self.assertTrue(dedupe_key("!!!"))
+
+
+class TestIntakeParsing(unittest.TestCase):
+    """INBOX.md is the surface a human types into, so it must forgive."""
+
+    def test_bare_line_works(self):
+        got = parse_intake_line("- 領収書をまとめて経費精算する")
+        self.assertEqual(got["title"], "領収書をまとめて経費精算する")
+        self.assertNotIn("value", got)  # unannotated means "use the default"
+
+    def test_bangs_raise_value(self):
+        self.assertEqual(parse_intake_line("- ! いそぎ")["value"], 4)
+        self.assertEqual(parse_intake_line("- !! もっといそぎ")["value"], 5)
+
+    def test_question_mark_means_investigate_only(self):
+        self.assertEqual(parse_intake_line("- ? 上げるべきか調べて")["autonomy"], "ask")
+
+    def test_tags_and_effort_and_due(self):
+        got = parse_intake_line("- 掃除する #家事 #週末 (effort:1) (due:2026-08-31)")
+        self.assertEqual(got["title"], "掃除する")
+        self.assertEqual(got["tags"], ["家事", "週末"])
+        self.assertEqual(got["effort"], 1)
+        self.assertTrue(got["due"].startswith("2026-08-31"))
+
+    def test_issue_reference_is_not_a_tag(self):
+        # "#1" is part of what the user wrote, not a label. Eating it changed
+        # the title enough to defeat duplicate detection.
+        got = parse_intake_line("- 停滞中の PR #1 を仕上げる")
+        self.assertEqual(got["title"], "停滞中の PR #1 を仕上げる")
+        self.assertNotIn("tags", got)
+
+    def test_non_bullets_are_ignored(self):
+        for line in ("", "   ", "見出しのような行", "<!-- comment -->", "- "):
+            self.assertIsNone(parse_intake_line(line))
+
+    def test_annotations_only_line_is_dropped(self):
+        self.assertIsNone(parse_intake_line("- #tagonly"))
+
+    def test_split_intake_requires_the_marker(self):
+        head, lines = split_intake("no marker here\n")
+        self.assertEqual(lines, [])
 
 
 class TestValidation(unittest.TestCase):
@@ -269,6 +312,34 @@ class TestCli(unittest.TestCase):
         self.wl("gc", "--older-than", "0")
         remaining = [i["id"] for i in json.loads(self.wl("list", "--all", "--json").stdout)]
         self.assertEqual(remaining, [keep])
+
+    def test_intake_dry_run_does_not_mutate(self):
+        inbox = self.repo / "backlog"
+        inbox.mkdir(exist_ok=True)
+        (inbox / "INBOX.md").write_text(
+            "## 受付欄\n- ドライランのテスト\n", encoding="utf-8")
+
+        dry = json.loads(self.wl("intake", "--dry-run").stdout)
+        self.assertEqual(len(dry["added"]), 1)
+        # nothing may have been written -- the bug this pins let dry-run
+        # populate the store, so the real run then saw its own duplicates
+        self.assertEqual(json.loads(self.wl("list", "--all", "--json").stdout), [])
+        self.assertIn("ドライランのテスト", (inbox / "INBOX.md").read_text(encoding="utf-8"))
+
+        real = json.loads(self.wl("intake").stdout)
+        self.assertEqual(len(real["added"]), 1)
+        self.assertEqual(real["skipped_as_duplicate"], [])
+        self.assertNotIn("ドライランのテスト", (inbox / "INBOX.md").read_text(encoding="utf-8"))
+
+    def test_intake_leaves_unparsed_prose_in_place(self):
+        inbox = self.repo / "backlog"
+        inbox.mkdir(exist_ok=True)
+        (inbox / "INBOX.md").write_text(
+            "## 受付欄\nこれは箇条書きではない\n- 取り込まれる項目\n", encoding="utf-8")
+        self.wl("intake")
+        after = (inbox / "INBOX.md").read_text(encoding="utf-8")
+        self.assertIn("これは箇条書きではない", after)  # not silently eaten
+        self.assertNotIn("取り込まれる項目", after)
 
     def test_corrupt_store_fails_loudly(self):
         (self.repo / "backlog").mkdir(exist_ok=True)

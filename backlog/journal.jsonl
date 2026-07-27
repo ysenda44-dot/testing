@@ -5,3 +5,5 @@
 {"at": "2026-07-27T22:53:43+00:00", "event": "outcome", "id": "wl_175f641c", "title": "PR に CI を追加する (現在チェック0件)", "result": "success", "note": "CI workflow を追加: engine テスト + backlog validate + 重複チェック", "ref": ".github/workflows/ci.yml"}
 {"at": "2026-07-27T23:03:43+00:00", "event": "add", "id": "wl_e971eb7b", "title": "harvester Routine を claude.ai の UI から作り直して connector を付ける", "source": "manual"}
 {"at": "2026-07-27T23:03:43+00:00", "event": "update", "id": "wl_0784cfbb", "changed": {}, "note": "connector 制約を反映"}
+{"at": "2026-07-27T23:38:29+00:00", "event": "intake", "added": 5, "skipped": 0, "items": [{"id": "wl_e1eb2967", "title": "領収書をまとめて経費精算する"}, {"id": "wl_8377b8dd", "title": "請求書の締切が今週金曜"}, {"id": "wl_59509906", "title": "Python 3.13 に上げるべきか調べて"}, {"id": "wl_260ab952", "title": "古いブランチを整理する"}, {"id": "wl_a81650af", "title": "停滞中の PR (TSUCHI no HI LP) を仕上げてマージ可能にする"}]}
+{"at": "2026-07-27T23:38:54+00:00", "event": "intake", "added": 3, "skipped": 1, "items": [{"id": "wl_54b7769c", "title": "領収書をまとめて経費精算する"}, {"id": "wl_10ccc52c", "title": "請求書の締切が今週金曜"}, {"id": "wl_406211c9", "title": "Python 3.13 に上げるべきか調べて"}]}

@@ -173,6 +173,80 @@ def make_item(
     return item
 
 
+# --- INBOX.md parsing -------------------------------------------------------
+
+# Everything below this marker in backlog/INBOX.md is user-written intake.
+INTAKE_MARKER = "## 受付欄"
+
+# A tag must start with a non-digit: "#1" in "PR #1" is an issue reference the
+# user means to keep in the title, not a label.
+_TAG = re.compile(r"#(?!\d)(\S+)")
+_EFFORT = re.compile(r"\(effort:\s*([1-5])\s*\)", re.I)
+_DUE = re.compile(r"\(due:\s*([0-9]{4}-[0-9]{2}-[0-9]{2})\s*\)", re.I)
+
+
+def parse_intake_line(line: str) -> dict | None:
+    """Turn one hand-written INBOX.md bullet into wl.add keyword arguments.
+
+    The annotations are all optional sugar -- a bare line must work, because
+    the whole point of this surface is that the user can type one sentence
+    from a phone and be done. Anything unparseable stays in the title rather
+    than raising; a dropped wish is worse than an ugly one.
+    """
+    text = line.strip()
+    if not text.startswith("-"):
+        return None
+    text = text.lstrip("-").strip()
+    if not text or text.startswith("<!--"):
+        return None
+
+    kwargs: dict = {"source_kind": "manual", "confidence": 0.9}
+
+    tags = _TAG.findall(text)
+    if tags:
+        kwargs["tags"] = tags
+        text = _TAG.sub("", text)
+
+    if m := _EFFORT.search(text):
+        kwargs["effort"] = int(m.group(1))
+        text = _EFFORT.sub("", text)
+
+    if m := _DUE.search(text):
+        kwargs["due"] = f"{m.group(1)}T00:00:00+00:00"
+        text = _DUE.sub("", text)
+
+    # '?' means "decide nothing, just investigate".
+    if text.startswith("?"):
+        kwargs["autonomy"] = "ask"
+        text = text.lstrip("?").strip()
+
+    # '!' raises importance; '!!' more so.
+    bangs = 0
+    while text.startswith("!"):
+        bangs += 1
+        text = text[1:].strip()
+    if bangs:
+        kwargs["value"] = min(5, 3 + bangs)
+
+    title = " ".join(text.split())
+    if not title:
+        return None
+    kwargs["title"] = title
+    return kwargs
+
+
+def split_intake(markdown: str) -> tuple[str, list[str]]:
+    """Return (everything above and including the marker, the bullet lines)."""
+    idx = markdown.find(INTAKE_MARKER)
+    if idx == -1:
+        return markdown, []
+    head_end = markdown.find("\n", idx)
+    if head_end == -1:
+        return markdown, []
+    head, body = markdown[: head_end + 1], markdown[head_end + 1:]
+    return head, body.splitlines()
+
+
 def validate(item: dict) -> dict:
     if not item.get("id"):
         raise ValidationError("item is missing an id")

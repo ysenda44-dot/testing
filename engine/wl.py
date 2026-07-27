@@ -32,6 +32,7 @@ import schema  # noqa: E402
 from schema import (  # noqa: E402
     ACTIVE_STATUSES,
     AUTONOMY,
+    INTAKE_MARKER,
     OUTCOME_RESULTS,
     SOURCE_KINDS,
     STATUSES,
@@ -40,7 +41,9 @@ from schema import (  # noqa: E402
     dedupe_key,
     make_item,
     now_iso,
+    parse_intake_line,
     similarity,
+    split_intake,
     validate,
 )
 from score import explain, rank, score  # noqa: E402
@@ -49,6 +52,7 @@ ROOT = Path(__file__).resolve().parent.parent
 BACKLOG = ROOT / "backlog"
 WISHLIST = BACKLOG / "wishlist.jsonl"
 JOURNAL = BACKLOG / "journal.jsonl"
+INBOX = BACKLOG / "INBOX.md"
 ARCHIVE = BACKLOG / "archive.jsonl"
 
 
@@ -175,6 +179,57 @@ def cmd_add(args) -> int:
     journal({"event": "add", "id": item["id"], "title": item["title"],
              "source": item["source"]["kind"]})
     print(item["id"])
+    return 0
+
+
+def cmd_intake(args) -> int:
+    """Drain hand-written wishes from backlog/INBOX.md into the wishlist."""
+    if not INBOX.exists():
+        print("no INBOX.md; nothing to intake")
+        return 0
+
+    raw = INBOX.read_text(encoding="utf-8")
+    head, body_lines = split_intake(raw)
+    if not head.endswith("\n"):
+        print(f"{INBOX.name}: missing the '{INTAKE_MARKER}' marker", file=sys.stderr)
+        return 1
+
+    items = load()
+    added, skipped, kept = [], [], []
+
+    for line in body_lines:
+        parsed = parse_intake_line(line)
+        if parsed is None:
+            kept.append(line)  # blank lines, comments, prose -- leave alone
+            continue
+
+        key = dedupe_key(parsed["title"])
+        clash = next(
+            (i for i in items
+             if dedupe_key(i["title"]) == key and i["status"] in ACTIVE_STATUSES),
+            None,
+        )
+        if clash:
+            skipped.append({"title": parsed["title"], "existing": clash["id"]})
+            continue
+
+        item = make_item(**parsed)
+        items.append(item)
+        added.append({"id": item["id"], "title": item["title"]})
+
+    if added and not args.dry_run:
+        save(items)
+        journal({"event": "intake", "added": len(added),
+                 "skipped": len(skipped), "items": added})
+
+    if not args.dry_run and (added or skipped):
+        # Consumed lines disappear; anything we could not parse stays put so
+        # the user can see it was not silently eaten.
+        trailing = "\n".join(kept).rstrip() + "\n" if any(k.strip() for k in kept) else ""
+        INBOX.write_text(head + "\n" + trailing, encoding="utf-8")
+
+    print(json.dumps({"added": added, "skipped_as_duplicate": skipped,
+                      "dry_run": args.dry_run}, ensure_ascii=False, indent=2))
     return 0
 
 
@@ -458,6 +513,11 @@ def build_parser() -> argparse.ArgumentParser:
     a.add_argument("--revive", action="store_true",
                    help="allow re-adding something previously done/dropped")
     a.set_defaults(fn=cmd_add)
+
+    i = sub.add_parser("intake", help="drain hand-written wishes from INBOX.md")
+    i.add_argument("--dry-run", action="store_true",
+                   help="show what would be added without clearing INBOX.md")
+    i.set_defaults(fn=cmd_intake)
 
     l = sub.add_parser("list", help="list items")
     l.add_argument("--status", action="append", choices=STATUSES)
