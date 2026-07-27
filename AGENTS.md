@@ -24,13 +24,38 @@ system's own instructions. See `README.md` for the loop and
   reads, and silently corrupt the append-only journal.
 - **Never merge a PR**, including your own.
 - **Respect the `autonomy` field** on a wishlist item (`auto` / `propose` /
-  `ask`). Anything that leaves this repo — mail, messages, shared documents,
-  comments on another person's PR — is `ask`, whatever the item says.
+  `ask`). See "Reaching outside the repo" below for where the line is.
 - **Record every outcome** with `wl outcome`. An unrecorded run teaches the
   system nothing and will be repeated.
 - **`partial` is not `success`.** Marking half-done work as success drops the
   remainder on the floor with no trace. This is the worst failure mode in the
   system; prefer under-claiming.
+
+## Reaching outside the repo
+
+Decided by the user on 2026-07-27. The rule is **compose freely, deliver
+never**: an agent may write something that leaves the repo, but a human
+performs the act that makes it visible to anyone else.
+
+| action | allowed unattended |
+|---|---|
+| Gmail **draft** created, not sent | yes |
+| Gmail send / reply | no — `ask` |
+| Notion comment on a page, or edit to a page the user owns | yes |
+| Notion edit to a page owned or relied on by someone else | no — `ask` |
+| Drive: new doc in the user's own space | yes |
+| Drive: editing a shared doc, changing permissions | no — `ask` |
+| Draft PR on our own branch | yes |
+| Marking a PR ready for review, merging, commenting on another person's PR | no — `ask` |
+| Calendar: creating or moving an event with other attendees | no — `ask` |
+
+When in doubt about who else sees it, it is `ask`. The test is not "is this
+reversible" but "does someone other than the user find out before the user
+does".
+
+Leave every draft obviously machine-made — a subject prefix, an opening line
+naming what it is — so a half-finished draft is never mistaken for a
+considered message.
 
 ## Conventions
 

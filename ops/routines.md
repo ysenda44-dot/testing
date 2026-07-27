@@ -6,12 +6,54 @@ written to stand alone.
 
 Times are UTC in the stored cron; the local column is JST (UTC+9).
 
-| agent | local (JST) | cron (UTC) | why this slot |
-|---|---|---|---|
-| `harvester` | 07:10 daily | `10 22 * * *` | before the day starts, so the list is current when the user looks |
-| `prioritizer` | 07:40 daily | `40 22 * * *` | after capture, so it triages the same morning's intake |
-| `executor` | 09:20, 14:20 daily | `20 0,5 * * *` | two passes; one item each, not a batch |
-| `distiller` | 23:30 daily | `30 14 * * *` | end of day, while that day's session logs still exist |
+| agent | state | local (JST) | cron (UTC) | why this slot |
+|---|---|---|---|---|
+| `harvester` | **live** | 07:10 daily | `10 22 * * *` | before the day starts, so the list is current when the user looks |
+| `prioritizer` | **live** | 07:40 daily | `40 22 * * *` | after capture, so it triages the same morning's intake |
+| `executor` | not registered | 09:20, 14:20 | `20 0,5 * * *` | two passes; one item each, not a batch |
+| `distiller` | not registered | 23:30 daily | `30 14 * * *` | end of day, while that day's session logs still exist |
+
+Only the two read-only agents are scheduled. The intended sequence is to run
+capture and triage for a week or two, judge whether the list it produces is
+any good, and register `executor` only once it is — an executor working from
+a bad backlog produces confident, useless PRs, and that is harder to notice
+than an empty list.
+
+To promote one, create the Routine with the cron above and move it to
+**live** in this table.
+
+## Known limitation: the live Routines have no connectors
+
+Both Routines were created through the `claude-code-remote` MCP tool, which
+**cannot attach connectors** in this organisation — it refuses the
+`connectors` parameter outright. So the sessions they fire come up without
+Gmail, Calendar, Notion, Drive, or the GitHub MCP tools.
+
+What that costs, concretely:
+
+- `prioritizer` — nothing. It only reads `backlog/` and git. Fully functional.
+- `harvester` — most of its sweep. It can still read this container's session
+  logs and the local git history, but Gmail, Calendar, Notion, Drive and
+  GitHub are all unreachable. Its prompt tells it to skip unavailable sources
+  and say so rather than fail, so the run will succeed and under-deliver,
+  which is the failure mode to watch for.
+
+To fix, re-create the harvester Routine from the **claude.ai Routines UI**,
+where connectors can be granted. Same cron (`10 22 * * *`), same prompt; then
+delete `trig_0113RjvX8VkZsqM6aQecEjWB`. Until then, treat the harvester's
+output as partial and do a manual sweep periodically.
+
+## The agents must exist on the branch the session clones
+
+A scheduled firing clones the repository's **default branch**. If
+`.claude/agents/` and `engine/` are not on `main` yet, the session comes up
+without them and the Routine cannot do its job. Both live prompts therefore
+fall back to checking out the feature branch when `engine/wl.py` is missing,
+and say so in their report.
+
+Delete that fallback once the system is merged to `main` — it is scaffolding,
+and leaving it in means a future breakage on `main` gets silently papered
+over by an old branch.
 
 ## Ordering matters
 

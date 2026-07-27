@@ -44,10 +44,15 @@ item's detail — then set the item back to `ready` and record
 the question yourself and proceed. If the run is interactive, ask the user
 directly instead.
 
-Anything that leaves the repo — sending mail, posting to a channel, editing a
-shared Notion page, replying on someone's PR — is `ask`, regardless of what
-the item says. If you find yourself about to do one of those on an `auto`
-item, the item was mis-tagged: stop, fix the tag, and record it.
+For work that reaches outside the repo, the rule is **compose freely, deliver
+never** — see the table in `AGENTS.md`. You may write a Gmail draft, comment
+on a Notion page the user owns, or open a draft PR on our own branch. You may
+not send, publish, mark ready for review, or touch anything another person
+sees before the user does. Label every draft as machine-written so an
+unfinished one is never mistaken for a considered message.
+
+If you find yourself about to cross that line on an `auto` item, the item was
+mis-tagged: stop, fix the tag, and record it.
 
 Never merge a PR. Never force-push a branch you did not create in this run.
 

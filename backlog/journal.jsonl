@@ -3,3 +3,5 @@
 {"at": "2026-07-27T22:53:31+00:00", "event": "add", "id": "wl_d030f069", "title": "Codex レビューを自動で取り込むループを作る", "source": "conversation"}
 {"at": "2026-07-27T22:53:31+00:00", "event": "add", "id": "wl_0784cfbb", "title": "harvester の初回スイープを実行してバックログを埋める", "source": "manual"}
 {"at": "2026-07-27T22:53:43+00:00", "event": "outcome", "id": "wl_175f641c", "title": "PR に CI を追加する (現在チェック0件)", "result": "success", "note": "CI workflow を追加: engine テスト + backlog validate + 重複チェック", "ref": ".github/workflows/ci.yml"}
+{"at": "2026-07-27T23:03:43+00:00", "event": "add", "id": "wl_e971eb7b", "title": "harvester Routine を claude.ai の UI から作り直して connector を付ける", "source": "manual"}
+{"at": "2026-07-27T23:03:43+00:00", "event": "update", "id": "wl_0784cfbb", "changed": {}, "note": "connector 制約を反映"}
