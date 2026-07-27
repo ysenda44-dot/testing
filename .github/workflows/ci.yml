@@ -1,0 +1,32 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  engine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # engine/ is deliberately dependency-free, so there is nothing to install.
+      - name: Tests
+        run: python3 engine/test_engine.py
+
+      - name: Backlog is well-formed
+        run: python3 engine/wl.py validate
+
+      - name: No unresolved duplicates
+        run: |
+          stale=$(python3 engine/wl.py dedupe | python3 -c \
+            'import json,sys; print(json.load(sys.stdin)["stale_keys"])')
+          if [ "$stale" != "0" ]; then
+            echo "::error::$stale item(s) have out-of-date fingerprints." \
+                 "Run: python3 engine/wl.py dedupe --fix"
+            exit 1
+          fi

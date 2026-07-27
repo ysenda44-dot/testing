@@ -1,0 +1,67 @@
+# AGENTS.md
+
+Operating rules for every agent in this repo — Claude Code, Codex, and the
+scheduled agents in `.claude/agents/`. `CLAUDE.md` points here; keep one copy
+of the truth.
+
+This file is maintained by the `distiller` agent, which proposes changes as a
+PR each day based on what actually happened. Rules earn their place by being
+needed twice. Delete anything that stops being true.
+
+## What this repo is
+
+A backlog that drives itself. `backlog/wishlist.jsonl` holds the やりたいこと
+リスト; four scheduled agents fill it, order it, work it, and improve the
+system's own instructions. See `README.md` for the loop and
+`ops/routines.md` for the schedule.
+
+## Hard rules
+
+- **Never commit to `main`.** Work on the branch named in the task, or in
+  `ops/routines.md`. Open a draft PR; a human merges.
+- **Never edit `backlog/*.jsonl` by hand or with a text editor.** Use
+  `engine/wl.py`. Direct edits lose the outcome history that prioritisation
+  reads, and silently corrupt the append-only journal.
+- **Never merge a PR**, including your own.
+- **Respect the `autonomy` field** on a wishlist item (`auto` / `propose` /
+  `ask`). Anything that leaves this repo — mail, messages, shared documents,
+  comments on another person's PR — is `ask`, whatever the item says.
+- **Record every outcome** with `wl outcome`. An unrecorded run teaches the
+  system nothing and will be repeated.
+- **`partial` is not `success`.** Marking half-done work as success drops the
+  remainder on the floor with no trace. This is the worst failure mode in the
+  system; prefer under-claiming.
+
+## Conventions
+
+- Commit messages reference the wishlist id they serve: `<summary> (wl_abc12345)`.
+- Reply to the user in the language they wrote in. This user writes Japanese;
+  code, identifiers, and commit messages stay English.
+- Before adding a dependency, check whether the stdlib covers it. `engine/`
+  is deliberately dependency-free so any agent can run it anywhere.
+- Run `python3 engine/wl.py validate` after anything touches the backlog.
+
+## Facts worth not rediscovering
+
+- The wishlist CLI is `python3 engine/wl.py` from the repo root. `wl next`
+  gives the ranked queue; `wl why <id>` explains a score term by term.
+- Ordering is computed in `engine/score.py`, not decided by an agent. To move
+  an item, change its inputs (`value`/`effort`/`confidence`), not its
+  position — there is no position to change.
+- Japanese titles are fingerprinted with CJK character bigrams
+  (`schema.dedupe_key`), because whitespace-based tokenising made
+  「AGENTS.mdを磨く」and「AGENTS.md を磨く」look like different items.
+- `wl add` exiting non-zero on a duplicate is the guard working, not an
+  error. Do not reach for `--force`.
+- The container is ephemeral and the repo is re-cloned each session. Anything
+  not committed and pushed is gone. Conversation logs under
+  `~/.claude/projects/` do **not** survive — the distiller only ever sees the
+  sessions in its own container, which is why it runs daily rather than
+  weekly.
+
+## Known bottleneck
+
+This system exists because work was stalling on human availability, not on
+capability. When you find yourself waiting for a human, check first whether
+the item's `autonomy` genuinely requires it. If it does, say precisely what
+decision you need — a blocked item with a vague reason wastes the wait.
