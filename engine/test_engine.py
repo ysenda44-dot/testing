@@ -369,6 +369,19 @@ class TestCli(unittest.TestCase):
         report = json.loads(self.wl("runs", "--days", "1").stdout)
         self.assertEqual(report["unfinished_runs"], [])
 
+    def test_can_add_a_blocked_item_in_one_command(self):
+        # Validation requires blocked_by, so `add --status blocked` without a
+        # way to supply it was simply impossible.
+        bad = self.wl("add", "止まってる作業", "--status", "blocked")
+        self.assertNotEqual(bad.returncode, 0)
+
+        ok = self.wl("add", "止まってる作業", "--status", "blocked",
+                     "--blocked-by", "PR #2 のマージ待ち")
+        self.assertEqual(ok.returncode, 0, ok.stderr)
+        rec = json.loads(self.wl("show", ok.stdout.strip()).stdout)
+        self.assertEqual(rec["blocked_by"], "PR #2 のマージ待ち")
+        self.assertEqual(self.wl("validate").returncode, 0)
+
     def test_corrupt_store_fails_loudly(self):
         (self.repo / "backlog").mkdir(exist_ok=True)
         (self.repo / "backlog" / "wishlist.jsonl").write_text("{not json\n")

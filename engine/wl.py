@@ -173,6 +173,7 @@ def cmd_add(args) -> int:
         autonomy=args.autonomy,
         tags=args.tag or [],
         due=args.due,
+        blocked_by=args.blocked_by or "",
     )
     items.append(item)
     save(items)
@@ -577,6 +578,8 @@ def build_parser() -> argparse.ArgumentParser:
     a.add_argument("--autonomy", choices=AUTONOMY, default="propose")
     a.add_argument("--tag", action="append")
     a.add_argument("--due", help="ISO date/time")
+    a.add_argument("--blocked-by", dest="blocked_by",
+                   help="required when adding straight to --status blocked")
     a.add_argument("--force", action="store_true", help="add despite a duplicate")
     a.add_argument("--revive", action="store_true",
                    help="allow re-adding something previously done/dropped")
