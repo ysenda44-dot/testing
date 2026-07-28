@@ -27,6 +27,10 @@ system's own instructions. See `README.md` for the loop and
   `ask`). See "Reaching outside the repo" below for where the line is.
 - **Record every outcome** with `wl outcome`. An unrecorded run teaches the
   system nothing and will be repeated.
+- **Heartbeat at the start of every scheduled run** (`wl heartbeat <agent>`),
+  committed before the real work. Without it a run that dies early is
+  indistinguishable from one that never fired. `wl runs` shows which recent
+  runs produced nothing.
 - **`partial` is not `success`.** Marking half-done work as success drops the
   remainder on the floor with no trace. This is the worst failure mode in the
   system; prefer under-claiming.
@@ -70,6 +74,11 @@ considered message.
 
 - The wishlist CLI is `python3 engine/wl.py` from the repo root. `wl next`
   gives the ranked queue; `wl why <id>` explains a score term by term.
+- `wl next` returns `ready` and `in_progress` only. An `inbox` item is
+  untriaged -- no one has confirmed it is wanted or doable -- so no agent
+  acts on one. Pass `--status inbox` explicitly if you are triaging.
+- An empty executor queue is a normal state, not a fault. It means the
+  prioritiser has not triaged anything yet, or everything is blocked.
 - Ordering is computed in `engine/score.py`, not decided by an agent. To move
   an item, change its inputs (`value`/`effort`/`confidence`), not its
   position — there is no position to change.

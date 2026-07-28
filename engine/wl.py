@@ -233,6 +233,68 @@ def cmd_intake(args) -> int:
     return 0
 
 
+def cmd_heartbeat(args) -> int:
+    """Record that an agent run started, before it can fail.
+
+    A scheduled firing that dies early -- bad checkout, missing tool, empty
+    queue -- otherwise leaves nothing behind, and "ran and did nothing" looks
+    exactly like "never fired". The heartbeat is written and pushed before any
+    real work, so the journal always shows the attempt.
+    """
+    journal({"event": "heartbeat", "agent": args.agent, "phase": args.phase,
+             "note": args.note or ""})
+    print(f"heartbeat: {args.agent} {args.phase}")
+    return 0
+
+
+def cmd_runs(args) -> int:
+    """Which agents have run lately, and did each leave any work behind."""
+    if not JOURNAL.exists():
+        print(json.dumps({"runs": []}, indent=2))
+        return 0
+
+    events = []
+    for line in JOURNAL.read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            try:
+                events.append(json.loads(line))
+            except json.JSONDecodeError:
+                continue
+
+    ref = datetime.now(timezone.utc)
+    runs: list[dict] = []
+    for ev in events:
+        if ev.get("event") != "heartbeat" or ev.get("phase") != "start":
+            continue
+        if age_days(ev.get("at"), ref=ref) > args.days:
+            continue
+        runs.append({"agent": ev.get("agent"), "at": ev.get("at"),
+                     "note": ev.get("note", ""), "produced": [], "finished": False})
+
+    # Attribute every non-heartbeat event to the run it followed.
+    for ev in events:
+        at = ev.get("at", "")
+        started = [r for r in runs if r["at"] <= at]
+        if not started:
+            continue
+        current = started[-1]
+        if ev.get("event") == "heartbeat":
+            if ev.get("phase") == "end" and ev.get("agent") == current["agent"]:
+                current["finished"] = True
+        else:
+            current["produced"].append(ev.get("event"))
+
+    silent = [r for r in runs if not r["produced"]]
+    print(json.dumps({
+        "window_days": args.days,
+        "runs": runs,
+        "silent_runs": [{"agent": r["agent"], "at": r["at"]} for r in silent],
+        "unfinished_runs": [{"agent": r["agent"], "at": r["at"]}
+                            for r in runs if not r["finished"]],
+    }, ensure_ascii=False, indent=2))
+    return 0
+
+
 def cmd_list(args) -> int:
     items = load()
     if args.status:
@@ -250,8 +312,14 @@ def cmd_list(args) -> int:
 def cmd_next(args) -> int:
     items = load()
     ranked = rank(items)
-    if not args.include_blocked:
-        ranked = [i for i in ranked if i["status"] != "blocked"]
+    if args.status:
+        ranked = [i for i in ranked if i["status"] in args.status]
+    else:
+        # Default queue excludes blocked work, and excludes `inbox` -- an
+        # untriaged item has not been checked by anyone for whether it is
+        # wanted, well-specified, or even doable. The executor acting on one
+        # is how the machine ends up confidently doing the wrong thing.
+        ranked = [i for i in ranked if i["status"] in ("ready", "in_progress")]
     if args.autonomy:
         ranked = [i for i in ranked if i.get("autonomy") in args.autonomy]
     emit(ranked[: args.n], args.json)
@@ -514,6 +582,16 @@ def build_parser() -> argparse.ArgumentParser:
                    help="allow re-adding something previously done/dropped")
     a.set_defaults(fn=cmd_add)
 
+    hb = sub.add_parser("heartbeat", help="record that an agent run started/ended")
+    hb.add_argument("agent")
+    hb.add_argument("--phase", choices=("start", "end"), default="start")
+    hb.add_argument("--note", default="")
+    hb.set_defaults(fn=cmd_heartbeat)
+
+    r = sub.add_parser("runs", help="recent agent runs, and which produced nothing")
+    r.add_argument("--days", type=float, default=7.0)
+    r.set_defaults(fn=cmd_runs)
+
     i = sub.add_parser("intake", help="drain hand-written wishes from INBOX.md")
     i.add_argument("--dry-run", action="store_true",
                    help="show what would be added without clearing INBOX.md")
@@ -530,7 +608,8 @@ def build_parser() -> argparse.ArgumentParser:
     n = sub.add_parser("next", help="top-ranked actionable items")
     n.add_argument("-n", type=int, default=3)
     n.add_argument("--autonomy", action="append", choices=AUTONOMY)
-    n.add_argument("--include-blocked", action="store_true")
+    n.add_argument("--status", action="append", choices=STATUSES,
+                   help="override the default ready/in_progress queue")
     n.add_argument("--json", action="store_true")
     n.set_defaults(fn=cmd_next)
 

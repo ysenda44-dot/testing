@@ -341,6 +341,34 @@ class TestCli(unittest.TestCase):
         self.assertIn("これは箇条書きではない", after)  # not silently eaten
         self.assertNotIn("取り込まれる項目", after)
 
+    def test_next_excludes_untriaged_and_blocked(self):
+        ready = self.wl("add", "триaged work", "--status", "ready").stdout.strip()
+        self.wl("add", "untriaged work")  # defaults to inbox
+        blocked = self.wl("add", "blocked work", "--status", "ready").stdout.strip()
+        self.wl("outcome", blocked, "--result", "blocked", "--note", "waiting")
+
+        queue = [i["id"] for i in json.loads(self.wl("next", "--json").stdout)]
+        self.assertEqual(queue, [ready])  # inbox is not the executor's to take
+
+        with_inbox = json.loads(self.wl("next", "--status", "inbox", "--json").stdout)
+        self.assertEqual(len(with_inbox), 1)
+
+    def test_heartbeat_makes_a_silent_run_visible(self):
+        self.wl("heartbeat", "executor", "--note", "fired")
+        report = json.loads(self.wl("runs", "--days", "1").stdout)
+        self.assertEqual(len(report["runs"]), 1)
+        self.assertEqual(report["silent_runs"][0]["agent"], "executor")
+
+        # once the run produces something, it is no longer silent
+        self.wl("add", "work the run produced")
+        report = json.loads(self.wl("runs", "--days", "1").stdout)
+        self.assertEqual(report["silent_runs"], [])
+        self.assertEqual(len(report["unfinished_runs"]), 1)
+
+        self.wl("heartbeat", "executor", "--phase", "end")
+        report = json.loads(self.wl("runs", "--days", "1").stdout)
+        self.assertEqual(report["unfinished_runs"], [])
+
     def test_corrupt_store_fails_loudly(self):
         (self.repo / "backlog").mkdir(exist_ok=True)
         (self.repo / "backlog" / "wishlist.jsonl").write_text("{not json\n")

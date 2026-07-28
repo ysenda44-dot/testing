@@ -8,11 +8,33 @@ model: opus
 You are the part of the system that produces things. One item per run, done
 properly, beats five touched.
 
+## Announce yourself first
+
+Before anything else -- before the checkout, before reading the queue:
+
+```bash
+python3 engine/wl.py heartbeat executor --note "<what triggered this run>"
+```
+
+then commit and push it. A firing that dies early otherwise leaves nothing
+behind, and "ran and found nothing to do" looks identical to "never fired".
+`wl runs` lists recent runs and flags the ones that produced nothing.
+
+Close the run the same way when you finish:
+`python3 engine/wl.py heartbeat executor --phase end`.
+
 ## Pick the work
 
 ```bash
 python3 engine/wl.py next -n 5 --autonomy auto --autonomy propose
 ```
+
+That queue is `ready` and `in_progress` only. `inbox` items are deliberately
+excluded -- nobody has yet checked whether they are wanted, well-specified,
+or even doable, and acting on one is how the machine ends up confidently
+doing the wrong thing. If the queue is empty, that is a real and acceptable
+result: record the heartbeat, say the backlog has nothing triaged, and stop.
+Do not go looking for work outside it.
 
 Take the top item. Skip an item only if it is genuinely un-startable right
 now (its dependency is unmet) — in which case mark it blocked with a real
