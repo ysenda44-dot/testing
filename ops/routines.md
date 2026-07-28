@@ -79,15 +79,25 @@ it can write a heartbeat. This silently killed every executor firing on
 agent running and finding nothing to do.
 
 Widen the refspec first; after that ordinary git works, including upstream
-tracking for the push:
+tracking for the push. **Write it as one chained command with the branch name
+spelled out literally** — see below for why:
 
 ```bash
-BR=claude/ai-driven-agent-design-lbizu5
-git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
-git fetch origin
-git checkout "$BR"
-git pull --ff-only
+git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*' && git fetch origin && git checkout claude/ai-driven-agent-design-lbizu5 && git pull --ff-only
 ```
+
+### Never use a shell variable across lines in a routine prompt
+
+The first version of this fix opened with `BR=claude/ai-driven-agent-design-lbizu5`
+and used `"$BR"` on the following lines. **Shell state does not persist
+between Bash tool calls.** An agent that runs the block line by line — which
+is the normal thing to do — loses the assignment immediately and then
+executes `git checkout ""`, which fails. The run dies in setup exactly as
+before, and the fix appears not to have worked.
+
+Every command in a routine prompt must therefore be independently runnable:
+literal paths and branch names, no variables carried between lines, and
+anything that must happen together chained with `&&` in a single line.
 
 Delete this fallback once the system is merged to `main` — it is
 scaffolding, and leaving it in means a future breakage on `main` gets

@@ -87,6 +87,11 @@ considered message.
   「AGENTS.mdを磨く」and「AGENTS.md を磨く」look like different items.
 - `wl add` exiting non-zero on a duplicate is the guard working, not an
   error. Do not reach for `--force`.
+- **Shell state does not persist between Bash tool calls.** A variable set on
+  one line is gone by the next call, so any multi-step shell recipe written
+  for an agent must use literal values and chain with `&&` on one line. This
+  broke the routine setup blocks on 2026-07-28: `BR=...` then `git checkout
+  "$BR"` ran as `git checkout ""`.
 - A scheduled firing gets a **`--single-branch` clone of the default branch**.
   `git fetch origin <branch>` then updates only `FETCH_HEAD` and creates no
   `origin/<branch>`, so `git checkout <branch>` fails with "pathspec did not
