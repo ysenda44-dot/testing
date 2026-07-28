@@ -87,6 +87,11 @@ considered message.
   「AGENTS.mdを磨く」and「AGENTS.md を磨く」look like different items.
 - `wl add` exiting non-zero on a duplicate is the guard working, not an
   error. Do not reach for `--force`.
+- A scheduled firing gets a **`--single-branch` clone of the default branch**.
+  `git fetch origin <branch>` then updates only `FETCH_HEAD` and creates no
+  `origin/<branch>`, so `git checkout <branch>` fails with "pathspec did not
+  match". Run `git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'`
+  before fetching; ordinary git works after that. See `ops/routines.md`.
 - The container is ephemeral and the repo is re-cloned each session. Anything
   not committed and pushed is gone. Conversation logs under
   `~/.claude/projects/` do **not** survive — the distiller only ever sees the

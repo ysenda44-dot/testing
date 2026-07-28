@@ -59,15 +59,39 @@ output as partial and do a manual sweep periodically.
 
 ## The agents must exist on the branch the session clones
 
-A scheduled firing clones the repository's **default branch**. If
-`.claude/agents/` and `engine/` are not on `main` yet, the session comes up
-without them and the Routine cannot do its job. Both live prompts therefore
-fall back to checking out the feature branch when `engine/wl.py` is missing,
-and say so in their report.
+A scheduled firing clones the repository's **default branch**. While
+`.claude/agents/` and `engine/` are not on `main`, every firing comes up
+without them and must check out the feature branch first.
 
-Delete that fallback once the system is merged to `main` — it is scaffolding,
-and leaving it in means a future breakage on `main` gets silently papered
-over by an old branch.
+**The obvious way to write that fallback does not work.** A scheduled
+firing gets a `--single-branch` clone, whose fetch refspec is
+`+refs/heads/main:refs/remotes/origin/main` — main and nothing else. So:
+
+```bash
+git fetch origin claude/ai-driven-agent-design-lbizu5   # only updates FETCH_HEAD
+git checkout claude/ai-driven-agent-design-lbizu5       # error: pathspec did not match
+```
+
+No `origin/<branch>` ref is ever created, so the checkout fails on a
+pathspec error and the run dies before it can do anything — including before
+it can write a heartbeat. This silently killed every executor firing on
+2026-07-28 (00:20 and 05:20 UTC), which looked from the outside like the
+agent running and finding nothing to do.
+
+Widen the refspec first; after that ordinary git works, including upstream
+tracking for the push:
+
+```bash
+BR=claude/ai-driven-agent-design-lbizu5
+git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+git fetch origin
+git checkout "$BR"
+git pull --ff-only
+```
+
+Delete this fallback once the system is merged to `main` — it is
+scaffolding, and leaving it in means a future breakage on `main` gets
+silently papered over by an old branch.
 
 ## Ordering matters
 
