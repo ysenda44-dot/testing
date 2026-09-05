@@ -31,6 +31,10 @@ system's own instructions. See `README.md` for the loop and
   committed before the real work. Without it a run that dies early is
   indistinguishable from one that never fired. `wl runs` shows which recent
   runs produced nothing.
+- **Changing an agent's `tools:` line changes what runs unattended.** You may
+  do it when the work genuinely requires it, but say so in the outcome note
+  and never bury it in a larger diff. CI annotates every such change
+  (`ops/agent_permissions.py`); a human approves it at merge.
 - **`partial` is not `success`.** Marking half-done work as success drops the
   remainder on the floor with no trace. This is the worst failure mode in the
   system; prefer under-claiming.

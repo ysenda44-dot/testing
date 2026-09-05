@@ -30,3 +30,25 @@ jobs:
                  "Run: python3 engine/wl.py dedupe --fix"
             exit 1
           fi
+
+  agent-permissions:
+    # An agent can edit .claude/agents/*.md, including its own `tools:` line.
+    # Sometimes that is correct — the executor legitimately needed
+    # resolve_review_thread on 2026-09-05 and disclosed it. But a change to
+    # what an unattended agent may invoke must not reach a reviewer as one
+    # more line in a large diff.
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Surface any change to agent tool grants
+        run: |
+          git fetch origin "${{ github.base_ref }}" --quiet
+          python3 ops/agent_permissions.py "origin/${{ github.base_ref }}" \
+            | tee -a "$GITHUB_STEP_SUMMARY"
