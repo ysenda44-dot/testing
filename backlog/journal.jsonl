@@ -16,3 +16,9 @@
 {"at": "2026-09-05T05:35:56+00:00", "event": "harvest", "added": 1, "sources": ["inbox", "github"], "unreachable_sources": ["gmail", "calendar", "notion", "drive"], "note": "first harvest run; github MCP tools worked despite routine note claiming unavailable; gmail/calendar/notion/drive tools not present in toolset"}
 {"at": "2026-09-05T05:35:58+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": "scheduled run complete"}
 {"at": "2026-09-05T05:37:08+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "start", "note": "scheduled run"}
+{"at": "2026-09-05T05:39:35+00:00", "event": "update", "id": "wl_10ccc52c", "changed": {"status": ["inbox", "ready"]}, "note": "締切(2026-08-31)を5日超過済み。inboxに放置する理由なし。ready化すれば due_pressure(過去日=1.5x)がスコアを自動で押し上げる"}
+{"at": "2026-09-05T05:39:35+00:00", "event": "update", "id": "wl_54b7769c", "changed": {"status": ["inbox", "dropped"]}, "note": "39日間 inbox で無動き、期限なし、advocateなし。30日ルールで drop"}
+{"at": "2026-09-05T05:39:35+00:00", "event": "update", "id": "wl_406211c9", "changed": {"status": ["inbox", "dropped"]}, "note": "39日間 inbox で無動き、期限なし、advocateなし。30日ルールで drop。必要になれば harvester が再捕捉する"}
+{"at": "2026-09-05T05:39:35+00:00", "event": "update", "id": "wl_d030f069", "changed": {"status": ["inbox", "ready"]}, "note": "PR#1(wl_28fc23a9)がCodex対応(wl_8a16d95e, done)後も82日超塩漬けという実例が今日のharvestで具体化。着手可能と判断しreadyへ"}
+{"at": "2026-09-05T05:39:35+00:00", "event": "update", "id": "wl_28fc23a9", "changed": {"status": ["inbox", "ready"]}, "note": "harvesterが本日追加。マージ/クローズ判断はautonomy=askで人に聞く前提、実行キューには乗せる"}
+{"at": "2026-09-05T05:39:51+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "end", "note": ""}
