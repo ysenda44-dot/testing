@@ -112,10 +112,17 @@ considered message.
   promoted it to the top of the executor's queue. Demonstrate on a scratch
   copy (`TMPDIR`), never on the live backlog.
 - The container is ephemeral and the repo is re-cloned each session. Anything
-  not committed and pushed is gone. Conversation logs under
-  `~/.claude/projects/` do **not** survive — the distiller only ever sees the
-  sessions in its own container, which is why it runs daily rather than
-  weekly.
+  not committed and pushed is gone.
+- **The distiller cannot see the user's conversations at all.** Each scheduled
+  firing gets a fresh container whose `~/.claude/projects/` holds only that
+  firing's own log — zero user turns. Corrections, stated preferences and
+  repeated procedures, which `distiller.md` names as its top three sources,
+  are therefore structurally invisible to it; it can only ever mine
+  `backlog/journal.jsonl` and `git log`. Running it daily does not help: the
+  cadence is not the limit, the corpus is. Confirmed by the 2026-09-05T14:35
+  run, which checked and said so. Fixing this needs conversation content
+  persisted into the repo from interactive sessions — a privacy decision, so
+  it is tracked as an `ask` item, not something an agent should just do.
 
 ## Known bottleneck
 
