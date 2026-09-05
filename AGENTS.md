@@ -102,6 +102,11 @@ considered message.
   (2026-09-05), which contradicted this file's earlier guess. Do not assert a
   tool is unavailable without evidence from an actual run — say what you
   observed and let the next run correct you.
+- **Never seed example or test items into `backlog/wishlist.jsonl`.** The
+  prioritiser cannot tell fiction from fact: on 2026-09-05 it correctly
+  applied its own rules to a made-up "invoice due Friday" fixture and
+  promoted it to the top of the executor's queue. Demonstrate on a scratch
+  copy (`TMPDIR`), never on the live backlog.
 - The container is ephemeral and the repo is re-cloned each session. Anything
   not committed and pushed is gone. Conversation logs under
   `~/.claude/projects/` do **not** survive — the distiller only ever sees the
