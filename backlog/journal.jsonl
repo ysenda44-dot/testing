@@ -15,3 +15,4 @@
 {"at": "2026-09-05T05:35:45+00:00", "event": "add", "id": "wl_28fc23a9", "title": "TSUCHI no HI 農業体験ランディングページの PR #1 をレビューしてマージするか決める", "source": "github"}
 {"at": "2026-09-05T05:35:56+00:00", "event": "harvest", "added": 1, "sources": ["inbox", "github"], "unreachable_sources": ["gmail", "calendar", "notion", "drive"], "note": "first harvest run; github MCP tools worked despite routine note claiming unavailable; gmail/calendar/notion/drive tools not present in toolset"}
 {"at": "2026-09-05T05:35:58+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": "scheduled run complete"}
+{"at": "2026-09-05T05:37:08+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "start", "note": "scheduled run"}
