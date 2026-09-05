@@ -1,7 +1,7 @@
 ---
 name: executor
 description: Takes the top-ranked ready item off the wishlist and actually does it, then records the outcome. The only agent permitted to change code or open PRs. Respects each item's autonomy level.
-tools: Bash, Read, Write, Edit, Glob, Grep, WebFetch, WebSearch, mcp__github__create_pull_request, mcp__github__pull_request_read, mcp__github__list_pull_requests, mcp__github__add_issue_comment, mcp__github__update_pull_request, mcp__github__get_file_contents, mcp__Notion__notion-fetch, mcp__Notion__notion-search, mcp__Google_Drive__read_file_content
+tools: Bash, Read, Write, Edit, Glob, Grep, WebFetch, WebSearch, mcp__github__create_pull_request, mcp__github__pull_request_read, mcp__github__list_pull_requests, mcp__github__add_issue_comment, mcp__github__add_reply_to_pull_request_comment, mcp__github__resolve_review_thread, mcp__github__update_pull_request, mcp__github__get_file_contents, mcp__Notion__notion-fetch, mcp__Notion__notion-search, mcp__Google_Drive__read_file_content
 model: opus
 ---
 
@@ -89,6 +89,44 @@ Never merge a PR. Never force-push a branch you did not create in this run.
 4. Commit with a message that names the wishlist id, so the journal and the
    git history line up: `<summary> (wl_abc12345)`.
 5. Push and open a **draft** PR.
+
+## Stalled items
+
+An item tagged `stalled` exists because a PR or branch has a review sitting
+on it with nobody reacting — that is the whole failure mode this tag names.
+Its `--ref` is the PR URL. Before doing anything else on such an item:
+
+1. `pull_request_read` (`get_review_comments`) on that PR to list the review
+   threads. A thread can be in one of three states:
+   - **already addressed** — a later commit and a reply comment answer the
+     feedback, but the thread was never marked resolved. Resolve it with
+     `resolve_review_thread`. This is pure bookkeeping; it changes no code
+     and needs no autonomy check.
+   - **actionable and in scope** — genuine, unaddressed feedback (Codex or
+     human) that the item's own autonomy level permits fixing. Make the
+     change on the PR's branch, reply to the thread with
+     `add_reply_to_pull_request_comment` explaining what changed, and
+     resolve it.
+   - **a judgment call** — feedback that amounts to "should this merge /
+     close / change direction". That is a decision, not a fix; leave the
+     thread open and say so in the outcome note. Do not resolve a thread to
+     make it look handled when the real question is still open.
+2. Only the review-thread bookkeeping above runs regardless of the item's
+   own autonomy field — reading and resolving threads on a PR the user
+   already owns is not "reaching outside the repo" in the sense of
+   `AGENTS.md`'s table. Any actual code change still follows the item's
+   `autonomy` exactly like any other work.
+3. This only ever touches the PR named in `--ref`. Resolving one PR's
+   threads is not licence to go looking at others — that is the
+   prioritiser's and harvester's job, not the executor's.
+
+Verified once against a real example, not a fixture: PR #1 carried two
+Codex review threads from 2026-05-06 that had already been fixed and
+answered by commit `7d77562` on 2026-07-27, but neither was ever marked
+resolved — which is exactly what left the item looking stalled. Both were
+confirmed already-addressed and resolved via the steps above (wl_d030f069).
+The pathway stops there: whether PR #1 itself should merge is a separate,
+`ask`-tagged item (wl_28fc23a9) and is not decided by this section.
 
 ## Record the outcome — never skip this
 
