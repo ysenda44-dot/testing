@@ -24,3 +24,4 @@
 {"at": "2026-09-05T05:39:51+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "end", "note": ""}
 {"at": "2026-09-05T05:41:48+00:00", "event": "update", "id": "wl_10ccc52c", "changed": {"status": ["ready", "dropped"]}, "note": "架空のテストデータ。2026-07-27 に INBOX.md の取り込み動作を実演するため投入したもので、実在の請求書ではない。prioritizer が規則どおり正しく ready に上げたが、入力が虚構だった"}
 {"at": "2026-09-05T05:41:48+00:00", "event": "outcome", "id": "wl_0784cfbb", "title": "harvester の初回スイープを実行してバックログを埋める", "result": "success", "note": "2026-09-05 05:34 の harvester 初回発火で実施済み。connector 不在のため Gmail/Calendar/Notion/Drive は未到達だが、INBOX.md・GitHub・会話ログは走査され PR #1 の停滞を捕捉した", "ref": "https://github.com/ysenda44-dot/testing/commit/b02832a"}
+{"at": "2026-09-05T07:23:28+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
