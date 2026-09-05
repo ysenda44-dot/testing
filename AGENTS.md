@@ -97,6 +97,11 @@ considered message.
   `origin/<branch>`, so `git checkout <branch>` fails with "pathspec did not
   match". Run `git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'`
   before fetching; ordinary git works after that. See `ops/routines.md`.
+- A scheduled firing HAS the GitHub MCP tools; it does NOT have Gmail,
+  Calendar, Drive or Notion. Established by the first real harvester run
+  (2026-09-05), which contradicted this file's earlier guess. Do not assert a
+  tool is unavailable without evidence from an actual run — say what you
+  observed and let the next run correct you.
 - The container is ephemeral and the repo is re-cloned each session. Anything
   not committed and pushed is gone. Conversation logs under
   `~/.claude/projects/` do **not** survive — the distiller only ever sees the

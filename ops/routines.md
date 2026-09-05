@@ -29,33 +29,42 @@ Trigger ids:
 | executor | `trig_017pZgpQ5cPHF7e6s4sKw625` |
 | distiller | `trig_01HdXpdKBp6jFNGfZm3HDs4t` |
 
-## Known limitation: the live Routines have no connectors
+## Known limitation: the live Routines have no Google/Notion connectors
 
-Both Routines were created through the `claude-code-remote` MCP tool, which
-**cannot attach connectors** in this organisation — it refuses the
-`connectors` parameter outright. So the sessions they fire come up without
-Gmail, Calendar, Notion, Drive, or the GitHub MCP tools.
+Routines created through the `claude-code-remote` MCP tool cannot be given
+connectors — it refuses the `connectors` parameter in this organisation.
 
-What that costs, concretely:
+**But not everything is missing.** The first real harvester run (2026-09-05)
+established empirically what a fired session actually has:
 
-- `prioritizer` — nothing. It only reads `backlog/` and git. Fully functional.
-- `distiller` — nothing important. It reads session logs and git, and pushes
-  to the branch. It cannot open a PR via the GitHub API, so its work lands as
-  commits on the existing PR instead.
-- `executor` — it can do the work and push, but cannot open a *new* PR. Since
-  every agent pushes to `claude/ai-driven-agent-design-lbizu5`, which already
-  has PR #2 open, the work still surfaces for review — PR #2 just becomes a
-  rolling PR rather than one PR per item. Worth splitting up once merged.
-- `harvester` — most of its sweep. It can still read this container's session
-  logs and the local git history, but Gmail, Calendar, Notion, Drive and
-  GitHub are all unreachable. Its prompt tells it to skip unavailable sources
-  and say so rather than fail, so the run will succeed and under-deliver,
-  which is the failure mode to watch for.
+| tool surface | available to a firing |
+|---|---|
+| GitHub MCP (`mcp__github__*`) | **yes** |
+| git, python, the repo | yes |
+| Gmail | no |
+| Google Calendar | no |
+| Google Drive | no |
+| Notion | no |
 
-To fix, re-create the harvester Routine from the **claude.ai Routines UI**,
-where connectors can be granted. Same cron (`10 22 * * *`), same prompt; then
-delete `trig_0113RjvX8VkZsqM6aQecEjWB`. Until then, treat the harvester's
-output as partial and do a manual sweep periodically.
+An earlier version of this file asserted GitHub was unavailable too. That was
+wrong, and the harvester said so in its own journal entry rather than quietly
+working around it — which is the behaviour the prompts ask for and the reason
+the error got caught at all. Do not re-assert an unavailability without
+evidence from a real run.
+
+What this costs, concretely:
+
+- `prioritizer` — nothing. It only reads `backlog/` and git.
+- `distiller` — nothing. It reads session logs and git.
+- `executor` — nothing structural. It has GitHub MCP, so it *can* open its
+  own draft PR per item rather than piling every item onto PR #2.
+- `harvester` — the mailbox half of its sweep. Stalled GitHub work (its
+  highest-yield source), `INBOX.md`, session logs and local git all work.
+  Gmail, Calendar, Notion and Drive do not.
+
+To get the rest, re-create the harvester Routine from the **claude.ai
+Routines UI**, where connectors can be granted. Same cron (`10 22 * * *`),
+same prompt; then delete `trig_0113RjvX8VkZsqM6aQecEjWB`.
 
 ## The agents must exist on the branch the session clones
 
