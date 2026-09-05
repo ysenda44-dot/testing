@@ -83,6 +83,12 @@ considered message.
   acts on one. Pass `--status inbox` explicitly if you are triaging.
 - An empty executor queue is a normal state, not a fault. It means the
   prioritiser has not triaged anything yet, or everything is blocked.
+- **`ask` does not mean the executor ignores the item.** It may investigate
+  and write up options; it may not decide. Its queue therefore includes
+  `--autonomy ask`. Once investigated, an `ask` item goes to `blocked` with
+  the question as `blocked_by` — not back to `ready`, which would make every
+  later firing re-derive the same analysis, since `skipped` is not a failure
+  and does not decay the score.
 - Ordering is computed in `engine/score.py`, not decided by an agent. To move
   an item, change its inputs (`value`/`effort`/`confidence`), not its
   position — there is no position to change.

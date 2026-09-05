@@ -112,6 +112,23 @@ Delete this fallback once the system is merged to `main` — it is
 scaffolding, and leaving it in means a future breakage on `main` gets
 silently papered over by an old branch.
 
+## The stored prompts duplicate the agent files — keep them in sync
+
+Each Routine's stored prompt inlines the commands its agent should run, and
+`.claude/agents/*.md` states them too. When those disagree, the **stored
+prompt wins**: the firing runs the literal command in front of it, even
+though the prompt also says "follow <agent>.md exactly".
+
+That bit on 2026-09-05. `executor.md` was fixed to query
+`--autonomy auto --autonomy propose --autonomy ask`, but the stored prompt
+still said `--autonomy auto --autonomy propose`, so the fix had no effect on
+any firing. A repo-only fix to an agent's commands is not deployed.
+
+After changing a command in an agent file, update the matching Routine with
+`update_trigger` and note it here. The better long-term shape is for the
+stored prompt to stop inlining commands and defer to the agent file, so there
+is only one copy to get wrong.
+
 ## Ordering matters
 
 `harvester` → `prioritizer` → `executor` is a pipeline, not three

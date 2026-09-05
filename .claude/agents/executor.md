@@ -26,8 +26,14 @@ Close the run the same way when you finish:
 ## Pick the work
 
 ```bash
-python3 engine/wl.py next -n 5 --autonomy auto --autonomy propose
+python3 engine/wl.py next -n 5 --autonomy auto --autonomy propose --autonomy ask
 ```
+
+`ask` is in that list deliberately. An `ask` item is not "none of your
+business" — it is work you *can* do (investigate it, lay out the options)
+stopping short of the decision itself. Leaving it out, as this command did
+until 2026-09-05, silently disabled the whole `ask` pathway below and let
+wl_e971eb7b sit at the top of the list for 40 days with `attempts: 0`.
 
 That queue is `ready` and `in_progress` only. `inbox` items are deliberately
 excluded -- nobody has yet checked whether they are wanted, well-specified,
@@ -61,10 +67,28 @@ Every item carries an `autonomy` field. It is not advisory.
 | `ask`     | investigate and write up options                     | change anything |
 
 For `ask` items, your deliverable is a written recommendation appended to the
-item's detail — then set the item back to `ready` and record
-`--result skipped --note "needs a decision: <the question>"`. Do not answer
-the question yourself and proceed. If the run is interactive, ask the user
-directly instead.
+item's detail: what the options are, what each costs, which one you would
+pick and why. Do not answer the question yourself and proceed.
+
+Then hand it to the human properly:
+
+```bash
+python3 engine/wl.py update <id> --status blocked \
+  --blocked-by "needs a decision: <the question, in one line>"
+python3 engine/wl.py outcome <id> --result skipped \
+  --note "investigated; options written to detail" --status blocked
+```
+
+**Block it, do not put it back on `ready`.** An investigated `ask` item is
+waiting on a person, which is what `blocked` means — and `wl next` excludes
+blocked items, so it stops being re-investigated. Returning it to `ready`
+would make every later firing rediscover and re-append the same analysis
+forever, since `skipped` is not a failure and does not decay the score.
+
+Only re-investigate an `ask` item if it comes back to `ready` — which means a
+human unblocked it, or its terms changed.
+
+If the run is interactive, just ask the user directly instead.
 
 For work that reaches outside the repo, the rule is **compose freely, deliver
 never** — see the table in `AGENTS.md`. You may write a Gmail draft, comment
