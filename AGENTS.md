@@ -108,10 +108,14 @@ considered message.
   match". Run `git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'`
   before fetching; ordinary git works after that. See `ops/routines.md`.
 - A scheduled firing HAS the GitHub MCP tools; it does NOT have Gmail,
-  Calendar, Drive or Notion. Established by the first real harvester run
-  (2026-09-05), which contradicted this file's earlier guess. Do not assert a
-  tool is unavailable without evidence from an actual run — say what you
-  observed and let the next run correct you.
+  Calendar, Drive or Notion tool access — though `ListConnectors` shows all
+  four `connected: true` at the org level, just `enabledInChat: false` for
+  the Routine's own session (confirmed by the 2026-09-06 executor run). That
+  is a toggle a human can flip, not a missing authorization; see
+  `ops/routines.md` for the fix path. Established by the first real
+  harvester run (2026-09-05), which contradicted this file's earlier guess.
+  Do not assert a tool is unavailable without evidence from an actual run —
+  say what you observed and let the next run correct you.
 - **Never seed example or test items into `backlog/wishlist.jsonl`.** The
   prioritiser cannot tell fiction from fact: on 2026-09-05 it correctly
   applied its own rules to a made-up "invoice due Friday" fixture and
