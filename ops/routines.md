@@ -129,6 +129,37 @@ After changing a command in an agent file, update the matching Routine with
 stored prompt to stop inlining commands and defer to the agent file, so there
 is only one copy to get wrong.
 
+**Confirmed still broken on 2026-09-06** (wl_f4b1d499): the executor firing
+that ran that day was itself handed a TASK line reading `python3 engine/wl.py
+next -n 5 --autonomy auto --autonomy propose` — still missing
+`--autonomy ask`, three days after `executor.md` was fixed. That firing also
+checked for the `claude-code-remote` MCP tools (`update_trigger`,
+`ListConnectors` search for a matching connector) and found neither present —
+a scheduled executor firing has no way to call `update_trigger` on itself.
+Fixing the stored prompt on `trig_017pZgpQ5cPHF7e6s4sKw625` needs either the
+user, or an interactive Claude Code session with that connector enabled;
+it cannot be done from inside a scheduled run. Recorded as `blocked` rather
+than retried, so it stops being silently re-picked by every future firing.
+
+Two fixes are needed together, both applied to the stored prompt via
+`update_trigger --trigger_id trig_017pZgpQ5cPHF7e6s4sKw625`, whoever has the
+connector to run it:
+
+1. **Immediate**: change the TASK line's literal command to include
+   `--autonomy ask`:
+   `python3 engine/wl.py next -n 5 --autonomy auto --autonomy propose --autonomy ask`
+2. **Structural** (so this class of drift stops recurring): stop inlining
+   the command at all. Replace the TASK line with something like:
+
+   > TASK: Run the queue command given in `.claude/agents/executor.md` under
+   > "Pick the work" (do not hardcode the flags here — read them from the
+   > file so this can't drift again), take the top item, and actually do it.
+   > ONE item per run, done properly, beats five touched.
+
+   This makes `executor.md` the single source of truth for the query; a
+   future flag change only needs the repo-side edit, with nothing left in
+   the Routine to fall out of sync.
+
 ## Ordering matters
 
 `harvester` → `prioritizer` → `executor` is a pipeline, not three
