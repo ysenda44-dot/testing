@@ -184,6 +184,17 @@ Routines are managed through the `claude-code-remote` MCP tools, not a file
 in this repo — this table is documentation, not configuration. Editing it
 changes nothing on its own.
 
+**A scheduled firing cannot call these tools on itself.**
+`create_trigger`/`update_trigger`/`delete_trigger`/`list_triggers`/
+`get_trigger` are absent from a Routine's own toolset, confirmed
+independently by two 2026-09-06 executor firings (`wl_f4b1d499` at 00:20,
+`wl_e971eb7b` at 05:21) that each checked via `ToolSearch`/`ListConnectors`
+before concluding the item was unfixable from where they stood. Any
+schedule, stored-prompt, or connector change needs the user or an
+interactive session; a scheduled agent can investigate and write up the
+fix, but set the item to `blocked` with that reason rather than retrying —
+retrying from another firing hits the same wall.
+
 ```
 list_triggers                                  # ids and current state
 update_trigger --trigger_id trig_... --cron_expression "..."
