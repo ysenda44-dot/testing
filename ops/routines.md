@@ -29,10 +29,19 @@ Trigger ids:
 | executor | `trig_017pZgpQ5cPHF7e6s4sKw625` |
 | distiller | `trig_01HdXpdKBp6jFNGfZm3HDs4t` |
 
-## Known limitation: the live Routines have no Google/Notion connectors
+## Known limitation: Google/Notion connectors are not enabled for the firings
 
 Routines created through the `claude-code-remote` MCP tool cannot be given
-connectors — it refuses the `connectors` parameter in this organisation.
+connectors at creation — it refuses the `connectors` parameter in this
+organisation.
+
+**That is not the same as the connections being absent.** The 2026-09-06
+executor firing ran `ListConnectors` and found Gmail, Google Calendar, Google
+Drive and Notion all `connected: true` at the org level, but
+`enabledInChat: false` for the firing's own session. The authorisation
+already exists; what is missing is enabling those connectors for the
+Routine's chat. That is a smaller fix than "recreate the Routine from
+scratch", and it is worth trying first.
 
 **But not everything is missing.** The first real harvester run (2026-09-05)
 established empirically what a fired session actually has:
@@ -62,9 +71,21 @@ What this costs, concretely:
   highest-yield source), `INBOX.md`, session logs and local git all work.
   Gmail, Calendar, Notion and Drive do not.
 
-To get the rest, re-create the harvester Routine from the **claude.ai
-Routines UI**, where connectors can be granted. Same cron (`10 22 * * *`),
-same prompt; then delete `trig_0113RjvX8VkZsqM6aQecEjWB`.
+To get the rest, try in this order:
+
+1. **Enable the existing connectors for the Routine's chat.** They are
+   already authorised org-wide; only `enabledInChat` is false. If that can be
+   toggled for `trig_0113RjvX8VkZsqM6aQecEjWB`, nothing needs recreating.
+2. Failing that, re-create the harvester Routine from the **claude.ai
+   Routines UI** with the connectors attached — same cron (`10 22 * * *`),
+   same prompt — then delete the old trigger. Copy the existing prompt out of
+   the UI first: there is no `get_trigger`, so a firing cannot recover its own
+   prompt text to hand over.
+
+Either way this is a standing grant: an unattended daily agent would hold
+read access to personal mail and calendar from then on, with no per-run
+confirmation. That is the decision recorded in `wl_e971eb7b`, not a mechanical
+step.
 
 ## The agents must exist on the branch the session clones
 
@@ -115,50 +136,30 @@ silently papered over by an old branch.
 ## The stored prompts duplicate the agent files — keep them in sync
 
 Each Routine's stored prompt inlines the commands its agent should run, and
-`.claude/agents/*.md` states them too. When those disagree, the **stored
-prompt wins**: the firing runs the literal command in front of it, even
-though the prompt also says "follow <agent>.md exactly".
+`.claude/agents/*.md` states them too. When they disagree, **which one a
+firing follows is not determined** — and that is worse than either answer
+being fixed.
 
-That bit on 2026-09-05. `executor.md` was fixed to query
-`--autonomy auto --autonomy propose --autonomy ask`, but the stored prompt
-still said `--autonomy auto --autonomy propose`, so the fix had no effect on
-any firing. A repo-only fix to an agent's commands is not deployed.
+Both behaviours were observed within 30 hours of the same drift:
+
+- `executor.md` was changed on 2026-09-05 to query
+  `--autonomy auto --autonomy propose --autonomy ask`; the stored TASK line
+  still said `--autonomy auto --autonomy propose`.
+- The **2026-09-06 00:20** firing read its own TASK line, reported it as
+  stale, and worked only from it.
+- The **2026-09-06 05:21** firing picked up `wl_e971eb7b`, an `autonomy: ask`
+  item that the stale TASK line makes invisible — so it followed
+  `executor.md` instead.
+
+An earlier version of this section claimed "the stored prompt wins". That was
+generalised from the first firing alone and is wrong. The real hazard is that
+the same drift produces different behaviour on different days, which is
+untestable and unexplainable after the fact.
 
 After changing a command in an agent file, update the matching Routine with
-`update_trigger` and note it here. The better long-term shape is for the
-stored prompt to stop inlining commands and defer to the agent file, so there
-is only one copy to get wrong.
-
-**Confirmed still broken on 2026-09-06** (wl_f4b1d499): the executor firing
-that ran that day was itself handed a TASK line reading `python3 engine/wl.py
-next -n 5 --autonomy auto --autonomy propose` — still missing
-`--autonomy ask`, three days after `executor.md` was fixed. That firing also
-checked for the `claude-code-remote` MCP tools (`update_trigger`,
-`ListConnectors` search for a matching connector) and found neither present —
-a scheduled executor firing has no way to call `update_trigger` on itself.
-Fixing the stored prompt on `trig_017pZgpQ5cPHF7e6s4sKw625` needs either the
-user, or an interactive Claude Code session with that connector enabled;
-it cannot be done from inside a scheduled run. Recorded as `blocked` rather
-than retried, so it stops being silently re-picked by every future firing.
-
-Two fixes are needed together, both applied to the stored prompt via
-`update_trigger --trigger_id trig_017pZgpQ5cPHF7e6s4sKw625`, whoever has the
-connector to run it:
-
-1. **Immediate**: change the TASK line's literal command to include
-   `--autonomy ask`:
-   `python3 engine/wl.py next -n 5 --autonomy auto --autonomy propose --autonomy ask`
-2. **Structural** (so this class of drift stops recurring): stop inlining
-   the command at all. Replace the TASK line with something like:
-
-   > TASK: Run the queue command given in `.claude/agents/executor.md` under
-   > "Pick the work" (do not hardcode the flags here — read them from the
-   > file so this can't drift again), take the top item, and actually do it.
-   > ONE item per run, done properly, beats five touched.
-
-   This makes `executor.md` the single source of truth for the query; a
-   future flag change only needs the repo-side edit, with nothing left in
-   the Routine to fall out of sync.
+`update_trigger` and note it here. Better still, stop inlining commands in the
+stored prompt and have it defer to the agent file, so there is only one copy
+to disagree with.
 
 ## Ordering matters
 
