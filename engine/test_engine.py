@@ -382,6 +382,48 @@ class TestCli(unittest.TestCase):
         self.assertEqual(rec["blocked_by"], "PR #2 のマージ待ち")
         self.assertEqual(self.wl("validate").returncode, 0)
 
+    def test_runs_counts_commits_not_just_journal_events(self):
+        """A run whose only output is a commit must not read as silent.
+
+        The distiller edits AGENTS.md and commits without writing a journal
+        event; counting journal events alone reported produced=[] for a run
+        that had done real work — the exact false signal heartbeats exist to
+        prevent.
+        """
+        subprocess.run(["git", "init", "-q"], cwd=self.repo, check=True)
+        subprocess.run(["git", "config", "user.email", "t@t"], cwd=self.repo, check=True)
+        subprocess.run(["git", "config", "user.name", "t"], cwd=self.repo, check=True)
+
+        self.wl("heartbeat", "distiller", "--note", "run")
+        (self.repo / "NOTES.md").write_text("sharpened a rule\n", encoding="utf-8")
+        subprocess.run(["git", "add", "-A"], cwd=self.repo, check=True)
+        subprocess.run(["git", "commit", "-q", "-m", "distill: sharpen a rule"],
+                       cwd=self.repo, check=True)
+
+        report = json.loads(self.wl("runs", "--days", "1").stdout)
+        run = report["runs"][0]
+        self.assertEqual(run["produced"], [])          # nothing journalled
+        self.assertEqual(len(run["commits"]), 1)       # but work was done
+        self.assertEqual(report["silent_runs"], [])    # so: not silent
+        self.assertEqual(
+            report["committed_without_journalling"][0]["agent"], "distiller")
+
+    def test_runs_ignores_heartbeat_commits(self):
+        subprocess.run(["git", "init", "-q"], cwd=self.repo, check=True)
+        subprocess.run(["git", "config", "user.email", "t@t"], cwd=self.repo, check=True)
+        subprocess.run(["git", "config", "user.name", "t"], cwd=self.repo, check=True)
+
+        self.wl("heartbeat", "executor", "--note", "run")
+        (self.repo / "x.txt").write_text("x\n", encoding="utf-8")
+        subprocess.run(["git", "add", "-A"], cwd=self.repo, check=True)
+        subprocess.run(["git", "commit", "-q", "-m", "heartbeat: executor"],
+                       cwd=self.repo, check=True)
+
+        report = json.loads(self.wl("runs", "--days", "1").stdout)
+        # bookkeeping commits are not evidence of work
+        self.assertEqual(report["runs"][0]["commits"], [])
+        self.assertEqual(report["silent_runs"][0]["agent"], "executor")
+
     def test_corrupt_store_fails_loudly(self):
         (self.repo / "backlog").mkdir(exist_ok=True)
         (self.repo / "backlog" / "wishlist.jsonl").write_text("{not json\n")

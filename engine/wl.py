@@ -22,6 +22,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -248,6 +249,28 @@ def cmd_heartbeat(args) -> int:
     return 0
 
 
+def _commits_between(start: str, end: str | None) -> list[str]:
+    """Commit subjects authored in a window, excluding heartbeat bookkeeping.
+
+    A run's real output is often a commit rather than a journal event -- the
+    distiller edits AGENTS.md and commits, writing nothing to the journal. Left
+    to journal events alone this report calls such a run silent, which is the
+    exact false signal the heartbeat exists to prevent.
+    """
+    cmd = ["git", "log", "--format=%s", f"--since={start}"]
+    if end:
+        cmd.append(f"--until={end}")
+    try:
+        out = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True,
+                             timeout=15)
+    except (OSError, subprocess.SubprocessError):
+        return []
+    if out.returncode != 0:
+        return []
+    return [line for line in out.stdout.splitlines()
+            if line.strip() and not line.startswith("heartbeat:")]
+
+
 def cmd_runs(args) -> int:
     """Which agents have run lately, and did each leave any work behind."""
     if not JOURNAL.exists():
@@ -270,7 +293,8 @@ def cmd_runs(args) -> int:
         if age_days(ev.get("at"), ref=ref) > args.days:
             continue
         runs.append({"agent": ev.get("agent"), "at": ev.get("at"),
-                     "note": ev.get("note", ""), "produced": [], "finished": False})
+                     "note": ev.get("note", ""), "produced": [],
+                     "commits": [], "finished": False})
 
     # Attribute every non-heartbeat event to the run it followed.
     for ev in events:
@@ -285,11 +309,22 @@ def cmd_runs(args) -> int:
         else:
             current["produced"].append(ev.get("event"))
 
-    silent = [r for r in runs if not r["produced"]]
+    # Attribute commits by time window: from this run's start to the next
+    # run's start (or now, for the most recent).
+    for idx, run in enumerate(runs):
+        end = runs[idx + 1]["at"] if idx + 1 < len(runs) else None
+        run["commits"] = _commits_between(run["at"], end)
+
+    # Silent means it left no trace at all -- neither journal nor commit.
+    silent = [r for r in runs if not r["produced"] and not r["commits"]]
     print(json.dumps({
         "window_days": args.days,
         "runs": runs,
         "silent_runs": [{"agent": r["agent"], "at": r["at"]} for r in silent],
+        "committed_without_journalling": [
+            {"agent": r["agent"], "at": r["at"], "commits": r["commits"]}
+            for r in runs if r["commits"] and not r["produced"]
+        ],
         "unfinished_runs": [{"agent": r["agent"], "at": r["at"]}
                             for r in runs if not r["finished"]],
     }, ensure_ascii=False, indent=2))
