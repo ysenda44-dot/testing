@@ -458,6 +458,19 @@ class TestCli(unittest.TestCase):
         self.assertEqual(report["committed_without_journalling"], [])
         self.assertEqual(report["silent_runs"][0]["agent"], "prioritizer")
 
+    def test_silent_runs_say_whether_they_finished(self):
+        """Silent covers two opposite cases; the report must not conflate them."""
+        self.wl("heartbeat", "prioritizer", "--note", "quiet")
+        self.wl("heartbeat", "prioritizer", "--phase", "end")
+        report = json.loads(self.wl("runs", "--days", "1").stdout)
+        done = report["silent_runs"][0]
+        self.assertTrue(done["finished"])   # nothing to do, closed out properly
+
+        self.wl("heartbeat", "executor", "--note", "dies here")
+        report = json.loads(self.wl("runs", "--days", "1").stdout)
+        died = [s for s in report["silent_runs"] if s["agent"] == "executor"][0]
+        self.assertFalse(died["finished"])  # no trace and never closed: investigate
+
     def test_corrupt_store_fails_loudly(self):
         (self.repo / "backlog").mkdir(exist_ok=True)
         (self.repo / "backlog" / "wishlist.jsonl").write_text("{not json\n")

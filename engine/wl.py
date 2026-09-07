@@ -371,7 +371,11 @@ def cmd_runs(args) -> int:
     print(json.dumps({
         "window_days": args.days,
         "runs": runs,
-        "silent_runs": [{"agent": r["agent"], "at": r["at"]} for r in silent],
+        # `finished` distinguishes the two very different silent cases:
+        # True  -> ran to completion and correctly had nothing to do
+        # False -> died before closing out; this is the one to investigate
+        "silent_runs": [{"agent": r["agent"], "at": r["at"],
+                         "finished": r["finished"]} for r in silent],
         "committed_without_journalling": [
             {"agent": r["agent"], "at": r["at"], "commits": r["commits"]}
             for r in runs if r["commits"] and not r["produced"]
