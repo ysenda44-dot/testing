@@ -69,3 +69,7 @@
 {"at": "2026-09-07T00:20:58+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
 {"at": "2026-09-07T00:21:17+00:00", "event": "heartbeat", "agent": "executor", "phase": "end", "note": ""}
 {"at": "2026-09-07T05:21:07+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
+{"at": "2026-09-07T05:21:31+00:00", "event": "update", "id": "wl_28fc23a9", "changed": {"status": ["ready", "in_progress"]}, "note": "executor run: investigating ask item"}
+{"at": "2026-09-07T05:22:17+00:00", "event": "update", "id": "wl_28fc23a9", "changed": {"status": ["in_progress", "blocked"]}, "note": "ask item investigated; recommendation appended to detail"}
+{"at": "2026-09-07T05:22:21+00:00", "event": "outcome", "id": "wl_28fc23a9", "title": "TSUCHI no HI 農業体験ランディングページの PR #1 をレビューしてマージするか決める", "result": "skipped", "note": "investigated; options written to detail", "ref": "https://github.com/ysenda44-dot/testing/pull/1"}
+{"at": "2026-09-07T05:22:30+00:00", "event": "heartbeat", "agent": "executor", "phase": "end", "note": ""}
