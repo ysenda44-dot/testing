@@ -249,6 +249,50 @@ def cmd_heartbeat(args) -> int:
     return 0
 
 
+def _is_heartbeat_only_commit(commit_hash: str) -> bool:
+    """A commit is bookkeeping iff it touches only journal.jsonl and every
+    line it adds there is a heartbeat event.
+
+    Matching on a "heartbeat:" message prefix instead of the diff content
+    was tried first and produced a false positive: a 2026-09-06 prioritizer
+    run committed a heartbeat *end* event under the message "prioritizer:
+    quiet run, no metadata changes needed" (a genuinely more useful message
+    than a bare "heartbeat: prioritizer" would have been) and `wl runs`
+    flagged it as `committed_without_journalling` even though it carried no
+    real-work journal event to find. Checking the diff itself means the
+    commit message stays free to describe what happened.
+    """
+    try:
+        files = subprocess.run(
+            ["git", "show", "--name-only", "--format=", commit_hash],
+            cwd=ROOT, capture_output=True, text=True, timeout=15)
+        if files.returncode != 0:
+            return False
+        changed = [f for f in files.stdout.splitlines() if f.strip()]
+        if changed != ["backlog/journal.jsonl"]:
+            return False
+        diff = subprocess.run(
+            ["git", "show", commit_hash, "--", "backlog/journal.jsonl"],
+            cwd=ROOT, capture_output=True, text=True, timeout=15)
+        if diff.returncode != 0:
+            return False
+    except (OSError, subprocess.SubprocessError):
+        return False
+
+    added = [line[1:] for line in diff.stdout.splitlines()
+             if line.startswith("+") and not line.startswith("+++")]
+    if not added:
+        return False
+    for line in added:
+        try:
+            ev = json.loads(line)
+        except json.JSONDecodeError:
+            return False
+        if ev.get("event") != "heartbeat":
+            return False
+    return True
+
+
 def _commits_between(start: str, end: str | None) -> list[str]:
     """Commit subjects authored in a window, excluding heartbeat bookkeeping.
 
@@ -257,7 +301,7 @@ def _commits_between(start: str, end: str | None) -> list[str]:
     to journal events alone this report calls such a run silent, which is the
     exact false signal the heartbeat exists to prevent.
     """
-    cmd = ["git", "log", "--format=%s", f"--since={start}"]
+    cmd = ["git", "log", "--format=%H\t%s", f"--since={start}"]
     if end:
         cmd.append(f"--until={end}")
     try:
@@ -267,8 +311,15 @@ def _commits_between(start: str, end: str | None) -> list[str]:
         return []
     if out.returncode != 0:
         return []
-    return [line for line in out.stdout.splitlines()
-            if line.strip() and not line.startswith("heartbeat:")]
+    result = []
+    for line in out.stdout.splitlines():
+        if not line.strip() or "\t" not in line:
+            continue
+        commit_hash, subject = line.split("\t", 1)
+        if subject.startswith("heartbeat:") or _is_heartbeat_only_commit(commit_hash):
+            continue
+        result.append(subject)
+    return result
 
 
 def cmd_runs(args) -> int:

@@ -424,6 +424,40 @@ class TestCli(unittest.TestCase):
         self.assertEqual(report["runs"][0]["commits"], [])
         self.assertEqual(report["silent_runs"][0]["agent"], "executor")
 
+    def test_runs_ignores_heartbeat_commit_regardless_of_message(self):
+        """A commit that only adds a heartbeat journal line is bookkeeping
+        even when its message doesn't start with "heartbeat:".
+
+        A real 2026-09-06 prioritizer run committed its end-of-run heartbeat
+        under the message "prioritizer: quiet run, no metadata changes
+        needed" -- a more informative message than a bare "heartbeat:
+        prioritizer" -- and `wl runs` wrongly flagged it as
+        `committed_without_journalling` because the old check matched only
+        on message prefix. The content of the diff, not the wording chosen
+        for it, decides what counts as bookkeeping.
+        """
+        subprocess.run(["git", "init", "-q"], cwd=self.repo, check=True)
+        subprocess.run(["git", "config", "user.email", "t@t"], cwd=self.repo, check=True)
+        subprocess.run(["git", "config", "user.name", "t"], cwd=self.repo, check=True)
+
+        self.wl("heartbeat", "prioritizer", "--note", "scheduled run")
+        subprocess.run(["git", "add", "-A"], cwd=self.repo, check=True)
+        subprocess.run(
+            ["git", "commit", "-q", "-m", "heartbeat: prioritizer"],
+            cwd=self.repo, check=True)
+        self.wl("heartbeat", "prioritizer", "--phase", "end", "--note", "")
+        subprocess.run(["git", "add", "-A"], cwd=self.repo, check=True)
+        subprocess.run(
+            ["git", "commit", "-q", "-m",
+             "prioritizer: quiet run, no metadata changes needed"],
+            cwd=self.repo, check=True)
+
+        report = json.loads(self.wl("runs", "--days", "1").stdout)
+        run = report["runs"][0]
+        self.assertEqual(run["commits"], [])
+        self.assertEqual(report["committed_without_journalling"], [])
+        self.assertEqual(report["silent_runs"][0]["agent"], "prioritizer")
+
     def test_corrupt_store_fails_loudly(self):
         (self.repo / "backlog").mkdir(exist_ok=True)
         (self.repo / "backlog" / "wishlist.jsonl").write_text("{not json\n")
