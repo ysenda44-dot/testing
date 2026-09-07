@@ -75,3 +75,4 @@
 {"at": "2026-09-07T05:22:30+00:00", "event": "heartbeat", "agent": "executor", "phase": "end", "note": ""}
 {"at": "2026-09-07T05:23:43+00:00", "event": "observation", "by": "interactive session", "note": "executor prompt-drift の4回目の観測。従った対象が発火時刻と相関している: 09-06 00:20 stale / 09-06 05:21 fixed / 09-07 00:20 stale / 09-07 05:21 fixed。同一 cron・同一 stored prompt・ほぼ同一の backlog 状態で、00:20 は2回とも古いクエリ、05:21 は2回とも修正後のクエリ。スロットあたり n=2 なので偶然の可能性は十分あり、パターンと断定はしない。次の2〜3回で崩れるか続くかを見る。崩れなければ『非決定』ではなく発火スロットに依存する何かがあることになり、原因の切り分け方が変わる。"}
 {"at": "2026-09-07T05:23:43+00:00", "event": "update", "id": "wl_f4b1d499", "changed": {}, "note": "4回目の観測を journal に記録: 従う対象が発火時刻と相関している可能性"}
+{"at": "2026-09-07T14:34:12+00:00", "event": "heartbeat", "agent": "distiller", "phase": "start", "note": "scheduled run"}
