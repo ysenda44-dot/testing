@@ -92,3 +92,4 @@
 {"at": "2026-09-08T00:25:03+00:00", "event": "observation", "by": "interactive session", "note": "executor prompt-drift の時刻相関仮説は反証された。09-08 00:21 の firing は修正後のクエリを使い ask 項目 wl_063f93e3 を拾った。観測は 00:20 stale / 05:21 fixed / 00:20 stale / 05:21 fixed / 00:21 FIXED。スロットとの相関は崩れ、元の診断(発火ごとに非決定)が正しい。n=2 でパターンと断定しなかった判断は妥当だった。wl_f4b1d499 と ops/routines.md の記述は変更不要。"}
 {"at": "2026-09-08T05:21:21+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
 {"at": "2026-09-08T05:21:39+00:00", "event": "heartbeat", "agent": "executor", "phase": "end", "note": ""}
+{"at": "2026-09-08T14:33:56+00:00", "event": "heartbeat", "agent": "distiller", "phase": "start", "note": "scheduled run"}
