@@ -156,6 +156,11 @@ generalised from the first firing alone and is wrong. The real hazard is that
 the same drift produces different behaviour on different days, which is
 untestable and unexplainable after the fact.
 
+A second hypothesis — that the choice tracked the firing slot (00:20 stale,
+05:21 fixed, twice each) — was also disproven: the 2026-09-08 00:21 firing
+used the fixed query. Five observations now read stale / fixed / stale /
+fixed / fixed. Non-determinism per firing is the diagnosis that survives.
+
 After changing a command in an agent file, update the matching Routine with
 `update_trigger` and note it here. Better still, stop inlining commands in the
 stored prompt and have it defer to the agent file, so there is only one copy
