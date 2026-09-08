@@ -84,3 +84,8 @@
 {"at": "2026-09-07T22:40:34+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "start", "note": "scheduled run"}
 {"at": "2026-09-07T22:42:38+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "end", "note": "quiet run: inbox empty (0), no thrashing, no misestimates found in done-item outcomes, top ready item (wl_063f93e3) defensible as sole item, blocked items re-verified against live PR #2/#1 state (still open/draft), hygiene clean (dedupe/gc/validate no-ops). Confirmed the 2026-09-07T00:20:58 silent executor run against the already-tracked wl_f4b1d499 slot-correlation pattern -- not a new fault."}
 {"at": "2026-09-08T00:21:11+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
+{"at": "2026-09-08T00:21:34+00:00", "event": "update", "id": "wl_063f93e3", "changed": {"status": ["ready", "in_progress"]}, "note": "executor run"}
+{"at": "2026-09-08T00:23:13+00:00", "event": "update", "id": "wl_063f93e3", "changed": {}, "note": ""}
+{"at": "2026-09-08T00:23:20+00:00", "event": "update", "id": "wl_063f93e3", "changed": {"status": ["in_progress", "blocked"]}, "note": ""}
+{"at": "2026-09-08T00:23:20+00:00", "event": "outcome", "id": "wl_063f93e3", "title": "distiller に会話ログを読ませる手段を決める（現状は構造的に不可能）", "result": "skipped", "note": "investigated; options refined and appended to detail (hook input format confirmed via session-start-hook skill; B-1/B-2 split identified for the summarizer; SessionEnd reliability risk noted)", "ref": ""}
+{"at": "2026-09-08T00:23:40+00:00", "event": "heartbeat", "agent": "executor", "phase": "end", "note": ""}
