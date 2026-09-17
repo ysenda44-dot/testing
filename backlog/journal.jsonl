@@ -196,3 +196,4 @@
 {"at": "2026-09-16T22:12:03+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": "harvest complete: 0 added"}
 {"at": "2026-09-16T22:41:03+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "start", "note": "scheduled run"}
 {"at": "2026-09-16T22:42:10+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "end", "note": "quiet run: inbox empty, no thrashing, both PR blockers (PR#1, PR#2) still open/unresolved, top-5 blocked queue unchanged, hygiene no-op"}
+{"at": "2026-09-17T00:21:06+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
