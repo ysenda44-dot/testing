@@ -220,3 +220,4 @@
 {"at": "2026-09-18T22:12:33+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": ""}
 {"at": "2026-09-18T22:40:58+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "start", "note": "scheduled run"}
 {"at": "2026-09-18T22:42:01+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "end", "note": "quiet run: inbox empty, all 5 active items already blocked with valid concrete blockers (PR#1/#2 still open, no update_trigger/connector tools this session), no new outcomes to correct estimates from, hygiene clean (dedupe 0, gc 0, validate ok)"}
+{"at": "2026-09-19T00:20:57+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
