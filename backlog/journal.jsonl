@@ -237,3 +237,4 @@
 {"at": "2026-09-20T00:21:25+00:00", "event": "update", "id": "wl_3760ec24", "changed": {"status": ["ready", "in_progress"]}, "note": "executor run"}
 {"at": "2026-09-20T00:22:32+00:00", "event": "outcome", "id": "wl_3760ec24", "title": "engine/score.py の _failed_attempts が blocked outcome を failed 扱いしてスコアを永続的に減衰させる", "result": "success", "note": "Fixed _failed_attempts() in engine/score.py to only count result=failed, not blocked. Verified wl_f4b1d499 and wl_28fc23a9 now score identically (attempt_decay=1.0 for both). Added regression test test_blocked_outcome_is_not_a_failed_attempt. Noted rationale in ops/routines.md. Full test suite (48 tests) and wl validate pass.", "ref": "https://github.com/ysenda44-dot/testing/pull/2"}
 {"at": "2026-09-20T00:22:39+00:00", "event": "heartbeat", "agent": "executor", "phase": "end", "note": ""}
+{"at": "2026-09-20T05:21:23+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
