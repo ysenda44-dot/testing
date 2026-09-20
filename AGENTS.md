@@ -87,8 +87,15 @@ considered message.
   and write up options; it may not decide. Its queue therefore includes
   `--autonomy ask`. Once investigated, an `ask` item goes to `blocked` with
   the question as `blocked_by` — not back to `ready`, which would make every
-  later firing re-derive the same analysis, since `skipped` is not a failure
-  and does not decay the score.
+  later firing re-derive the same analysis. Record the outcome as whichever
+  of `skipped` or `blocked` actually fits; both are decay-exempt now.
+  `engine/score.py`'s `_failed_attempts()` used to treat `result: blocked` as
+  a failure, so two identically-handled investigations (wl_f4b1d499 vs
+  wl_28fc23a9) scored differently depending only on which result value was
+  recorded, and the decay never cleared even after the item was unblocked
+  since outcome history is append-only. Fixed 2026-09-20 (wl_3760ec24); see
+  `test_blocked_outcome_is_not_a_failed_attempt` and the "Scoring" section of
+  `ops/routines.md`.
 - Ordering is computed in `engine/score.py`, not decided by an agent. To move
   an item, change its inputs (`value`/`effort`/`confidence`), not its
   position — there is no position to change.
