@@ -170,6 +170,19 @@ class TestScore(unittest.TestCase):
         recovered = score(it, ref=NOW)
         self.assertGreater(recovered, stuck)
 
+    def test_blocked_outcome_is_not_a_failed_attempt(self):
+        """An investigated `ask` item, blocked on a human decision, is not a
+        failed attempt (AGENTS.md) -- unlike `test_blocked_sinks_but_stays_visible`
+        below, which tests the *current status* multiplier, not decay from
+        outcome history. `skipped` results paired with a blocked status must
+        score identically to `blocked` results: wl_f4b1d499 and wl_28fc23a9
+        were the same situation recorded with different result values."""
+        it = item(value=5, effort=1)
+        no_outcomes = score(it, ref=NOW)
+        it["outcomes"] = [{"result": "blocked"}]
+        after_blocked = score(it, ref=NOW)
+        self.assertEqual(after_blocked, no_outcomes)
+
     def test_blocked_sinks_but_stays_visible(self):
         it = item(value=5, effort=1)
         open_score = score(it, ref=NOW)

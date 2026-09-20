@@ -34,11 +34,20 @@ MAX_DUE_BOOST = 1.50
 
 
 def _failed_attempts(item: dict) -> int:
-    """Attempts that ended badly. A partial success resets the decay."""
+    """Attempts that ended badly. A partial success resets the decay.
+
+    ``blocked`` is not a failure: AGENTS.md defines it as an investigated
+    ``ask`` item waiting on a human decision, not a failed attempt, and
+    ``skipped`` (the outcome paired with a ``blocked`` status) is explicitly
+    exempt from decay. Counting it here gave two identically-handled
+    investigations (wl_f4b1d499 vs wl_28fc23a9) different scores depending on
+    which result value was recorded, and the decay never clears even after
+    the item is unblocked since outcome history is append-only.
+    """
     failures = 0
     for outcome in item.get("outcomes", []):
         result = outcome.get("result")
-        if result in ("failed", "blocked"):
+        if result == "failed":
             failures += 1
         elif result in ("success", "partial"):
             failures = 0

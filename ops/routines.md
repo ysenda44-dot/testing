@@ -241,3 +241,15 @@ rather than adding locking.
 `distiller` run on Opus because they produce work that a human will read and
 merge. If cost matters more than throughput, drop the executor to one firing
 a day before touching anything else.
+
+## Scoring: `blocked` outcomes no longer decay a score
+
+`engine/score.py`'s `_failed_attempts()` used to count outcome
+`result: "blocked"` the same as `result: "failed"`, permanently sinking any
+item that was investigated and correctly parked on a human decision
+(AGENTS.md's `ask` pathway). Since outcome history is append-only, that
+decay never cleared even once the item was unblocked. Fixed 2026-09-20
+(wl_3760ec24): only `result: "failed"` counts as a failed attempt now;
+`blocked` and `skipped` score identically, as they should for the same
+situation recorded with different result values. See
+`test_blocked_outcome_is_not_a_failed_attempt` in `engine/test_engine.py`.
