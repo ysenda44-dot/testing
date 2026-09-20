@@ -233,3 +233,4 @@
 {"at": "2026-09-19T22:42:07+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "start", "note": "scheduled run"}
 {"at": "2026-09-19T22:45:50+00:00", "event": "add", "id": "wl_3760ec24", "title": "engine/score.py の _failed_attempts が blocked outcome を failed 扱いしてスコアを永続的に減衰させる", "source": "manual"}
 {"at": "2026-09-19T22:46:17+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "end", "note": "added wl_3760ec24 (score.py blocked-vs-failed decay bug), no other metadata changes: inbox empty, 5 pre-existing blocked items re-verified against live PR#1/#2 state (unchanged), no thrashing, hygiene clean"}
+{"at": "2026-09-20T00:21:11+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
