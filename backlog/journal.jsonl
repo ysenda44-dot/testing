@@ -295,3 +295,4 @@
 {"at": "2026-09-24T22:12:13+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": ""}
 {"at": "2026-09-24T22:40:46+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "start", "note": "scheduled run"}
 {"at": "2026-09-24T22:41:51+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "end", "note": "no metadata changes: inbox empty, all 5 active items correctly blocked (PR #1, PR #2 confirmed still open via GitHub; connector/privacy decisions still pending). dedupe/gc/validate clean."}
+{"at": "2026-09-25T00:20:52+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
