@@ -373,3 +373,5 @@
 {"at": "2026-10-01T14:34:00+00:00", "event": "distill", "rules_added": 0, "rules_removed": 0, "skills": [], "pr": null, "note": "quiet day; only own session log visible, journal shows empty queues and blocked items"}
 {"at": "2026-10-01T14:34:00+00:00", "event": "heartbeat", "agent": "distiller", "phase": "end", "note": "quiet day"}
 {"at": "2026-10-01T22:11:37+00:00", "event": "heartbeat", "agent": "harvester", "phase": "start", "note": "scheduled run"}
+{"at": "2026-10-01T22:11:54+00:00", "event": "harvest", "added": 0, "sources": ["inbox", "github"], "unreachable_sources": ["gmail", "calendar", "notion", "drive"], "note": "INBOX.md empty, intake 0. GitHub: PR#1 stalled since 2026-07-27, already tracked (wl_28fc23a9, blocked); PR#2 is own infra PR. 0 open issues; 3 branches all covered. Session log holds only this run's own trace."}
+{"at": "2026-10-01T22:11:54+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": "added 0"}
