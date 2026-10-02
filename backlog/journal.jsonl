@@ -387,3 +387,4 @@
 {"at": "2026-10-02T22:12:10+00:00", "event": "heartbeat", "agent": "harvester", "phase": "start", "note": "scheduled run"}
 {"at": "2026-10-02T22:12:28+00:00", "event": "harvest", "added": 0, "sources": ["inbox", "github", "conversation"], "unreachable_sources": ["gmail", "calendar", "notion", "drive"], "note": "INBOX.md empty, intake 0. GitHub: PR#1 stalled since 2026-07-27, already tracked (wl_28fc23a9, blocked); PR#2 own infra PR; no open issues; no PR-less branches. Session logs hold only this firing's own log."}
 {"at": "2026-10-02T22:12:28+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": "0 added"}
+{"at": "2026-10-02T22:41:04+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "start", "note": "scheduled run"}
