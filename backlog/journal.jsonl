@@ -416,3 +416,4 @@
 {"at": "2026-10-05T00:21:02+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
 {"at": "2026-10-05T00:21:10+00:00", "event": "heartbeat", "agent": "executor", "phase": "end", "note": ""}
 {"at": "2026-10-05T05:20:54+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
+{"at": "2026-10-05T05:21:03+00:00", "event": "heartbeat", "agent": "executor", "phase": "end", "note": "queue empty"}
