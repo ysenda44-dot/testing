@@ -436,3 +436,4 @@
 {"at": "2026-10-06T22:11:38+00:00", "event": "harvest", "added": 0, "sources": ["inbox", "github", "conversation"], "unreachable_sources": ["gmail", "calendar", "notion", "drive"], "note": "INBOX.md empty. GitHub MCP reachable: PR#1 stalled since 2026-07-27 already tracked (wl_28fc23a9); PR#2 own infra PR; no open issues; no orphan branches. Session logs hold only this run."}
 {"at": "2026-10-06T22:11:38+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": "added 0"}
 {"at": "2026-10-06T22:40:41+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "start", "note": "scheduled run"}
+{"at": "2026-10-06T22:41:07+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "end", "note": "inbox empty; 5 blocked on human, no changes"}
