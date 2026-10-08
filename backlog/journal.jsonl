@@ -457,3 +457,5 @@
 {"at": "2026-10-08T14:34:17+00:00", "event": "distill", "rules_added": 0, "rules_removed": 0, "skills": [], "pr": null, "note": "quiet day; only own session log visible (no user turns), journal shows empty queues and blocked items"}
 {"at": "2026-10-08T14:34:17+00:00", "event": "heartbeat", "agent": "distiller", "phase": "end", "note": "quiet day, no changes"}
 {"at": "2026-10-08T22:11:52+00:00", "event": "heartbeat", "agent": "harvester", "phase": "start", "note": "scheduled run"}
+{"at": "2026-10-08T22:12:09+00:00", "event": "harvest", "added": 0, "sources": ["inbox", "github", "git-log", "session-logs"]}
+{"at": "2026-10-08T22:12:09+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": "nothing new"}
