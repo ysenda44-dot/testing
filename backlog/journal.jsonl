@@ -469,3 +469,5 @@
 {"at": "2026-10-09T14:34:38+00:00", "event": "distill", "rules_added": 0, "rules_removed": 0, "skills": [], "pr": null, "note": "quiet day; only own session log visible (no user turns), journal shows empty queues and blocked items"}
 {"at": "2026-10-09T14:34:38+00:00", "event": "heartbeat", "agent": "distiller", "phase": "end", "note": "quiet day, no AGENTS.md changes"}
 {"at": "2026-10-09T22:11:23+00:00", "event": "heartbeat", "agent": "harvester", "phase": "start", "note": "scheduled run"}
+{"at": "2026-10-09T22:11:39+00:00", "event": "harvest", "added": 0, "sources": ["inbox", "github", "git-log", "session-logs"], "unreachable_sources": ["gmail", "calendar", "notion", "drive"], "note": "INBOX empty; PR#1 already tracked (wl_28fc23a9); PR#2 own; no issues; no orphan branches."}
+{"at": "2026-10-09T22:11:39+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": "nothing new"}
