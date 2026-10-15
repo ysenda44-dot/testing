@@ -544,3 +544,4 @@
 {"at": "2026-10-15T22:11:45+00:00", "event": "harvest", "added": 0, "sources": ["inbox", "github", "git-log", "session-logs"], "unreachable_sources": ["gmail", "calendar", "notion", "drive"], "note": "INBOX empty; PR#1 stale but tracked (wl_28fc23a9); PR#2 own; PR#3 draft updated 10-14; no issues; sharp-brahmagupta branch not ahead of main; session log is this run only."}
 {"at": "2026-10-15T22:11:45+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": ""}
 {"at": "2026-10-15T22:40:41+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "start", "note": "scheduled run"}
+{"at": "2026-10-15T22:41:01+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "end", "note": "no inbox; 5 blocked, blockers unchanged"}
