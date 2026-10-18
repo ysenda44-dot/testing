@@ -580,3 +580,4 @@
 {"at": "2026-10-18T22:11:44+00:00", "event": "harvest", "added": 0, "sources": ["inbox", "github", "git-log", "session-logs"], "unreachable_sources": ["gmail", "calendar", "notion", "drive"], "note": "INBOX empty; PR#1 stale but tracked (wl_28fc23a9); PR#3 updated 10-14 (4d, not stale); PR#2 own; no open issues; no unPR'd branches ahead of main; session log is this run only."}
 {"at": "2026-10-18T22:11:44+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": "added 0"}
 {"at": "2026-10-18T22:41:10+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "start", "note": "scheduled run"}
+{"at": "2026-10-18T22:41:25+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "end", "note": "inbox empty, all 5 active blocked on human; no metadata changes"}
