@@ -593,3 +593,4 @@
 {"at": "2026-10-19T22:11:43+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": "0 added"}
 {"at": "2026-10-19T22:40:34+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "start", "note": "scheduled run"}
 {"at": "2026-10-19T22:40:49+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "end", "note": "inbox empty, 5 blocked on humans, no changes"}
+{"at": "2026-10-20T00:21:08+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
