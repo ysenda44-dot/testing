@@ -601,3 +601,5 @@
 {"at": "2026-10-20T14:34:41+00:00", "event": "distill", "rules_added": 0, "rules_removed": 0, "skills": [], "pr": null, "note": "quiet day: only own log (no user turns), no new outcomes, tests+validate pass"}
 {"at": "2026-10-20T14:34:41+00:00", "event": "heartbeat", "agent": "distiller", "phase": "end", "note": "quiet day, no changes"}
 {"at": "2026-10-20T22:11:54+00:00", "event": "heartbeat", "agent": "harvester", "phase": "start", "note": "scheduled run"}
+{"at": "2026-10-20T22:12:06+00:00", "event": "harvest", "added": 0, "sources": ["inbox", "github", "git-log", "session-logs"], "unreachable_sources": ["gmail", "calendar", "notion", "drive"], "note": "INBOX empty; PR#1 stale (~85d) but tracked as wl_28fc23a9; PR#3 updated 10-14 (6d, not stale); PR#2 own; no open issues; all branches have PRs; session log is this run only."}
+{"at": "2026-10-20T22:12:06+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": "0 added"}
