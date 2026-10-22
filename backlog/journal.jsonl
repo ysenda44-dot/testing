@@ -628,3 +628,4 @@
 {"at": "2026-10-22T22:11:53+00:00", "event": "add", "id": "wl_01a677eb", "title": "PR #3（免税店コピー修正案）をレビューして ready にするか判断する", "source": "github"}
 {"at": "2026-10-22T22:11:54+00:00", "event": "harvest", "added": 1, "sources": ["inbox", "github", "git-log", "session-logs"], "unreachable_sources": ["gmail", "calendar", "notion", "drive"], "note": "INBOX empty; PR#3 stale 8d filed; PR#1 tracked as wl_28fc23a9; PR#2 own; no issues; all branches have PRs; session log is this run only."}
 {"at": "2026-10-22T22:11:54+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": ""}
+{"at": "2026-10-22T22:40:55+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "start", "note": "scheduled run"}
