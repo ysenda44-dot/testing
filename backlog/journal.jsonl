@@ -639,3 +639,5 @@
 {"at": "2026-10-23T14:34:50+00:00", "event": "distill", "rules_added": 0, "rules_removed": 0, "skills": [], "pr": null, "note": "quiet day: only own log (no user turns). Unexplained, not ruled: both executor runs 2026-10-23 ended 'empty queue' within 5s although wl_01a677eb (ready, ask) was returned by `wl next --autonomy auto/propose/ask`"}
 {"at": "2026-10-23T14:34:50+00:00", "event": "heartbeat", "agent": "distiller", "phase": "end", "note": ""}
 {"at": "2026-10-23T22:13:04+00:00", "event": "heartbeat", "agent": "harvester", "phase": "start", "note": "scheduled run"}
+{"at": "2026-10-23T22:13:18+00:00", "event": "harvest", "added": 0, "sources": ["inbox", "github", "git-log", "session-logs"], "unreachable_sources": ["gmail", "calendar", "notion", "drive"], "note": "INBOX empty; PR#3 tracked as wl_01a677eb, PR#1 as wl_28fc23a9, PR#2 own; no issues; all branches have PRs."}
+{"at": "2026-10-23T22:13:18+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": ""}
