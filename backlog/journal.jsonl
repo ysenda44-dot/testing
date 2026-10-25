@@ -656,3 +656,6 @@
 {"at": "2026-10-24T22:40:44+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "start", "note": "scheduled run"}
 {"at": "2026-10-24T22:41:05+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "end", "note": "no metadata changes; inbox empty; GitHub API 503"}
 {"at": "2026-10-25T00:21:05+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
+{"at": "2026-10-25T00:21:30+00:00", "event": "update", "id": "wl_01a677eb", "changed": {"status": ["ready", "blocked"]}, "note": "executor investigation"}
+{"at": "2026-10-25T00:21:30+00:00", "event": "outcome", "id": "wl_01a677eb", "title": "PR #3（免税店コピー修正案）をレビューして ready にするか判断する", "result": "skipped", "note": "needs a decision: investigated PR #3, options and recommendation (B) written to detail; no changes made", "ref": "https://github.com/ysenda44-dot/testing/pull/3"}
+{"at": "2026-10-25T00:21:34+00:00", "event": "heartbeat", "agent": "executor", "phase": "end", "note": ""}
