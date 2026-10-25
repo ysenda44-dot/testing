@@ -655,3 +655,4 @@
 {"at": "2026-10-24T22:11:40+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": "added 0"}
 {"at": "2026-10-24T22:40:44+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "start", "note": "scheduled run"}
 {"at": "2026-10-24T22:41:05+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "end", "note": "no metadata changes; inbox empty; GitHub API 503"}
+{"at": "2026-10-25T00:21:05+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
