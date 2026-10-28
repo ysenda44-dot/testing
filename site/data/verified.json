@@ -1,0 +1,42 @@
+{
+  "B01": {
+    "checked_at": "2026-10-28",
+    "source_url": "https://www.awwwards.com/sites/cartier-watches-wonders-2026",
+    "fields": {
+      "credits": "2023：**Immersive Garden**、60fps、Mooders。Immersive Gardenは物語のデザインとECの統合を組み合わせたと説明 ([immersive-g](https://immersive-g.com/projects/cartier-watches-and-wonders-23))<br>2024：Immersive Garden ([immersive-g](https://immersive-g.com/projects/cartier-watches-and-wonders-24))<br>2026：**Immersive Garden**（掲載クレジットを直接確認）",
+      "confidence": "A（受賞・2026年の制作クレジットを掲載ページで確認）"
+    },
+    "note": "2026年版の制作クレジットは **Immersive Garden**。初回調査の「不明」を [Awwwards掲載ページ](https://www.awwwards.com/sites/cartier-watches-wonders-2026) で補完しました。"
+  },
+  "B35": {
+    "checked_at": "2026-10-28",
+    "source_url": "https://www.dutchdigital.design/cases/aesop",
+    "fields": {
+      "credits": "**Studio Regale**（Dutch Digital Design の事例本文で確認）"
+    },
+    "note": "制作は **Studio Regale**。初回調査では紹介サイト **Dutch Digital Design** を制作会社として誤記していました。[事例本文](https://www.dutchdigital.design/cases/aesop) で訂正。実作品へのリンクは現在名前解決できません。"
+  },
+  "FJ24": {
+    "checked_at": "2026-10-28",
+    "source_url": "https://www.ginzanovo.com/",
+    "fields": {
+      "name": "東急プラザ銀座（現 GINZA NOVO）"
+    },
+    "note": "旧施設URLから案内された現行公式サイトは [GINZA NOVO](https://www.ginzanovo.com/) です。画像は現在のサイトを撮影しています。"
+  },
+  "FJ06": {
+    "checked_at": "2026-10-28",
+    "source_url": "https://prtimes.jp/main/html/rd/p/000000027.000160791.html",
+    "note": "初回の画像候補 digitalpr.jp/r/121703 は乃村工藝社の別案件の受賞記事でした。今回は [東神開発のP.受賞発表](https://prtimes.jp/main/html/rd/p/000000027.000160791.html) に差し替え、P.の画像を収録しています。公式サイト全体の制作会社は未確認です。"
+  },
+  "_studios": {
+    "Dutch Digital Design": {
+      "スタジオ": "Studio Regale",
+      "拠点": "オランダ（市は未確認）",
+      "確認できたラグジュアリー案件（カード）": "Aesopキャンドル体験（B35）。Dutch Digital Designは紹介サイト。",
+      "受賞の要点": "事例紹介ではFWA・Awwwards・Webby等と売上+400%を記載。受賞年・段位・計測条件は未確認。",
+      "撮影元のURL": "https://www.dutchdigital.design/cases/aesop（制作主体を本文で確認）",
+      "確度": "C"
+    }
+  }
+}

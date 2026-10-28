@@ -1,0 +1,1190 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>多ブランドLP リファレンス帖</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400..700&family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+/* ------------------------------------------------------------------
+   LAYOUT CONCEPT: a reference book in the manner of an auction catalogue.
+   Each entry is a "lot" (the card ID is the lot number), set in a didone
+   numeral face; the filters work as the catalogue index (sticky sidebar on
+   wide screens, sticky bar on phones); a card opens as a plate sheet.
+   ------------------------------------------------------------------ */
+:root {
+  /* colour: cool limestone paper, green-black ink, a single claret accent */
+  --paper: #ECEEEB;
+  --plate: #F7F8F6;
+  --ink: #181D1B;
+  --stone: #566260;
+  --rule: #C9CFCB;
+  --claret: #7B2A3B;
+  --on-claret: #FBF6F6;
+  --band: #E2E6E3;
+  --scrim: rgba(24, 29, 27, 0.5);
+  /* image-slot washes, one quiet tint per chapter */
+  --wash-1: #DDE4DF;
+  --wash-2: #DCE2E8;
+  --wash-3: #E4DDE1;
+  --wash-4: #E5E1D9;
+  --hatch: #D0D6D1;
+
+  /* type: display = lot numbers and figures, head = Japanese headings,
+     body = running text, util = URLs and codes */
+  --f-display: "Bodoni Moda", "Bodoni 72", Didot, "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --f-head: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+  --f-body: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", system-ui, sans-serif;
+  --f-util: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  --nav-h: 2.75rem;
+  --measure: 40rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0F1412;
+    --plate: #161C19;
+    --ink: #E8EBE7;
+    --stone: #9AA49E;
+    --rule: #2B3430;
+    --claret: #DE9AA8;
+    --on-claret: #1C0E12;
+    --band: #131A17;
+    --scrim: rgba(0, 0, 0, 0.62);
+    --wash-1: #1A2420;
+    --wash-2: #19212A;
+    --wash-3: #251D23;
+    --wash-4: #26231D;
+    --hatch: #222B27;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0F1412;
+  --plate: #161C19;
+  --ink: #E8EBE7;
+  --stone: #9AA49E;
+  --rule: #2B3430;
+  --claret: #DE9AA8;
+  --on-claret: #1C0E12;
+  --band: #131A17;
+  --scrim: rgba(0, 0, 0, 0.62);
+  --wash-1: #1A2420;
+  --wash-2: #19212A;
+  --wash-3: #251D23;
+  --wash-4: #26231D;
+  --hatch: #222B27;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px) + 0.75rem); }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+html.modal-open { overflow: hidden; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 1rem/1.85 var(--f-body);
+  line-break: strict;
+  word-break: auto-phrase;
+  text-wrap: pretty;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  z-index: 10;
+  background: var(--paper);
+}
+h1, h2, h3, h4, h5, p, ul, ol, dl, dd, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration-color: var(--rule); text-decoration-thickness: 1px; text-underline-offset: 0.22em; }
+a:hover { text-decoration-color: var(--claret); color: var(--claret); }
+:focus-visible { outline: 2px solid var(--claret); outline-offset: 2px; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.skip { position: absolute; left: 1rem; top: -4rem; z-index: 40; background: var(--ink); color: var(--paper); padding: 0.5rem 0.9rem; }
+.skip:focus { top: calc(env(safe-area-inset-top, 0px) + 0.5rem); }
+.num { font-variant-numeric: tabular-nums lining-nums; }
+
+.wrap {
+  max-width: 82rem;
+  margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* ---------- running head ---------- */
+.topnav {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 9;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+}
+.nav-in { display: flex; align-items: center; gap: 1.5rem; height: var(--nav-h); }
+.brand { font: 600 0.9375rem/1 var(--f-head); letter-spacing: 0.06em; white-space: nowrap; text-decoration: none; }
+.nav-links { display: flex; gap: 0.15rem; margin-left: auto; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.nav-links::-webkit-scrollbar { display: none; }
+.nav-links a { display: block; padding: 0.55rem 0.7rem; font-size: 0.8125rem; letter-spacing: 0.08em; white-space: nowrap; text-decoration: none; color: var(--stone); }
+.nav-links a:hover { color: var(--ink); }
+@media (max-width: 620px) { .brand { display: none; } .nav-links { margin-left: 0; } }
+
+/* ---------- masthead ---------- */
+.masthead { padding-block: clamp(2rem, 6vw, 4.25rem) clamp(2rem, 5vw, 3.25rem); }
+.mast-grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+.mast-main { display: grid; gap: 1.25rem; min-width: 0; }
+.eyebrow { font-size: 0.75rem; letter-spacing: 0.22em; font-weight: 500; color: var(--claret); }
+h1 { font: 600 clamp(2.15rem, 5.6vw, 3.9rem)/1.2 var(--f-head); letter-spacing: 0.02em; text-wrap: balance; font-feature-settings: "palt"; }
+.deck { font: 500 clamp(1.05rem, 2.1vw, 1.35rem)/1.65 var(--f-head); color: var(--stone); text-wrap: balance; }
+.lead { max-width: var(--measure); font-size: 0.96875rem; line-height: 1.95; display: grid; gap: 0.8em; }
+.mast-side { display: grid; gap: 1.5rem; min-width: 0; }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--ink); }
+.stat { display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 0.2rem; padding: 0.85rem 0.6rem 0.85rem 0; border-bottom: 1px solid var(--rule); min-width: 0; }
+.stat dt { font-size: 0.75rem; letter-spacing: 0.06em; color: var(--stone); line-height: 1.5; }
+.stat dd { font: 400 clamp(2rem, 4.2vw, 2.9rem)/1 var(--f-display); font-variant-numeric: lining-nums tabular-nums; }
+.notice { display: grid; gap: 0.55rem; padding: 1rem 1.1rem; border: 1px solid var(--rule); background: var(--plate); font-size: 0.875rem; line-height: 1.85; }
+.notice h2 { font: 600 0.9375rem/1.5 var(--f-head); letter-spacing: 0.08em; }
+@media (max-width: 900px) { .mast-grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* generic disclosure */
+details > summary { cursor: pointer; list-style: none; display: flex; align-items: baseline; gap: 0.5rem; font-size: 0.8125rem; letter-spacing: 0.06em; color: var(--stone); padding-block: 0.35rem; }
+details > summary::-webkit-details-marker { display: none; }
+details > summary::before { content: "+"; font: 400 1.05rem/1 var(--f-display); width: 1rem; flex: none; color: var(--claret); }
+details[open] > summary::before { content: "\2212"; }
+details > summary:hover { color: var(--ink); }
+.intro { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-block: 0.25rem; }
+.intro[open] { padding-bottom: 1rem; }
+.prose { display: grid; gap: 0.85em; max-width: 46rem; font-size: 0.9375rem; line-height: 1.95; padding-top: 0.5rem; }
+.legend-body { display: grid; gap: 1rem; padding-top: 0.5rem; font-size: 0.8125rem; line-height: 1.8; }
+.legend-body dl { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.4rem 0.9rem; align-items: baseline; }
+.legend-body h3 { font: 600 0.875rem/1.5 var(--f-head); letter-spacing: 0.06em; }
+
+/* ---------- sections ---------- */
+.sec { padding-block: clamp(2.5rem, 6vw, 4.25rem); border-top: 1px solid var(--rule); }
+.sec-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem 1.25rem; margin-bottom: 1.5rem; }
+.sec-head h2 { font: 600 clamp(1.6rem, 3.6vw, 2.3rem)/1.3 var(--f-head); letter-spacing: 0.03em; text-wrap: balance; }
+.kicker { font-size: 0.8125rem; letter-spacing: 0.08em; color: var(--stone); }
+.sec-lead { max-width: var(--measure); font-size: 0.9375rem; line-height: 1.95; color: var(--stone); margin-bottom: 1.5rem; display: grid; gap: 0.7em; }
+
+/* lot figures, grades, ids */
+.grade { display: inline-grid; place-items: center; min-width: 1.55rem; height: 1.55rem; padding-inline: 0.3rem; font: 500 0.8125rem/1 var(--f-display); letter-spacing: 0.02em; border: 1px solid var(--ink); border-radius: 2px; flex: none; white-space: nowrap; }
+.g-A { background: var(--ink); color: var(--paper); }
+.g-B { color: var(--ink); }
+.g-C { color: var(--stone); border-color: var(--stone); }
+.g-D { color: var(--stone); border-color: var(--stone); border-style: dashed; }
+.g-none { border-color: var(--rule); color: var(--stone); }
+.idref { display: inline; padding: 0 0.32em; margin-inline: 0.04em; font: 500 0.95em/1.5 var(--f-display); letter-spacing: 0.02em; color: var(--claret); background: var(--plate); border: 1px solid var(--rule); border-radius: 2px; }
+.idref:hover { background: var(--claret); border-color: var(--claret); color: var(--on-claret); }
+.btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.8rem; border: 1px solid var(--ink); background: transparent; border-radius: 2px; font-size: 0.8125rem; letter-spacing: 0.06em; line-height: 1.4; }
+.btn:hover:not(:disabled) { background: var(--ink); color: var(--paper); }
+.btn:disabled { opacity: 0.4; cursor: default; }
+.btn-quiet { border-color: var(--rule); color: var(--stone); }
+.btn-sm { padding: 0.2rem 0.55rem; font-size: 0.75rem; border-color: var(--rule); color: var(--stone); flex: none; }
+.st { display: inline-block; padding: 0.05rem 0.45rem; font-size: 0.6875rem; letter-spacing: 0.04em; line-height: 1.6; border: 1px solid var(--stone); color: var(--stone); border-radius: 2px; white-space: nowrap; }
+.st-seen { border-style: solid; }
+.st-build, .st-src, .st-unv { border-style: dashed; border-color: var(--claret); color: var(--claret); }
+
+/* ---------- top picks ---------- */
+.picks { background: var(--band); border-block: 1px solid var(--rule); padding-block: clamp(2.25rem, 5vw, 3.5rem); }
+.pick-list { display: grid; margin-top: 0.5rem; }
+.pick { display: grid; grid-template-columns: minmax(0, 17rem) minmax(0, 1fr); gap: 0.6rem 2.5rem; padding-block: 1.1rem; border-top: 1px solid var(--rule); }
+.pick:first-child { border-top-color: var(--ink); }
+.pick-lens { font: 600 1.0625rem/1.5 var(--f-head); }
+.pick-why { margin-top: 0.3rem; font-size: 0.8125rem; line-height: 1.8; color: var(--stone); }
+.chips { display: flex; flex-wrap: wrap; gap: 0.4rem; min-width: 0; align-content: flex-start; }
+.chip { display: inline-flex; align-items: baseline; gap: 0.55rem; max-width: 100%; min-width: 0; padding: 0.3rem 0.65rem; border: 1px solid var(--rule); background: var(--plate); border-radius: 2px; font-size: 0.8125rem; line-height: 1.5; text-align: left; transition: border-color 0.15s; }
+.chip:hover { border-color: var(--claret); }
+.chip-id { font: 500 1rem/1 var(--f-display); color: var(--claret); flex: none; }
+.chip-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 15rem; }
+@media (max-width: 760px) { .pick { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- catalogue ---------- */
+.cat-layout { display: block; }
+.filters { position: sticky; top: calc(env(safe-area-inset-top, 0px) + var(--nav-h)); z-index: 8; background: var(--paper); border-bottom: 1px solid var(--rule); padding-block: 0.6rem; margin-bottom: 1.25rem; }
+.f-top { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 0.5rem; align-items: center; }
+.f-search { min-width: 0; }
+.filters .f-search label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+#q, #sq { width: 100%; min-width: 0; padding: 0.5rem 0.7rem; background: var(--plate); border: 1px solid var(--rule); border-radius: 2px; font-size: 0.9375rem; line-height: 1.4; }
+#q::placeholder, #sq::placeholder { color: var(--stone); opacity: 0.85; }
+#q:focus-visible, #sq:focus-visible { border-color: var(--claret); outline-offset: 0; }
+.f-count { font-size: 0.8125rem; color: var(--stone); white-space: nowrap; }
+.f-count-n { font: 500 1.15rem/1 var(--f-display); color: var(--ink); font-variant-numeric: lining-nums tabular-nums; }
+.f-panel { display: none; margin-top: 0.7rem; gap: 0.9rem; max-height: 55dvh; overflow-y: auto; }
+.filters.open .f-panel { display: grid; }
+.f-group { border: 0; margin: 0; padding: 0; min-width: 0; display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; }
+.f-group legend { padding: 0; font-size: 0.6875rem; letter-spacing: 0.16em; color: var(--stone); margin-bottom: 0.3rem; }
+.opt { position: relative; display: inline-flex; align-items: baseline; gap: 0.4rem; padding: 0.3rem 0.7rem; border: 1px solid var(--rule); border-radius: 2px; background: var(--plate); font-size: 0.8125rem; line-height: 1.5; cursor: pointer; }
+.opt input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.opt-mark { display: none; }
+.opt-n { font: 400 0.8125rem/1 var(--f-display); color: var(--stone); font-variant-numeric: lining-nums tabular-nums; }
+.opt:has(input:checked) { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.opt:has(input:checked) .opt-n { color: var(--paper); }
+.opt:has(input:focus-visible) { outline: 2px solid var(--claret); outline-offset: 2px; }
+.opt.zero { opacity: 0.55; }
+.f-actions { display: flex; }
+.f-toggle[aria-expanded="true"] { background: var(--ink); color: var(--paper); }
+
+@media (min-width: 1024px) {
+  .cat-layout { display: grid; grid-template-columns: 14.5rem minmax(0, 1fr); gap: 2.75rem; align-items: start; }
+  .filters { top: calc(env(safe-area-inset-top, 0px) + var(--nav-h) + 1rem); align-self: start; margin-bottom: 0; padding: 0 0.25rem 0 0; border-bottom: 0; max-height: calc(100dvh - var(--nav-h) - env(safe-area-inset-top, 0px) - 2rem); overflow-y: auto; }
+  .f-top { grid-template-columns: minmax(0, 1fr); gap: 0.6rem; }
+  .filters .f-search label { position: static; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal; display: block; font-size: 0.6875rem; letter-spacing: 0.16em; color: var(--stone); margin-bottom: 0.3rem; }
+  .filters .f-count { order: -1; padding-bottom: 0.6rem; border-bottom: 1px solid var(--ink); font-size: 0.8125rem; }
+  .filters .f-count-n { font-size: 2.4rem; margin-right: 0.15rem; }
+  .f-toggle { display: none; }
+  .f-panel { display: grid; margin-top: 1.1rem; max-height: none; overflow: visible; gap: 1.25rem; }
+  .f-group { display: grid; gap: 0; }
+  .f-group legend { margin-bottom: 0.2rem; padding-bottom: 0.35rem; border-bottom: 1px solid var(--rule); }
+  .opt { display: flex; justify-content: space-between; align-items: baseline; gap: 0.6rem; padding: 0.42rem 0.1rem; border: 0; border-bottom: 1px solid var(--rule); border-radius: 0; background: transparent; }
+  .opt-mark { display: block; width: 0.55rem; height: 0.55rem; border: 1px solid var(--stone); flex: none; align-self: center; }
+  .opt .opt-t { flex: 1; min-width: 0; }
+  .opt-radio .opt-mark { border-radius: 50%; }
+  .opt:has(input:checked) { background: transparent; color: var(--ink); font-weight: 700; }
+  .opt:has(input:checked) .opt-mark { background: var(--claret); border-color: var(--claret); }
+  .opt:has(input:checked) .opt-n { color: var(--claret); }
+  .opt:has(input:focus-visible) { outline-offset: -2px; }
+  .f-group.row { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .f-group.row .opt { border: 1px solid var(--rule); border-radius: 2px; padding: 0.3rem 0.65rem; background: var(--plate); }
+  .f-group.row .opt:has(input:checked) { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .f-group.row .opt-mark { display: none; }
+}
+
+.cat-main { min-width: 0; }
+.results { display: grid; gap: clamp(2.5rem, 5vw, 3.75rem); min-width: 0; }
+.chapter { display: grid; gap: 1.5rem; min-width: 0; }
+.ch-head { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 1.25rem; align-items: start; padding-bottom: 1rem; border-bottom: 1px solid var(--ink); }
+.ch-no { font: 400 clamp(3rem, 7vw, 4.75rem)/0.85 var(--f-display); color: var(--claret); font-variant-numeric: lining-nums; }
+.ch-title { font: 600 clamp(1.4rem, 2.8vw, 1.9rem)/1.35 var(--f-head); letter-spacing: 0.03em; }
+.ch-deck { margin-top: 0.35rem; font-size: 0.875rem; line-height: 1.8; color: var(--stone); max-width: 44rem; text-wrap: balance; }
+.ch-body { display: grid; gap: 2.25rem; min-width: 0; }
+.sub { display: grid; gap: 0.9rem; min-width: 0; }
+.sub-head { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 0.9rem; align-items: baseline; }
+.sub-no { font: 500 1.4rem/1.2 var(--f-display); letter-spacing: 0.02em; }
+.sub-title { font: 600 1.125rem/1.5 var(--f-head); letter-spacing: 0.03em; }
+.sub-deck { grid-column: 2; font-size: 0.8125rem; line-height: 1.8; color: var(--stone); max-width: 44rem; }
+.sub-meta { grid-column: 2; font-size: 0.75rem; letter-spacing: 0.06em; color: var(--stone); font-variant-numeric: lining-nums tabular-nums; }
+.sub-meta b { font: 500 0.875rem/1 var(--f-display); letter-spacing: 0.03em; color: var(--ink); font-weight: 500; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 17.5rem), 1fr)); gap: 1rem; }
+.card { position: relative; display: flex; flex-direction: column; min-width: 0; background: var(--plate); border: 1px solid var(--rule); border-radius: 2px; transition: border-color 0.15s; }
+.card:hover { border-color: var(--ink); }
+.card-body { display: flex; flex-direction: column; gap: 0.4rem; flex: 1; min-width: 0; padding: 0.8rem 0.9rem 0.9rem; }
+.lot { display: flex; align-items: baseline; gap: 0.6rem; min-width: 0; }
+.lot-id { font: 500 1.35rem/1 var(--f-display); letter-spacing: 0.01em; font-variant-numeric: lining-nums; }
+.lot-year { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.75rem; color: var(--stone); font-variant-numeric: tabular-nums; }
+.lot .grade { align-self: center; }
+.card-name { font: 600 1rem/1.5 var(--f-head); letter-spacing: 0.02em; }
+.card-open { display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; padding: 0; border: 0; background: none; text-align: left; font: inherit; letter-spacing: inherit; color: inherit; }
+.card-open::after { content: ""; position: absolute; inset: 0; }
+.card-open:focus-visible { outline: none; }
+.card-open:focus-visible::after { outline: 2px solid var(--claret); outline-offset: 2px; }
+.card-cat { font-size: 0.75rem; line-height: 1.6; color: var(--stone); display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.card-credits { font-size: 0.8125rem; line-height: 1.7; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; }
+.aw { display: flex; flex-wrap: wrap; gap: 0.3rem; min-width: 0; }
+.aw-chip { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0.05rem 0.5rem; font-size: 0.6875rem; line-height: 1.7; border: 1px solid var(--rule); border-radius: 2px; }
+.aw-more { border-style: dashed; color: var(--stone); }
+.flags { display: flex; flex-wrap: wrap; gap: 0.3rem 0.6rem; margin-top: auto; padding-top: 0.3rem; font-size: 0.6875rem; letter-spacing: 0.06em; color: var(--stone); }
+.flag { display: inline-flex; align-items: center; gap: 0.3rem; }
+.flag::before { content: ""; width: 0.3rem; height: 0.3rem; background: var(--stone); }
+.flag-pick { color: var(--claret); }
+.flag-pick::before { background: var(--claret); }
+
+/* Reference images retain their original composition. */
+.slot { position: relative; width: 100%; max-width: 100%; aspect-ratio: 16 / 10; overflow: hidden; background: var(--wash-1); border-bottom: 1px solid var(--rule); border-radius: 2px 2px 0 0; }
+.slot[data-ch="2"] { background-color: var(--wash-2); }
+.slot[data-ch="3"] { background-color: var(--wash-3); }
+.slot[data-ch="4"] { background-color: var(--wash-4); }
+.image-caption { display: flex; justify-content: space-between; gap: .5rem; padding: .45rem .8rem; font-size: .65rem; color: var(--stone); border-bottom: 1px solid var(--rule); }
+.capture-info { padding: 1rem 0; font-size: .8rem; line-height: 1.8; overflow-wrap: anywhere; }
+.capture-info p { margin: .3rem 0; }
+.capture-info a { text-decoration: underline; }
+.verification { padding: 1rem; border: 1px solid var(--rule); margin: 1rem 0; }
+.slot img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+.ph { background-image: repeating-linear-gradient(135deg, transparent 0 9px, var(--hatch) 9px 10px); }
+.ph::before { content: ""; position: absolute; inset: 0.55rem; border: 1px solid var(--rule); pointer-events: none; }
+.ph-label { position: absolute; top: 0.95rem; left: 1rem; font-size: 0.6875rem; letter-spacing: 0.16em; color: var(--claret); }
+.ph-id { position: absolute; left: 1rem; bottom: 1.75rem; font: 400 clamp(2.5rem, 6vw, 3.4rem)/1 var(--f-display); letter-spacing: -0.005em; font-variant-numeric: lining-nums; color: var(--ink); }
+.ph-host { position: absolute; left: 1rem; right: 1rem; bottom: 0.9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 0.6875rem/1.4 var(--f-util); color: var(--stone); }
+.slot-lg { border-radius: 2px; border: 1px solid var(--rule); }
+.slot-lg .ph-id { font-size: clamp(3.4rem, 10vw, 5.5rem); bottom: 2.2rem; }
+.slot-lg .ph-label { font-size: 0.75rem; top: 1.2rem; left: 1.3rem; }
+.slot-lg .ph-host { font-size: 0.75rem; left: 1.3rem; bottom: 1.2rem; }
+.slot-lg .ph-id { left: 1.3rem; }
+
+.empty { padding: 3rem 0; display: grid; gap: 1rem; justify-items: start; font-family: var(--f-head); font-size: 1.125rem; }
+
+/* ---------- studios ---------- */
+.s-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1.25rem; margin-bottom: 2rem; }
+.s-bar .f-search { flex: 1 1 18rem; max-width: 30rem; }
+.s-groups { display: grid; gap: 2.75rem; }
+.s-group { display: grid; gap: 0.5rem; min-width: 0; }
+.s-title { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 0.9rem; align-items: baseline; padding-bottom: 0.6rem; border-bottom: 1px solid var(--ink); }
+.s-title .sub-title { font-size: 1.125rem; }
+.s-count { grid-column: 2; font-size: 0.75rem; letter-spacing: 0.06em; color: var(--stone); }
+.studio { display: grid; grid-template-columns: 15rem minmax(0, 1fr); gap: 0.6rem 2.25rem; padding-block: 1rem; border-bottom: 1px solid var(--rule); }
+.st-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.15rem 0.6rem; align-content: start; align-items: start; min-width: 0; }
+.st-name { font: 600 1.0625rem/1.5 var(--f-head); letter-spacing: 0.02em; overflow-wrap: anywhere; }
+.st-base { grid-column: 1; font-size: 0.8125rem; color: var(--stone); }
+.st-head .grade { grid-column: 2; grid-row: 1; }
+.st-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.9rem 2rem; min-width: 0; }
+.st-f { min-width: 0; }
+.st-f.wide { grid-column: 1 / -1; }
+.st-f dt, .fld dt { font-size: 0.6875rem; letter-spacing: 0.14em; color: var(--stone); line-height: 1.6; margin-bottom: 0.15rem; }
+.st-f dd { font-size: 0.875rem; line-height: 1.85; overflow-wrap: anywhere; }
+.urls { display: grid; gap: 0.45rem; }
+.url-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.2rem 0.6rem; min-width: 0; }
+.url-text { min-width: 0; max-width: 100%; font: 0.75rem/1.6 var(--f-util); overflow-wrap: anywhere; word-break: break-all; }
+.url-note { flex: 1 0 100%; font-size: 0.75rem; line-height: 1.6; color: var(--stone); }
+.table-wrap { overflow-x: auto; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); max-width: 100%; }
+.tbl { width: 100%; min-width: 44rem; border-collapse: collapse; font-size: 0.875rem; line-height: 1.8; }
+.tbl th { text-align: left; font-size: 0.6875rem; letter-spacing: 0.12em; font-weight: 500; color: var(--stone); padding: 0.6rem 0.9rem 0.6rem 0; border-bottom: 1px solid var(--ink); white-space: nowrap; }
+.tbl td { vertical-align: top; padding: 0.7rem 0.9rem 0.7rem 0; border-bottom: 1px solid var(--rule); overflow-wrap: anywhere; }
+.tbl tr:last-child td { border-bottom: 0; }
+.tbl td:first-child { font: 500 1rem/1.7 var(--f-display); white-space: nowrap; font-variant-numeric: lining-nums; }
+@media (max-width: 860px) {
+  .studio { grid-template-columns: minmax(0, 1fr); gap: 0.7rem; }
+  .st-fields { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ---------- principles ---------- */
+.principles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(2rem, 5vw, 4rem); counter-reset: p; }
+.principle { display: grid; grid-template-columns: 3.4rem minmax(0, 1fr); gap: 0 0.75rem; padding-block: 1.4rem; border-top: 1px solid var(--rule); min-width: 0; }
+.principle:nth-child(-n+2) { border-top-color: var(--ink); }
+.p-no { font: 400 2.3rem/1 var(--f-display); color: var(--claret); font-variant-numeric: lining-nums tabular-nums; }
+.p-text { font-size: 0.9375rem; line-height: 2; min-width: 0; overflow-wrap: anywhere; }
+.p-text strong { font-family: var(--f-head); font-weight: 700; letter-spacing: 0.02em; }
+@media (max-width: 960px) { .principles { grid-template-columns: minmax(0, 1fr); } .principle:nth-child(2) { border-top-color: var(--rule); } }
+@media (max-width: 520px) { .principle { grid-template-columns: minmax(0, 1fr); gap: 0.4rem; } }
+
+/* ---------- checklist ---------- */
+.rt { width: 100%; border-collapse: collapse; font-size: 0.875rem; line-height: 1.9; }
+.rt th { text-align: left; font-size: 0.6875rem; letter-spacing: 0.14em; font-weight: 500; color: var(--stone); padding: 0.6rem 1.25rem 0.6rem 0; border-bottom: 1px solid var(--ink); white-space: nowrap; }
+.rt td { vertical-align: top; padding: 1rem 1.25rem 1rem 0; border-bottom: 1px solid var(--rule); overflow-wrap: anywhere; }
+.rt td:nth-child(1) { width: 28%; }
+.rt td:nth-child(2) { width: 24%; }
+@media (max-width: 860px) {
+  .rt, .rt tbody, .rt tr, .rt td { display: block; }
+  .rt thead { display: none; }
+  .rt tr { padding-block: 1rem; border-bottom: 1px solid var(--rule); display: grid; gap: 0.7rem; }
+  .rt td { padding: 0; border: 0; width: auto !important; }
+  .rt td::before { content: attr(data-label); display: block; font-size: 0.6875rem; letter-spacing: 0.14em; color: var(--stone); }
+}
+
+/* ---------- conclusion & foot ---------- */
+.conclusion { max-width: 44rem; display: grid; gap: 1.1em; font-size: 1rem; line-height: 2.05; }
+.foot { padding-block: 2rem 3rem; border-top: 1px solid var(--rule); font-size: 0.75rem; letter-spacing: 0.04em; color: var(--stone); }
+.foot .wrap { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; justify-content: space-between; }
+
+/* ---------- detail sheet ---------- */
+dialog#detail { position: fixed; inset: 0 0 0 auto; margin: 0; padding: 0; border: 0; max-width: none; max-height: none; width: min(46rem, 100%); height: 100%; height: 100dvh; background: var(--paper); color: var(--ink); overflow: hidden; }
+dialog#detail[open] { display: flex; flex-direction: column; animation: sheet-in 0.22s ease-out; }
+dialog#detail::backdrop { background: var(--scrim); }
+@keyframes sheet-in { from { transform: translateX(1.5rem); opacity: 0.4; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { dialog#detail[open] { animation: none; } .card, .chip { transition: none; } }
+@media (max-width: 700px) { dialog#detail { width: 100%; inset: 0; } }
+.dlg-head { flex: none; display: flex; align-items: center; gap: 0.5rem 0.75rem; padding: calc(0.7rem + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) 0.7rem max(16px, env(safe-area-inset-left, 0px)); background: var(--paper); border-bottom: 1px solid var(--rule); }
+.dlg-id { font: 500 1.9rem/1 var(--f-display); letter-spacing: 0.01em; font-variant-numeric: lining-nums; }
+.dlg-pos { flex: 1; min-width: 0; font-size: 0.75rem; line-height: 1.5; color: var(--stone); font-variant-numeric: tabular-nums; }
+.dlg-nav { display: flex; gap: 0.35rem; flex: none; }
+.dlg-body { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 1.25rem max(16px, env(safe-area-inset-right, 0px)) calc(2.5rem + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.dlg-main { display: grid; gap: 1.1rem; min-width: 0; }
+.dlg-name { font: 600 clamp(1.4rem, 4vw, 1.8rem)/1.45 var(--f-head); letter-spacing: 0.02em; text-wrap: balance; overflow-wrap: anywhere; }
+.dlg-meta { font-size: 0.8125rem; color: var(--stone); letter-spacing: 0.04em; line-height: 1.7; }
+.dlg-flags { display: flex; flex-wrap: wrap; gap: 0.3rem 0.8rem; }
+.dlg-flags .flag { font-size: 0.75rem; letter-spacing: 0.06em; }
+.fields { display: grid; }
+.fld { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: 0.2rem 1rem; padding-block: 0.9rem; border-top: 1px solid var(--rule); }
+.fld:first-child { border-top-color: var(--ink); }
+.fld dt { padding-top: 0.35rem; margin: 0; }
+.fld dd { font-size: 0.9375rem; line-height: 1.95; overflow-wrap: anywhere; min-width: 0; }
+.fld dd.dim { color: var(--stone); }
+.link-list { display: grid; gap: 0.3rem; }
+.link-list a { overflow-wrap: anywhere; }
+.link-host { font: 0.6875rem/1.6 var(--f-util); color: var(--stone); margin-left: 0.5rem; }
+.shots { display: grid; gap: 0.8rem; padding-top: 0.4rem; border-top: 1px solid var(--ink); }
+.shots h3 { font: 600 0.9375rem/1.6 var(--f-head); letter-spacing: 0.06em; padding-top: 0.7rem; }
+.shots-file { font: 0.75rem/1.7 var(--f-util); color: var(--stone); overflow-wrap: anywhere; }
+@media (max-width: 560px) {
+  .fld { grid-template-columns: minmax(0, 1fr); }
+  .fld dt { padding-top: 0; }
+  .dlg-id { font-size: 1.6rem; }
+  .dlg-head { flex-wrap: wrap; }
+  .dlg-id { order: 1; }
+  .dlg-nav { order: 2; margin-left: auto; }
+  .dlg-pos { order: 3; flex: 1 0 100%; }
+}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#catalog">カタログへ移動</a>
+
+<nav class="topnav" aria-label="ページ内の移動">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top">多ブランドLP リファレンス帖</a>
+    <div class="nav-links">
+      <a href="#picks">筆頭候補</a>
+      <a href="#catalog">カタログ</a>
+      <a href="#studios">スタジオ</a>
+      <a href="#principles">設計原則</a>
+      <a href="#checklist">チェックリスト</a>
+      <a href="#conclusion">結論</a>
+    </div>
+  </div>
+</nav>
+
+<header class="masthead" id="top">
+  <div class="wrap mast-grid">
+    <div class="mast-main">
+      <p class="eyebrow">ラグジュアリー多ブランドLP 設計資料</p>
+      <h1>多ブランドLP<br>リファレンス帖</h1>
+      <p class="deck" id="m-deck"></p>
+      <div class="lead" id="m-lead"></div>
+    </div>
+    <div class="mast-side">
+      <dl class="stats" id="m-stats" aria-label="収録数"></dl>
+      <div class="notice">
+        <h2>ご利用にあたって</h2>
+        <p>本文は検索結果をもとにした初回調査です。追加した画像は実ページを開いて収集し、カードごとに出典と確認日を記録しています。画像の確認は、受賞・売上・制作クレジットのすべてを検証したことを意味しません。</p>
+        <p>実サイトの画面と、受賞・制作事例・記事に掲載された画像を区別しています。現在の画面が過去の受賞当時と同じとは限りません。取得できない画像は理由を表示しています。</p>
+      </div>
+      <details class="legend">
+        <summary>記号と確度の読み方</summary>
+        <div class="legend-body">
+          <div>
+            <h3>確度</h3>
+            <dl>
+              <dt><span class="grade g-A">A</span></dt><dd>受賞ページ、主催者の発表、企業のIR・公式リリースなど一次情報が検索結果で確認できる</dd>
+              <dt><span class="grade g-B">B</span></dt><dd>信頼できる業界紙・報道にもとづく</dd>
+              <dt><span class="grade g-C">C</span></dt><dd>主な根拠が自己申告（制作会社の事例ページ、ベンダーのケーススタディ、応募書類、スポンサー記事）</dd>
+              <dt><span class="grade g-D">D</span></dt><dd>未検証、帰属が不確か、出典どうしの食い違い、検索要約からの記事の比定</dd>
+            </dl>
+          </div>
+          <div>
+            <h3>初回調査のURL状態</h3>
+            <dl>
+              <dt><span class="st st-seen">seen</span></dt><dd>検索結果にそのURLが出たと記録されたもの。初回調査時はページ未確認</dd>
+              <dt><span class="st st-build">要確認：構築</span></dt><dd>URLの形から組み立てたもの。実在を確かめる必要がある</dd>
+              <dt><span class="st st-src">出典URL・要確認</span></dt><dd>出典として検索結果に出たURLを、撮影元の候補として転記したもの</dd>
+              <dt><span class="st st-unv">URL未検証</span></dt><dd>公式URLが検索結果に出ておらず、事前知識によるもの</dd>
+            </dl>
+          </div>
+          <p>〔PK〕は事前知識、〔INF〕は推論、〔比定〕は検索要約から記事を推定したもの、〔自己申告〕は制作会社や運営会社の発表です。いずれも裏付けは取れていません。</p>
+          <div class="prose" id="m-premise"></div>
+        </div>
+      </details>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="picks" id="picks" aria-labelledby="picks-h">
+    <div class="wrap">
+      <div class="sec-head"><h2 id="picks-h">筆頭候補</h2><p class="kicker" id="picks-k"></p></div>
+      <p class="sec-lead" id="picks-lead"></p>
+      <ul class="pick-list" id="pick-list"></ul>
+    </div>
+  </section>
+
+  <section class="sec" id="catalog" aria-labelledby="cat-h">
+    <div class="wrap">
+      <div class="sec-head"><h2 id="cat-h">リファレンス一覧</h2><p class="kicker" id="cat-k"></p></div>
+      <div class="cat-layout">
+        <aside class="filters" id="filters" aria-label="絞り込み">
+          <div class="f-top">
+            <div class="f-search">
+              <label for="q">キーワード</label>
+              <input id="q" type="search" placeholder="名称・クライアント・受賞など" autocomplete="off" spellcheck="false">
+            </div>
+            <p class="f-count" id="count" role="status" aria-live="polite"><span class="f-count-n" id="count-n">0</span><span id="count-of"> / 0 件</span></p>
+            <button type="button" class="btn f-toggle" id="f-toggle" aria-expanded="false" aria-controls="f-panel">絞り込み</button>
+          </div>
+          <div class="f-panel" id="f-panel">
+            <fieldset class="f-group">
+              <legend>章</legend>
+              <label class="opt opt-radio"><input type="radio" name="ch" id="ch-all" value="" checked><span class="opt-mark"></span><span class="opt-t">すべて</span><span class="opt-n" data-n="ch:">0</span></label>
+              <label class="opt opt-radio"><input type="radio" name="ch" id="ch-1" value="1"><span class="opt-mark"></span><span class="opt-t">ブランドWeb</span><span class="opt-n" data-n="ch:1">0</span></label>
+              <label class="opt opt-radio"><input type="radio" name="ch" id="ch-2" value="2"><span class="opt-mark"></span><span class="opt-t">マルチブランド</span><span class="opt-n" data-n="ch:2">0</span></label>
+              <label class="opt opt-radio"><input type="radio" name="ch" id="ch-3" value="3"><span class="opt-mark"></span><span class="opt-t">商業施設・百貨店</span><span class="opt-n" data-n="ch:3">0</span></label>
+              <label class="opt opt-radio"><input type="radio" name="ch" id="ch-4" value="4"><span class="opt-mark"></span><span class="opt-t">雑誌・エディトリアル</span><span class="opt-n" data-n="ch:4">0</span></label>
+            </fieldset>
+            <fieldset class="f-group">
+              <legend>地域</legend>
+              <label class="opt opt-radio"><input type="radio" name="rg" id="rg-all" value="" checked><span class="opt-mark"></span><span class="opt-t">すべて</span><span class="opt-n" data-n="rg:">0</span></label>
+              <label class="opt opt-radio"><input type="radio" name="rg" id="rg-global" value="global"><span class="opt-mark"></span><span class="opt-t">海外</span><span class="opt-n" data-n="rg:global">0</span></label>
+              <label class="opt opt-radio"><input type="radio" name="rg" id="rg-japan" value="japan"><span class="opt-mark"></span><span class="opt-t">国内</span><span class="opt-n" data-n="rg:japan">0</span></label>
+            </fieldset>
+            <fieldset class="f-group">
+              <legend>条件</legend>
+              <label class="opt"><input type="checkbox" id="t-image"><span class="opt-mark"></span><span class="opt-t">画像あり</span><span class="opt-n" data-n="t:image">0</span></label>
+              <label class="opt"><input type="checkbox" id="t-award"><span class="opt-mark"></span><span class="opt-t">受賞あり</span><span class="opt-n" data-n="t:award">0</span></label>
+              <label class="opt"><input type="checkbox" id="t-results"><span class="opt-mark"></span><span class="opt-t">数値の成果あり</span><span class="opt-n" data-n="t:results">0</span></label>
+              <label class="opt"><input type="checkbox" id="t-pick"><span class="opt-mark"></span><span class="opt-t">筆頭候補のみ</span><span class="opt-n" data-n="t:pick">0</span></label>
+            </fieldset>
+            <fieldset class="f-group row">
+              <legend>確度（複数選択）</legend>
+              <label class="opt"><input type="checkbox" id="g-A" value="A"><span class="opt-mark"></span><span class="opt-t">A</span><span class="opt-n" data-n="g:A">0</span></label>
+              <label class="opt"><input type="checkbox" id="g-B" value="B"><span class="opt-mark"></span><span class="opt-t">B</span><span class="opt-n" data-n="g:B">0</span></label>
+              <label class="opt"><input type="checkbox" id="g-C" value="C"><span class="opt-mark"></span><span class="opt-t">C</span><span class="opt-n" data-n="g:C">0</span></label>
+              <label class="opt"><input type="checkbox" id="g-D" value="D"><span class="opt-mark"></span><span class="opt-t">D</span><span class="opt-n" data-n="g:D">0</span></label>
+            </fieldset>
+            <div class="f-actions"><button type="button" class="btn btn-quiet" id="f-reset">条件をリセット</button></div>
+          </div>
+        </aside>
+        <div class="cat-main">
+          <div class="results" id="results"></div>
+          <div class="empty" id="empty" hidden>
+            <p>条件に合うリファレンスがありません。</p>
+            <button type="button" class="btn" id="empty-reset">条件をリセット</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="studios" aria-labelledby="st-h">
+    <div class="wrap">
+      <div class="sec-head"><h2 id="st-h">スタジオ</h2><p class="kicker" id="st-k"></p></div>
+      <div class="sec-lead" id="st-lead"></div>
+      <div class="s-bar">
+        <div class="f-search">
+          <label class="sr-only" for="sq">スタジオを検索</label>
+          <input id="sq" type="search" placeholder="スタジオ名、拠点、案件、受賞で検索" autocomplete="off" spellcheck="false">
+        </div>
+        <p class="f-count" id="s-count" role="status" aria-live="polite"></p>
+      </div>
+      <div class="s-groups" id="s-groups"></div>
+      <p class="empty" id="s-empty" hidden>条件に合うスタジオがありません。</p>
+    </div>
+  </section>
+
+  <section class="sec" id="principles" aria-labelledby="pr-h">
+    <div class="wrap">
+      <div class="sec-head"><h2 id="pr-h">10の設計原則</h2><p class="kicker">多ブランドを1ページで見せるために</p></div>
+      <div class="sec-lead" id="pr-lead"></div>
+      <ol class="principles" id="pr-list"></ol>
+    </div>
+  </section>
+
+  <section class="sec" id="checklist" aria-labelledby="ck-h">
+    <div class="wrap">
+      <div class="sec-head"><h2 id="ck-h">未検証チェックリスト</h2><p class="kicker">デザインに入る前に、開いて確かめること</p></div>
+      <table class="rt" id="ck-table">
+        <thead><tr><th>項目</th><th>現状</th><th>確認方法</th></tr></thead>
+        <tbody id="ck-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sec" id="conclusion" aria-labelledby="co-h">
+    <div class="wrap">
+      <div class="sec-head"><h2 id="co-h">結論</h2></div>
+      <div class="conclusion" id="co-body"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>本文は初回調査、画像と追記は実ページの確認に基づきます。画像の権利は各サイト・権利者に帰属します。社内の比較検討資料として参照してください。</p>
+    <a href="#top">ページの先頭へ</a>
+  </div>
+</footer>
+
+<dialog id="detail" aria-labelledby="dlg-name">
+  <div class="dlg-head">
+    <span class="dlg-id num" id="dlg-id"></span>
+    <p class="dlg-pos" id="dlg-pos"></p>
+    <div class="dlg-nav">
+      <button type="button" class="btn" id="dlg-prev" aria-label="前のリファレンス">← 前へ</button>
+      <button type="button" class="btn" id="dlg-next" aria-label="次のリファレンス">次へ →</button>
+      <button type="button" class="btn" id="dlg-close">閉じる</button>
+    </div>
+  </div>
+  <div class="dlg-body" id="dlg-body">
+    <div class="dlg-main" id="dlg-main"></div>
+  </div>
+</dialog>
+<p class="sr-only" id="sr-status" role="status" aria-live="polite"></p>
+
+<script id="ref-data" type="application/json">__DATA__</script>
+<script>
+(function () {
+  'use strict';
+
+  var DATA = JSON.parse(document.getElementById('ref-data').textContent);
+  var CARDS = DATA.cards || [];
+  var BY_ID = new Map(CARDS.map(function (c) { return [c.id, c]; }));
+
+  function $(s, r) { return (r || document).querySelector(s); }
+  function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function norm(s) { return String(s || '').normalize('NFKC').toLowerCase(); }
+
+  /* ---------- tiny safe markdown: escape, then **bold**, links, <br>, card ids ---------- */
+  var ID_RE = /(^|[^A-Za-z0-9])([A-Z]{1,2}\d{2})(?![A-Za-z0-9])/g;
+  function linkIds(html) {
+    return html.replace(ID_RE, function (m, pre, id) {
+      var c = BY_ID.get(id);
+      if (!c) return m;
+      return pre + '<button type="button" class="idref" data-open="' + id + '" title="' + esc(c.name) + '">' + id + '</button>';
+    });
+  }
+  function md(src) {
+    if (src == null || src === '') return '';
+    var s = esc(src), stash = [];
+    s = s.replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, function (m, label, url) {
+      stash.push('<a href="' + url + '" target="_blank" rel="noopener">' + label + '</a>');
+      return '\u0000' + (stash.length - 1) + '\u0001';
+    });
+    s = s.replace(/\*\*([^*]+?)\*\*/g, '<strong>$1</strong>');
+    s = s.replace(/&lt;br\s*\/?&gt;/gi, '<br>');
+    s = linkIds(s);
+    return s.replace(/\u0000(\d+)\u0001/g, function (m, i) { return stash[+i]; });
+  }
+  function mdBlock(src) {
+    return String(src || '').split(/\n{2,}/).map(function (p) { return p.trim(); }).filter(Boolean)
+      .map(function (p) { return '<p>' + md(p.replace(/\n/g, ' ')) + '</p>'; }).join('');
+  }
+  function plain(src) {
+    return String(src == null ? '' : src)
+      .replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, '$1')
+      .replace(/\*\*/g, '')
+      .replace(/<br\s*\/?>/gi, ' ／ ')
+      .replace(/\s+/g, ' ').trim();
+  }
+  function host(u) { try { return new URL(u).hostname.replace(/^www\./, ''); } catch (e) { return ''; } }
+  function isHttp(u) { return /^https?:\/\//i.test(u || ''); }
+
+  /* ---------- parsing headings ---------- */
+  function parseGroup(g) {
+    var m = String(g || '').match(/^(\d+)\.\s*([^：]+)(?:：(.*))?$/);
+    return m ? { n: +m[1], title: m[2].trim(), deck: (m[3] || '').trim() } : { n: 0, title: g || '', deck: '' };
+  }
+  function parseSub(h) {
+    var m = String(h || '').match(/^(\d+[A-Z])\.\s*([^：]+)(?:：(.*))?$/);
+    return m ? { code: m[1], title: m[2].trim(), deck: (m[3] || '').trim() } : { code: '', title: h || '', deck: '' };
+  }
+
+  /* ---------- prepare cards ---------- */
+  var NEG = /^(なし|不明|非公開|記載なし|未取得|確認できない|該当なし|サイトの受賞はなし|.{0,30}見つからない)/;
+  CARDS.forEach(function (c) {
+    c._ch = parseGroup(c.group).n;
+    c._award = !!c.has_award && !NEG.test(plain(c.awards));
+    c._results = !!c.has_results;
+    c._pick = !!(c.picks && c.picks.length);
+    c._host = host(c.shot_url || '');
+    c._img = c.image && !/^(https?:)?\/\//i.test(c.image) ? c.image : '';
+    c._search = norm([c.id, c.name, c.client, c.credits, c.awards, c.category].map(plain).join(' '));
+  });
+
+  var GRADE_TIP = {
+    A: '一次情報（受賞ページ、主催者の発表、IR・公式リリース）が検索結果で確認できる',
+    B: '信頼できる業界紙・報道にもとづく',
+    C: '主な根拠が自己申告（制作会社の事例、ベンダーの事例、応募書類、スポンサー記事）',
+    D: '未検証、帰属が不確か、出典どうしの食い違い、検索要約からの記事の比定'
+  };
+  function gradeBadge(g, label) {
+    var k = /^[A-D]/.test(g || '') ? g.charAt(0) : 'none';
+    var tip = GRADE_TIP[k] ? '確度' + k + '：' + GRADE_TIP[k] : '確度の記載なし';
+    return '<span class="grade g-' + k + '" title="' + esc(tip) + '">' + esc(label || (k === 'none' ? '—' : g)) + '</span>';
+  }
+
+  var STAT = {
+    seen: ['seen', '検索結果にそのURLが出たと記録されたもの。初回調査時はページ未確認ため、開いて確認する'],
+    build: ['要確認：構築', 'URLの形から組み立てたもの。開いて実在を確かめる'],
+    src: ['出典URL・要確認', '出典として検索結果に出たURLを撮影元の候補として転記したもの。開いて確認する'],
+    unv: ['URL未検証', '公式URLが検索結果に出ておらず、事前知識によるもの。開いて確認する']
+  };
+  function statusInfo(s) {
+    var t = String(s || '').trim(), k = 'none';
+    if (/^seen/.test(t)) k = 'seen';
+    else if (/^要確認：構築/.test(t)) k = 'build';
+    else if (/^出典URL・要確認/.test(t)) k = 'src';
+    else if (/^URL未検証/.test(t)) k = 'unv';
+    var note = t.replace(/^(seen|要確認：構築|出典URL・要確認|URL未検証)[。：]?/, '');
+    return { k: k, label: STAT[k] ? STAT[k][0] : (t || '状態不明'), tip: STAT[k] ? STAT[k][1] : '状態の記載なし。開いて確認する', note: STAT[k] ? note : '' };
+  }
+  function urlRow(u, status) {
+    if (!isHttp(u)) return '';
+    var si = (status !== undefined && status !== null) ? statusInfo(status) : null;
+    return '<li class="url-row">' +
+      (si ? '<span class="st st-' + si.k + '" title="' + esc(si.tip) + '">' + esc(si.label) + '</span>' : '') +
+      '<a class="url-text" href="' + esc(u) + '" target="_blank" rel="noopener">' + esc(u) + '</a>' +
+      '<button type="button" class="btn btn-sm" data-copy="' + esc(u) + '">コピー</button>' +
+      (si && si.note ? '<span class="url-note">' + esc(si.note) + '</span>' : '') +
+      '</li>';
+  }
+  function parseUrls(s) {
+    var out = [], re = /(https?:\/\/[^\s（）()<>]+?)\s*(?:（([^）]*)）)?(?=$|\s|<|、|，|；|;)/g, m, str = String(s || '').replace(/<br\s*\/?>/gi, ' ');
+    while ((m = re.exec(str))) { out.push({ url: m[1].replace(/[.,。、]+$/, ''), status: m[2] || '' }); }
+    return out;
+  }
+
+  /* ---------- slots ---------- */
+  function slotInner(c, big) {
+    if (c._img) return '<img src="' + esc(c._img) + '" alt="' + esc(c.name) + '" loading="lazy" decoding="async" data-cid="' + c.id + '">';
+    return '<span class="ph-label">' + (c.capture && c.capture.status === 'unavailable' ? '取得できませんでした' : '画像未設定') + '</span><span class="ph-id">' + esc(c.id) + '</span><span class="ph-host">' + esc(c._host || 'URLなし') + '</span>';
+  }
+  function captureLabel(c) {
+    return c.capture && c.capture.kind === 'site' ? '実サイト画面' : c.capture && c.capture.kind === 'case_page' ? '制作事例画面' : '掲載画像';
+  }
+  function captureHTML(c) {
+    var x = c.capture || {};
+    if (!c._img) return '<div class="capture-info"><p>' + esc(x.note || '適切な画像を未取得です。出典リンクから確認できます。') + '</p></div>';
+    return '<div class="capture-info"><p><strong>' + captureLabel(c) + '</strong> · 確認日 ' + esc((x.captured_at || '').slice(0, 10)) + '</p>' +
+      (isHttp(x.source_url) ? '<p>出典：<a href="' + esc(x.source_url) + '" target="_blank" rel="noopener">' + esc(x.title || host(x.source_url)) + '</a></p>' : '') +
+      (x.note ? '<p>' + esc(x.note) + '</p>' : '') + '<p><a href="' + esc(c._img) + '" target="_blank" rel="noopener">画像を原寸で開く</a></p></div>';
+  }
+  function slotHTML(c, big) {
+    var ph = c._img ? '' : ' ph';
+    return '<div class="slot' + ph + (big ? ' slot-lg' : '') + '" data-ch="' + c._ch + '" data-cid="' + c.id + '"' +
+      (c._img ? '' : ' role="img" aria-label="' + esc(c.id) + '：画像未設定') + (c._img ? '' : '"') + '>' + slotInner(c, big) + '</div>';
+  }
+  document.addEventListener('error', function (e) {
+    var t = e.target;
+    if (!t || t.tagName !== 'IMG' || !t.closest('.slot')) return;
+    var slot = t.closest('.slot'), c = BY_ID.get(slot.getAttribute('data-cid'));
+    if (!c) return;
+    c._img = '';
+    slot.classList.add('ph');
+    slot.setAttribute('role', 'img');
+    slot.setAttribute('aria-label', c.id + '：画像未設定');
+    slot.innerHTML = slotInner(c);
+  }, true);
+
+  /* ---------- awards (short chips) ---------- */
+  function awardChips(c) {
+    if (!c._award) return [];
+    var out = [];
+    String(c.awards).split(/<br\s*\/?>/i).map(plain).forEach(function (line) {
+      line = line.split('。')[0].replace(/\s*[（(].*$/, '').trim();
+      if (!line) return;
+      var segs = line.split('、');
+      (segs.length >= 3 ? segs : [line]).forEach(function (s) { s = s.trim(); if (s) out.push(s); });
+    });
+    return out;
+  }
+
+  /* ---------- card ---------- */
+  function flagsHTML(c, forDetail) {
+    var f = [];
+    if (c._award) f.push('<span class="flag">受賞</span>');
+    if (c._results) f.push('<span class="flag">成果</span>');
+    if (c.self_reported) f.push('<span class="flag">自己申告</span>');
+    if (c._pick) {
+      var lens = forDetail ? c.picks.join('、') : c.picks[0] + (c.picks.length > 1 ? ' ほか' + (c.picks.length - 1) : '');
+      f.push('<span class="flag flag-pick" title="' + esc('筆頭候補：' + c.picks.join('、')) + '">筆頭候補 ' + esc(lens) + '</span>');
+    }
+    return f.join('');
+  }
+  function cardHTML(c) {
+    var chips = awardChips(c), awHTML = '';
+    if (chips.length) {
+      awHTML = '<div class="aw">' + chips.slice(0, 2).map(function (s) { return '<span class="aw-chip" title="' + esc(s) + '">' + esc(s) + '</span>'; }).join('') +
+        (chips.length > 2 ? '<span class="aw-chip aw-more">+' + (chips.length - 2) + '</span>' : '') + '</div>';
+    }
+    var credits = plain(c.credits), flags = flagsHTML(c, false);
+    return '<article class="card" data-id="' + c.id + '">' +
+      slotHTML(c, false) +
+      (c._img ? '<div class="image-caption"><span>' + captureLabel(c) + '</span><span>' + esc((c.capture.captured_at || '').slice(0, 10)) + '</span></div>' : '') +
+      '<div class="card-body">' +
+      '<div class="lot"><span class="lot-id">' + esc(c.id) + '</span><span class="lot-year">' + esc(plain(c.year)) + '</span>' + (c.grade ? gradeBadge(c.grade) : '') + '</div>' +
+      '<h5 class="card-name"><button type="button" class="card-open" data-open="' + c.id + '">' + esc(c.name) + '</button></h5>' +
+      '<p class="card-cat">' + esc(plain(c.category)) + '</p>' +
+      (credits ? '<p class="card-credits">' + esc(credits) + '</p>' : '') +
+      awHTML +
+      (flags ? '<div class="flags">' + flags + '</div>' : '') +
+      '</div></article>';
+  }
+
+  /* ---------- masthead ---------- */
+  function renderMasthead() {
+    $('#m-deck').textContent = DATA.title || '';
+    $('#m-lead').innerHTML = mdBlock(DATA.summary);
+    var studioRows = (DATA.studios || []).length;
+    var stats = [
+      [CARDS.length, 'リファレンス'],
+      [CARDS.filter(function(c) { return !!c._img; }).length, '画像収録'],
+      [studioRows, 'スタジオ・年間賞'],
+      [(DATA.principles || []).length, '設計原則'],
+      [CARDS.filter(function (c) { return c._award; }).length, '受賞あり'],
+      [CARDS.filter(function (c) { return c._results; }).length, '数値の成果あり'],
+      [CARDS.filter(function (c) { return c._pick; }).length, '筆頭候補']
+    ];
+    $('#m-stats').innerHTML = stats.map(function (s) { return '<div class="stat"><dt>' + s[1] + '</dt><dd>' + s[0] + '</dd></div>'; }).join('');
+    var first = (DATA.sections || [])[0];
+    if (first && first.intro) $('#m-premise').innerHTML = mdBlock(first.intro);
+  }
+
+  /* ---------- top picks ---------- */
+  function shortName(n) { return String(n).replace(/[（(][^）)]*[）)]\s*$/, '').trim(); }
+  function renderPicks() {
+    var secs = DATA.sections || [];
+    var s = secs.filter(function (x) { return x.level === 2 && /筆頭候補/.test(x.heading); })[0];
+    $('#picks-lead').innerHTML = s ? md(s.intro) : '';
+    $('#picks-k').textContent = (DATA.top_picks || []).length + '観点';
+    $('#pick-list').innerHTML = (DATA.top_picks || []).map(function (p) {
+      var chips = (p.ids || []).map(function (id) {
+        var c = BY_ID.get(id); if (!c) return '';
+        return '<button type="button" class="chip" data-open="' + id + '" title="' + esc(c.name) + '"><span class="chip-id">' + id + '</span><span class="chip-name">' + esc(shortName(c.name)) + '</span></button>';
+      }).join('');
+      return '<li class="pick"><div><h3 class="pick-lens">' + esc(p['観点']) + '</h3><p class="pick-why">' + md(p['根拠の要点']) + '</p></div><div class="chips">' + chips + '</div></li>';
+    }).join('');
+  }
+
+  /* ---------- catalogue ---------- */
+  function introBlock(intro, label) {
+    if (!intro || !String(intro).trim()) return '';
+    return '<details class="intro"><summary>' + esc(label) + '</summary><div class="prose">' + mdBlock(intro) + '</div></details>';
+  }
+  function renderCatalog() {
+    var secs = DATA.sections || [], introOf = {};
+    secs.forEach(function (s) { introOf[s.heading] = s.intro || ''; });
+    var chapters = [], chMap = {};
+    CARDS.forEach(function (c) {
+      var ch = chMap[c.group];
+      if (!ch) { ch = chMap[c.group] = { group: c.group, info: parseGroup(c.group), subs: [], subMap: {}, notes: [] }; chapters.push(ch); }
+      var sg = ch.subMap[c.subgroup];
+      if (!sg) { sg = ch.subMap[c.subgroup] = { heading: c.subgroup, info: parseSub(c.subgroup), cards: [] }; ch.subs.push(sg); }
+      sg.cards.push(c);
+    });
+    /* sections that have prose but no cards (e.g. 3C, 対象外) become notes of their chapter */
+    var cur = null;
+    secs.forEach(function (s) {
+      if (s.level === 2) { cur = chMap[s.heading] || null; return; }
+      if (s.level === 3 && cur && !cur.subMap[s.heading] && s.intro) cur.notes.push(s);
+    });
+    var html = chapters.map(function (ch) {
+      var subs = ch.subs.map(function (sg) {
+        var ids = sg.cards.map(function (c) { return c.id; });
+        return '<section class="sub" data-sub="' + esc(sg.info.code) + '">' +
+          '<header class="sub-head"><span class="sub-no">' + esc(sg.info.code) + '</span><h4 class="sub-title">' + esc(sg.info.title) + '</h4>' +
+          (sg.info.deck ? '<p class="sub-deck">' + md(sg.info.deck) + '</p>' : '') +
+          '<p class="sub-meta"><b>' + ids[0] + ' – ' + ids[ids.length - 1] + '</b>　<span class="sub-n" data-total="' + ids.length + '">' + ids.length + '件</span></p></header>' +
+          introBlock(introOf[sg.heading], 'この区分の解説') +
+          '<div class="grid">' + sg.cards.map(cardHTML).join('') + '</div></section>';
+      }).join('');
+      var notes = ch.notes.map(function (s) {
+        var p = parseSub(s.heading);
+        return introBlock(s.intro, '補足　' + (p.code ? p.code + ' ' : '') + p.title);
+      }).join('');
+      return '<section class="chapter" id="chapter-' + ch.info.n + '" data-ch="' + ch.info.n + '">' +
+        '<header class="ch-head"><span class="ch-no" aria-hidden="true">' + ch.info.n + '</span><div><h3 class="ch-title">' + esc(ch.info.title) + '</h3>' +
+        (ch.info.deck ? '<p class="ch-deck">' + md(ch.info.deck) + '</p>' : '') + '</div></header>' +
+        '<div class="ch-body">' + introBlock(introOf[ch.group], 'この章の概要') + subs + notes + '</div></section>';
+    }).join('');
+    $('#results').innerHTML = html;
+    $('#cat-k').textContent = chapters.length + '章　' + CARDS.length + '件';
+  }
+
+  /* ---------- filtering ---------- */
+  var state = { q: '', ch: '', rg: '', award: false, results: false, pick: false, image: false, grades: [] };
+  var visible = [], visibleSet = new Set();
+  var cardEls = {};
+  function terms() { return norm(state.q).split(/\s+/).filter(Boolean); }
+  function matches(c, T, skip) {
+    if (skip !== 'ch' && state.ch && String(c._ch) !== state.ch) return false;
+    if (skip !== 'rg' && state.rg && c.region !== state.rg) return false;
+    if (skip !== 'image' && state.image && !c._img) return false;
+    if (skip !== 'award' && state.award && !c._award) return false;
+    if (skip !== 'results' && state.results && !c._results) return false;
+    if (skip !== 'pick' && state.pick && !c._pick) return false;
+    if (skip !== 'g' && state.grades.length && state.grades.indexOf(c.grade) < 0) return false;
+    for (var i = 0; i < T.length; i++) if (c._search.indexOf(T[i]) < 0) return false;
+    return true;
+  }
+  function applyFilters() {
+    var T = terms();
+    visible = [];
+    CARDS.forEach(function (c) {
+      var el = cardEls[c.id], ok = matches(c, T, null);
+      if (el.hidden === ok) el.hidden = !ok;
+      if (ok) visible.push(c.id);
+    });
+    visibleSet = new Set(visible);
+    $$('.sub').forEach(function (sub) {
+      var n = $$('.card:not([hidden])', sub).length, total = +$('.sub-n', sub).dataset.total;
+      sub.hidden = n === 0;
+      $('.sub-n', sub).textContent = n === total ? total + '件' : n + ' / ' + total + '件';
+    });
+    $$('.chapter').forEach(function (ch) { ch.hidden = $$('.card:not([hidden])', ch).length === 0; });
+    $('#count-n').textContent = visible.length;
+    $('#count-of').textContent = ' / ' + CARDS.length + ' 件';
+    $('#empty').hidden = visible.length > 0;
+    $('#results').hidden = visible.length === 0;
+    /* option counts under the other active filters */
+    var tally = {};
+    function bump(key) { tally[key] = (tally[key] || 0) + 1; }
+    CARDS.forEach(function (c) {
+      if (matches(c, T, 'ch')) { bump('ch:'); bump('ch:' + c._ch); }
+      if (matches(c, T, 'rg')) { bump('rg:'); bump('rg:' + c.region); }
+      if (matches(c, T, 'image') && c._img) bump('t:image');
+      if (matches(c, T, 'award') && c._award) bump('t:award');
+      if (matches(c, T, 'results') && c._results) bump('t:results');
+      if (matches(c, T, 'pick') && c._pick) bump('t:pick');
+      if (matches(c, T, 'g') && c.grade) bump('g:' + c.grade);
+    });
+    $$('[data-n]').forEach(function (el) {
+      var n = tally[el.getAttribute('data-n')] || 0;
+      el.textContent = n;
+      var opt = el.closest('.opt'); if (opt) opt.classList.toggle('zero', n === 0);
+    });
+    if (dlg.open) updateNav();
+  }
+  function readState() {
+    state.q = $('#q').value;
+    state.ch = ($('input[name="ch"]:checked') || {}).value || '';
+    state.rg = ($('input[name="rg"]:checked') || {}).value || '';
+    state.image = $('#t-image').checked;
+    state.award = $('#t-award').checked;
+    state.results = $('#t-results').checked;
+    state.pick = $('#t-pick').checked;
+    state.grades = ['A', 'B', 'C', 'D'].filter(function (g) { return $('#g-' + g).checked; });
+    applyFilters();
+  }
+  function resetFilters() {
+    $('#q').value = '';
+    $('#ch-all').checked = true;
+    $('#rg-all').checked = true;
+    ['t-image', 't-award', 't-results', 't-pick', 'g-A', 'g-B', 'g-C', 'g-D'].forEach(function (id) { $('#' + id).checked = false; });
+    readState();
+  }
+
+  /* ---------- studios ---------- */
+  function studioParts(r) {
+    var keys = Object.keys(r).filter(function (k) { return k !== '_section'; });
+    var pk = keys.filter(function (k) { return /案件/.test(k); })[0];
+    var ak = keys.filter(function (k) { return /^受賞/.test(k); })[0];
+    return {
+      name: r[keys[0]] || '', base: r['拠点'] || '',
+      pLabel: pk ? pk.replace(/（カード）/, '') : '', projects: pk ? r[pk] : '',
+      aLabel: ak || '', awards: ak ? r[ak] : '',
+      url: r['撮影元のURL'] || '', grade: r['確度'] || ''
+    };
+  }
+  function studioHTML(r, idx) {
+    var p = studioParts(r), urls = parseUrls(p.url);
+    var urlHTML = urls.length ? '<ul class="urls">' + urls.map(function (u) { return urlRow(u.url, u.status); }).join('') + '</ul>' : (p.url ? '<span>' + md(p.url) + '</span>' : '<span class="kicker">なし</span>');
+    var search = norm(Object.keys(r).filter(function (k) { return k !== '_section'; }).map(function (k) { return plain(r[k]); }).join(' '));
+    return '<article class="studio" data-s="' + esc(search) + '">' +
+      '<header class="st-head"><h4 class="st-name">' + md(p.name) + '</h4>' +
+      (p.base ? '<p class="st-base">' + md(p.base) + '</p>' : '') +
+      (p.grade ? gradeBadge(p.grade) : '') + '</header>' +
+      '<dl class="st-fields">' +
+      (p.pLabel ? '<div class="st-f"><dt>' + esc(p.pLabel) + '</dt><dd>' + (md(p.projects) || '—') + '</dd></div>' : '') +
+      (p.aLabel ? '<div class="st-f"><dt>' + esc(p.aLabel) + '</dt><dd>' + (md(p.awards) || '—') + '</dd></div>' : '') +
+      '<div class="st-f wide"><dt>撮影元のURL</dt><dd>' + urlHTML + '</dd></div>' +
+      '</dl></article>';
+  }
+  function renderStudios() {
+    var secs = DATA.sections || [], rows = DATA.studios || [];
+    var inStudio = false, groups = [], lead = '';
+    secs.forEach(function (s) {
+      if (s.level === 2) { inStudio = /^5\./.test(s.heading); if (inStudio) lead = s.intro || ''; return; }
+      if (inStudio && s.level === 3) groups.push({ heading: s.heading, intro: s.intro || '', rows: rows.filter(function (r) { return r._section === s.heading; }) });
+    });
+    rows.forEach(function (r) {
+      if (!groups.some(function (g) { return g.heading === r._section; })) groups.push({ heading: r._section, intro: '', rows: rows.filter(function (x) { return x._section === r._section; }) });
+    });
+    $('#st-lead').innerHTML = mdBlock(lead);
+    var studioCount = rows.filter(function (r) { return !/^5E/.test(r._section); }).length;
+    var awardRows = rows.length - studioCount;
+    $('#st-k').textContent = studioCount + 'スタジオ' + (awardRows ? '、年間賞' + awardRows + '年分' : '');
+    $('#s-groups').innerHTML = groups.map(function (g) {
+      var p = parseSub(g.heading), head = '<header class="s-title"><span class="sub-no">' + esc(p.code) + '</span><h3 class="sub-title">' + esc(p.title + (p.deck ? '：' + p.deck : '')) + '</h3>' +
+        '<p class="s-count" data-total="' + g.rows.length + '"></p></header>';
+      if (!g.rows.length) {
+        return '<section class="s-group s-note">' + head + '<div class="prose">' + mdBlock(g.intro) + '</div></section>';
+      }
+      var body;
+      if (/^5E/.test(g.heading)) {
+        var keys = Object.keys(g.rows[0]).filter(function (k) { return k !== '_section'; });
+        body = '<div class="table-wrap"><table class="tbl"><thead><tr>' + keys.map(function (k) { return '<th>' + esc(k) + '</th>'; }).join('') + '</tr></thead><tbody>' +
+          g.rows.map(function (r) {
+            var search = norm(keys.map(function (k) { return plain(r[k]); }).join(' '));
+            return '<tr class="studio-row" data-s="' + esc(search) + '">' + keys.map(function (k) { return '<td>' + md(r[k]) + '</td>'; }).join('') + '</tr>';
+          }).join('') + '</tbody></table></div>';
+      } else {
+        body = '<div>' + g.rows.map(studioHTML).join('') + '</div>';
+      }
+      return '<section class="s-group">' + head + introBlock(g.intro, 'この区分の解説') + body + '</section>';
+    }).join('');
+    applyStudios();
+  }
+  function applyStudios() {
+    var T = norm($('#sq').value).split(/\s+/).filter(Boolean), shown = 0, total = 0;
+    $$('.s-group').forEach(function (g) {
+      var items = $$('[data-s]', g);
+      if (!items.length) { g.hidden = T.length > 0; return; }
+      var n = 0;
+      items.forEach(function (el) {
+        var ok = T.every(function (t) { return el.getAttribute('data-s').indexOf(t) >= 0; });
+        el.hidden = !ok; if (ok) n++;
+      });
+      total += items.length; shown += n;
+      g.hidden = n === 0;
+      var sc = $('.s-count', g); if (sc) sc.textContent = n === items.length ? items.length + '件' : n + ' / ' + items.length + '件';
+    });
+    $('#s-count').innerHTML = '<span class="f-count-n">' + shown + '</span> / ' + total + ' 件';
+    $('#s-empty').hidden = shown > 0;
+  }
+
+  /* ---------- principles, checklist, conclusion ---------- */
+  function renderRest() {
+    var secs = DATA.sections || [];
+    var pr = secs.filter(function (s) { return s.level === 2 && /^6\./.test(s.heading); })[0];
+    $('#pr-lead').innerHTML = pr ? mdBlock(pr.intro) : '';
+    $('#pr-list').innerHTML = (DATA.principles || []).map(function (t, i) {
+      return '<li class="principle"><span class="p-no">' + String(i + 1).padStart(2, '0') + '</span><p class="p-text">' + md(t) + '</p></li>';
+    }).join('');
+    var heads = ['項目', '現状', '確認方法'];
+    $('#ck-body').innerHTML = (DATA.checklist || []).map(function (r) {
+      return '<tr>' + heads.map(function (h) { return '<td data-label="' + h + '">' + md(r[h]) + '</td>'; }).join('') + '</tr>';
+    }).join('');
+    $('#co-body').innerHTML = mdBlock(DATA.conclusion);
+  }
+
+  /* ---------- detail sheet ---------- */
+  var dlg = $('#detail'), current = null, lastFocus = null;
+  function field(label, html, dim) {
+    return '<div class="fld"><dt>' + label + '</dt><dd' + (dim ? ' class="dim"' : '') + '>' + (html || '—') + '</dd></div>';
+  }
+  function linksHTML(c) {
+    var ls = (c.links || []).filter(function (l) { return isHttp(l.url); });
+    if (!ls.length) return md(c.url);
+    return '<div class="link-list">' + ls.map(function (l) {
+      return '<span><a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label || l.url) + '</a><span class="link-host">' + esc(host(l.url)) + '</span></span>';
+    }).join('') + '</div>';
+  }
+  function detailHTML(c) {
+    var g = parseGroup(c.group), s = parseSub(c.subgroup);
+    var shots = (c.shots || []).filter(function (x) { return isHttp(x.url); });
+    var shotHTML = shots.length ? '<ul class="urls">' + shots.map(function (x) { return urlRow(x.url, x.status); }).join('') + '</ul>'
+      : '<p class="kicker">撮影元のURLがありません。公式サイトのURLを調べて指定してください。</p>';
+    var flags = flagsHTML(c, true);
+    return slotHTML(c, true) + captureHTML(c) +
+      '<h2 class="dlg-name" id="dlg-name">' + esc(c.name) + '</h2>' +
+      '<p class="dlg-meta">第' + g.n + '章 ' + esc(g.title) + (s.code ? '　' + esc(s.code) + ' ' + esc(s.title) : '') + '　' + (c.region === 'japan' ? '国内' : '海外') + '</p>' +
+      (flags ? '<div class="dlg-flags">' + flags + '</div>' : '') +
+      (c.verification && c.verification.note ? '<section class="verification"><strong>実ページ確認による追記</strong><p>' + md(c.verification.note) + '</p></section>' : '') +
+      '<dl class="fields">' +
+      field('カテゴリ', md(c.category)) +
+      field('年', md(c.year)) +
+      field('URL', linksHTML(c)) +
+      field('クライアント', md(c.client)) +
+      field('制作', md(c.credits)) +
+      field('受賞', md(c.awards)) +
+      field('成果', md(c.results)) +
+      field('見た目・UX', md(c.visual_ux)) +
+      field('LPへの転用ポイント', md(c.borrow)) +
+      field('確度', (c.grade ? gradeBadge(c.grade) + ' ' : '') + md(c.confidence)) +
+      '</dl>' +
+      '<section class="shots"><h3>初回調査の候補URL</h3>' + shotHTML +
+      '<p class="shots-file">画像ファイル：images/' + esc(c.id) + '.webp' + (c._img ? '（設定済み：' + esc(c._img) + '）' : '（未設定）') + '</p></section>';
+  }
+  function navList() { return visibleSet.has(current) ? visible : CARDS.map(function (c) { return c.id; }); }
+  function updateNav() {
+    var list = navList(), i = list.indexOf(current), filtered = visibleSet.has(current);
+    $('#dlg-pos').textContent = (filtered ? '絞り込み結果 ' : '全件 ') + (i + 1) + ' / ' + list.length;
+    $('#dlg-prev').disabled = i <= 0;
+    $('#dlg-next').disabled = i < 0 || i >= list.length - 1;
+  }
+  function openCard(id, trigger) {
+    var c = BY_ID.get(id); if (!c) return;
+    current = id;
+    if (!dlg.open) { lastFocus = trigger || document.activeElement; }
+    $('#dlg-id').textContent = c.id;
+    $('#dlg-main').innerHTML = detailHTML(c);
+    updateNav();
+    if (!dlg.open) { dlg.showModal(); document.documentElement.classList.add('modal-open'); }
+    $('#dlg-body').scrollTop = 0;
+  }
+  function step(d) {
+    var list = navList(), i = list.indexOf(current) + d;
+    if (i >= 0 && i < list.length) openCard(list[i]);
+  }
+  dlg.addEventListener('close', function () {
+    document.documentElement.classList.remove('modal-open');
+    if (lastFocus && document.contains(lastFocus) && lastFocus.focus) { try { lastFocus.focus({ preventScroll: true }); } catch (e) { } }
+  });
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+  dlg.addEventListener('keydown', function (e) {
+    if (e.target && /^(INPUT|TEXTAREA)$/.test(e.target.tagName)) return;
+    if (e.key === 'ArrowLeft') { step(-1); e.preventDefault(); }
+    if (e.key === 'ArrowRight') { step(1); e.preventDefault(); }
+  });
+  $('#dlg-close').addEventListener('click', function () { dlg.close(); });
+  $('#dlg-prev').addEventListener('click', function () { step(-1); });
+  $('#dlg-next').addEventListener('click', function () { step(1); });
+
+  /* ---------- copy ---------- */
+  var statusEl = $('#sr-status');
+  function selectText(el) {
+    if (!el) return false;
+    try {
+      var r = document.createRange(); r.selectNodeContents(el);
+      var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      try { return document.execCommand('copy'); } catch (e) { return false; }
+    } catch (e) { return false; }
+  }
+  function flash(btn, text) {
+    var old = btn.getAttribute('data-label') || btn.textContent;
+    btn.setAttribute('data-label', old);
+    btn.textContent = text;
+    statusEl.textContent = text;
+    clearTimeout(btn._t);
+    btn._t = setTimeout(function () { btn.textContent = old; statusEl.textContent = ''; }, 2000);
+  }
+  function copyFrom(btn) {
+    var text = btn.getAttribute('data-copy'), row = btn.closest('.url-row'), el = row ? $('.url-text', row) : null;
+    function fallback() { flash(btn, selectText(el) ? 'コピーしました' : '選択しました。Ctrl+Cでコピー'); }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { flash(btn, 'コピーしました'); }, fallback);
+      } else { fallback(); }
+    } catch (e) { fallback(); }
+  }
+
+  /* ---------- wiring ---------- */
+  document.addEventListener('click', function (e) {
+    var o = e.target.closest('[data-open]');
+    if (o) { openCard(o.getAttribute('data-open'), o); return; }
+    var cp = e.target.closest('[data-copy]');
+    if (cp) { copyFrom(cp); }
+  });
+
+  function init() {
+    renderMasthead();
+    renderPicks();
+    renderCatalog();
+    $$('.card').forEach(function (el) { cardEls[el.getAttribute('data-id')] = el; });
+    renderStudios();
+    renderRest();
+    $('#q').addEventListener('input', readState);
+    $$('#f-panel input').forEach(function (i) { i.addEventListener('change', readState); });
+    $('#f-reset').addEventListener('click', resetFilters);
+    $('#empty-reset').addEventListener('click', resetFilters);
+    $('#sq').addEventListener('input', applyStudios);
+    $('#f-toggle').addEventListener('click', function () {
+      var open = $('#filters').classList.toggle('open');
+      this.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    readState();
+  }
+  init();
+})();
+</script>
+</body>
+</html>
