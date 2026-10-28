@@ -16,7 +16,7 @@ FIELDS = {
     "クライアント": "client", "制作": "credits", "受賞": "awards", "成果": "results",
     "見た目・UX": "visual_ux", "LPへの転用ポイント": "borrow", "確度": "confidence",
 }
-EMPTY = {"なし", "不明", "非公開", "—", "-", "", "なし（調査範囲）"}
+NO_AWARD = re.compile(r"^(なし|不明|非公開|記載なし|未取得|確認できない|該当なし|サイトの受賞はなし|.{0,30}見つからない|—|-$)")
 
 
 def cells(line):
@@ -122,7 +122,7 @@ def main(src):
         conf = re.match(r"\**([A-D])", c.get("confidence", ""))
         c["grade"] = conf.group(1) if conf else None
         aw = re.sub(r"[*\s]", "", c.get("awards", ""))
-        c["has_award"] = bool(aw) and aw not in EMPTY and not aw.startswith(("なし", "不明"))
+        c["has_award"] = bool(aw) and not NO_AWARD.match(aw)
         rs = re.sub(r"[*\s]", "", c.get("results", ""))
         c["has_results"] = bool(re.search(r"\d", rs)) and not rs.startswith(("非公開", "不明", "なし"))
         c["self_reported"] = "自己申告" in c.get("results", "")

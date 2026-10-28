@@ -592,7 +592,7 @@
     }
    ],
    "grade": "B",
-   "has_award": true,
+   "has_award": false,
    "has_results": false,
    "self_reported": false,
    "picks": []
@@ -834,7 +834,7 @@
     }
    ],
    "grade": "B",
-   "has_award": true,
+   "has_award": false,
    "has_results": false,
    "self_reported": false,
    "picks": []
@@ -2143,7 +2143,7 @@
     }
    ],
    "grade": "C",
-   "has_award": true,
+   "has_award": false,
    "has_results": true,
    "self_reported": true,
    "picks": [
@@ -2182,7 +2182,7 @@
     }
    ],
    "grade": "C",
-   "has_award": true,
+   "has_award": false,
    "has_results": false,
    "self_reported": true,
    "picks": []
@@ -2219,7 +2219,7 @@
     }
    ],
    "grade": "C",
-   "has_award": true,
+   "has_award": false,
    "has_results": false,
    "self_reported": false,
    "picks": []
@@ -2268,7 +2268,7 @@
     }
    ],
    "grade": "C",
-   "has_award": true,
+   "has_award": false,
    "has_results": false,
    "self_reported": false,
    "picks": []
@@ -2502,7 +2502,7 @@
     }
    ],
    "grade": "B",
-   "has_award": true,
+   "has_award": false,
    "has_results": false,
    "self_reported": false,
    "picks": []
@@ -2543,7 +2543,7 @@
     }
    ],
    "grade": "A",
-   "has_award": true,
+   "has_award": false,
    "has_results": false,
    "self_reported": false,
    "picks": []
@@ -3620,7 +3620,7 @@
     }
    ],
    "grade": "A",
-   "has_award": true,
+   "has_award": false,
    "has_results": true,
    "self_reported": false,
    "picks": []
@@ -4407,7 +4407,7 @@
     }
    ],
    "grade": "A",
-   "has_award": true,
+   "has_award": false,
    "has_results": false,
    "self_reported": false,
    "picks": []
@@ -4647,7 +4647,7 @@
     }
    ],
    "grade": "A",
-   "has_award": true,
+   "has_award": false,
    "has_results": true,
    "self_reported": false,
    "picks": []
@@ -4684,7 +4684,7 @@
     }
    ],
    "grade": "C",
-   "has_award": true,
+   "has_award": false,
    "has_results": true,
    "self_reported": true,
    "picks": [
@@ -5226,7 +5226,7 @@
     }
    ],
    "grade": "A",
-   "has_award": true,
+   "has_award": false,
    "has_results": true,
    "self_reported": false,
    "picks": []
@@ -5497,7 +5497,7 @@
     }
    ],
    "grade": "B",
-   "has_award": true,
+   "has_award": false,
    "has_results": true,
    "self_reported": false,
    "picks": []
@@ -5589,7 +5589,7 @@
     }
    ],
    "grade": "A",
-   "has_award": true,
+   "has_award": false,
    "has_results": true,
    "self_reported": false,
    "picks": []
@@ -6255,7 +6255,7 @@
     }
    ],
    "grade": "B",
-   "has_award": true,
+   "has_award": false,
    "has_results": false,
    "self_reported": false,
    "picks": []
@@ -6719,7 +6719,7 @@
     }
    ],
    "grade": "A",
-   "has_award": true,
+   "has_award": false,
    "has_results": true,
    "self_reported": false,
    "picks": []
@@ -7159,7 +7159,7 @@
     }
    ],
    "grade": "B",
-   "has_award": true,
+   "has_award": false,
    "has_results": false,
    "self_reported": false,
    "picks": []
@@ -7456,7 +7456,7 @@
     }
    ],
    "grade": "A",
-   "has_award": true,
+   "has_award": false,
    "has_results": true,
    "self_reported": false,
    "picks": []
@@ -7792,7 +7792,7 @@
     }
    ],
    "grade": "B",
-   "has_award": true,
+   "has_award": false,
    "has_results": true,
    "self_reported": true,
    "picks": []
@@ -9062,7 +9062,7 @@
     }
    ],
    "grade": "A",
-   "has_award": true,
+   "has_award": false,
    "has_results": false,
    "self_reported": false,
    "picks": []
