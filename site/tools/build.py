@@ -15,6 +15,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data" / "references.json"
 IMAGES = ROOT / "data" / "images.json"
+CAPTURES = ROOT / "data" / "captures.json"
+VERIFIED = ROOT / "data" / "verified.json"
 TEMPLATE = ROOT / "src" / "page.html"
 OUT = ROOT / "index.html"
 PLACEHOLDER = "__DATA__"
@@ -46,8 +48,18 @@ def main():
     data = json.loads(DATA.read_text(encoding="utf-8"))
     cards = data["cards"]
     overrides = load_overrides({c["id"] for c in cards})
+    captures = json.loads(CAPTURES.read_text(encoding="utf-8")) if CAPTURES.exists() else {}
+    verified = json.loads(VERIFIED.read_text(encoding="utf-8")) if VERIFIED.exists() else {}
+    studio_updates = verified.get("_studios", {})
+    for studio in data.get("studios", []):
+        studio.update(studio_updates.get(studio.get("スタジオ"), {}))
     for c in cards:
         c["image"] = overrides.get(c["id"], c.get("image"))
+        c["capture"] = captures.get(c["id"], {})
+        c["verification"] = verified.get(c["id"], {})
+        for key, value in c["verification"].get("fields", {}).items():
+            if key in {"credits", "confidence", "visual_ux", "name"}:
+                c[key] = value
 
     page = TEMPLATE.read_text(encoding="utf-8")
     if page.count(PLACEHOLDER) != 1:

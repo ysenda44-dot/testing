@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>多ブランドLP リファレンス帖</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -293,11 +298,16 @@ details > summary:hover { color: var(--ink); }
 .flag-pick { color: var(--claret); }
 .flag-pick::before { background: var(--claret); }
 
-/* image slot: real image later, designed plate now */
+/* Reference images retain their original composition. */
 .slot { position: relative; width: 100%; max-width: 100%; aspect-ratio: 16 / 10; overflow: hidden; background: var(--wash-1); border-bottom: 1px solid var(--rule); border-radius: 2px 2px 0 0; }
 .slot[data-ch="2"] { background-color: var(--wash-2); }
 .slot[data-ch="3"] { background-color: var(--wash-3); }
 .slot[data-ch="4"] { background-color: var(--wash-4); }
+.image-caption { display: flex; justify-content: space-between; gap: .5rem; padding: .45rem .8rem; font-size: .65rem; color: var(--stone); border-bottom: 1px solid var(--rule); }
+.capture-info { padding: 1rem 0; font-size: .8rem; line-height: 1.8; overflow-wrap: anywhere; }
+.capture-info p { margin: .3rem 0; }
+.capture-info a { text-decoration: underline; }
+.verification { padding: 1rem; border: 1px solid var(--rule); margin: 1rem 0; }
 .slot img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
 .ph { background-image: repeating-linear-gradient(135deg, transparent 0 9px, var(--hatch) 9px 10px); }
 .ph::before { content: ""; position: absolute; inset: 0.55rem; border: 1px solid var(--rule); pointer-events: none; }
@@ -413,6 +423,8 @@ dialog#detail::backdrop { background: var(--scrim); }
   .dlg-pos { order: 3; flex: 1 0 100%; }
 }
 </style>
+</head>
+<body>
 
 <a class="skip" href="#catalog">カタログへ移動</a>
 
@@ -442,8 +454,8 @@ dialog#detail::backdrop { background: var(--scrim); }
       <dl class="stats" id="m-stats" aria-label="収録数"></dl>
       <div class="notice">
         <h2>ご利用にあたって</h2>
-        <p>掲載内容はすべて、Web検索の結果（タイトル、URL、要約）にもとづきます。ネットワーク制限のため、どのページも実際には開いて目で確認していません。書体、配色、モーションの記述は、紹介文や記事の要約です。</p>
-        <p>画像は後日、スクリーンショットで追加します。それまでは、各カードに仮の画像枠（画像未設定）を表示しています。</p>
+        <p>本文は検索結果をもとにした初回調査です。追加した画像は実ページを開いて収集し、カードごとに出典と確認日を記録しています。画像の確認は、受賞・売上・制作クレジットのすべてを検証したことを意味しません。</p>
+        <p>実サイトの画面と、受賞・制作事例・記事に掲載された画像を区別しています。現在の画面が過去の受賞当時と同じとは限りません。取得できない画像は理由を表示しています。</p>
       </div>
       <details class="legend">
         <summary>記号と確度の読み方</summary>
@@ -458,9 +470,9 @@ dialog#detail::backdrop { background: var(--scrim); }
             </dl>
           </div>
           <div>
-            <h3>画像URLの状態</h3>
+            <h3>初回調査のURL状態</h3>
             <dl>
-              <dt><span class="st st-seen">seen</span></dt><dd>検索結果にそのURLが出たと記録されたもの。ページの中身は誰も見ていない</dd>
+              <dt><span class="st st-seen">seen</span></dt><dd>検索結果にそのURLが出たと記録されたもの。初回調査時はページ未確認</dd>
               <dt><span class="st st-build">要確認：構築</span></dt><dd>URLの形から組み立てたもの。実在を確かめる必要がある</dd>
               <dt><span class="st st-src">出典URL・要確認</span></dt><dd>出典として検索結果に出たURLを、撮影元の候補として転記したもの</dd>
               <dt><span class="st st-unv">URL未検証</span></dt><dd>公式URLが検索結果に出ておらず、事前知識によるもの</dd>
@@ -513,6 +525,7 @@ dialog#detail::backdrop { background: var(--scrim); }
             </fieldset>
             <fieldset class="f-group">
               <legend>条件</legend>
+              <label class="opt"><input type="checkbox" id="t-image"><span class="opt-mark"></span><span class="opt-t">画像あり</span><span class="opt-n" data-n="t:image">0</span></label>
               <label class="opt"><input type="checkbox" id="t-award"><span class="opt-mark"></span><span class="opt-t">受賞あり</span><span class="opt-n" data-n="t:award">0</span></label>
               <label class="opt"><input type="checkbox" id="t-results"><span class="opt-mark"></span><span class="opt-t">数値の成果あり</span><span class="opt-n" data-n="t:results">0</span></label>
               <label class="opt"><input type="checkbox" id="t-pick"><span class="opt-mark"></span><span class="opt-t">筆頭候補のみ</span><span class="opt-n" data-n="t:pick">0</span></label>
@@ -582,7 +595,7 @@ dialog#detail::backdrop { background: var(--scrim); }
 
 <footer class="foot">
   <div class="wrap">
-    <p>情報源はWeb検索の結果です。画像は後日追加します。</p>
+    <p>本文は初回調査、画像と追記は実ページの確認に基づきます。画像の権利は各サイト・権利者に帰属します。社内の比較検討資料として参照してください。</p>
     <a href="#top">ページの先頭へ</a>
   </div>
 </footer>
@@ -689,7 +702,7 @@ dialog#detail::backdrop { background: var(--scrim); }
   }
 
   var STAT = {
-    seen: ['seen', '検索結果にそのURLが出たと記録されたもの。ページの中身は誰も見ていないため、開いて確認する'],
+    seen: ['seen', '検索結果にそのURLが出たと記録されたもの。初回調査時はページ未確認ため、開いて確認する'],
     build: ['要確認：構築', 'URLの形から組み立てたもの。開いて実在を確かめる'],
     src: ['出典URL・要確認', '出典として検索結果に出たURLを撮影元の候補として転記したもの。開いて確認する'],
     unv: ['URL未検証', '公式URLが検索結果に出ておらず、事前知識によるもの。開いて確認する']
@@ -722,7 +735,17 @@ dialog#detail::backdrop { background: var(--scrim); }
   /* ---------- slots ---------- */
   function slotInner(c, big) {
     if (c._img) return '<img src="' + esc(c._img) + '" alt="' + esc(c.name) + '" loading="lazy" decoding="async" data-cid="' + c.id + '">';
-    return '<span class="ph-label">画像未設定</span><span class="ph-id">' + esc(c.id) + '</span><span class="ph-host">' + esc(c._host || 'URLなし') + '</span>';
+    return '<span class="ph-label">' + (c.capture && c.capture.status === 'unavailable' ? '取得できませんでした' : '画像未設定') + '</span><span class="ph-id">' + esc(c.id) + '</span><span class="ph-host">' + esc(c._host || 'URLなし') + '</span>';
+  }
+  function captureLabel(c) {
+    return c.capture && c.capture.kind === 'site' ? '実サイト画面' : c.capture && c.capture.kind === 'case_page' ? '制作事例画面' : '掲載画像';
+  }
+  function captureHTML(c) {
+    var x = c.capture || {};
+    if (!c._img) return '<div class="capture-info"><p>' + esc(x.note || '適切な画像を未取得です。出典リンクから確認できます。') + '</p></div>';
+    return '<div class="capture-info"><p><strong>' + captureLabel(c) + '</strong> · 確認日 ' + esc((x.captured_at || '').slice(0, 10)) + '</p>' +
+      (isHttp(x.source_url) ? '<p>出典：<a href="' + esc(x.source_url) + '" target="_blank" rel="noopener">' + esc(x.title || host(x.source_url)) + '</a></p>' : '') +
+      (x.note ? '<p>' + esc(x.note) + '</p>' : '') + '<p><a href="' + esc(c._img) + '" target="_blank" rel="noopener">画像を原寸で開く</a></p></div>';
   }
   function slotHTML(c, big) {
     var ph = c._img ? '' : ' ph';
@@ -775,6 +798,7 @@ dialog#detail::backdrop { background: var(--scrim); }
     var credits = plain(c.credits), flags = flagsHTML(c, false);
     return '<article class="card" data-id="' + c.id + '">' +
       slotHTML(c, false) +
+      (c._img ? '<div class="image-caption"><span>' + captureLabel(c) + '</span><span>' + esc((c.capture.captured_at || '').slice(0, 10)) + '</span></div>' : '') +
       '<div class="card-body">' +
       '<div class="lot"><span class="lot-id">' + esc(c.id) + '</span><span class="lot-year">' + esc(plain(c.year)) + '</span>' + (c.grade ? gradeBadge(c.grade) : '') + '</div>' +
       '<h5 class="card-name"><button type="button" class="card-open" data-open="' + c.id + '">' + esc(c.name) + '</button></h5>' +
@@ -792,6 +816,7 @@ dialog#detail::backdrop { background: var(--scrim); }
     var studioRows = (DATA.studios || []).length;
     var stats = [
       [CARDS.length, 'リファレンス'],
+      [CARDS.filter(function(c) { return !!c._img; }).length, '画像収録'],
       [studioRows, 'スタジオ・年間賞'],
       [(DATA.principles || []).length, '設計原則'],
       [CARDS.filter(function (c) { return c._award; }).length, '受賞あり'],
@@ -865,13 +890,14 @@ dialog#detail::backdrop { background: var(--scrim); }
   }
 
   /* ---------- filtering ---------- */
-  var state = { q: '', ch: '', rg: '', award: false, results: false, pick: false, grades: [] };
+  var state = { q: '', ch: '', rg: '', award: false, results: false, pick: false, image: false, grades: [] };
   var visible = [], visibleSet = new Set();
   var cardEls = {};
   function terms() { return norm(state.q).split(/\s+/).filter(Boolean); }
   function matches(c, T, skip) {
     if (skip !== 'ch' && state.ch && String(c._ch) !== state.ch) return false;
     if (skip !== 'rg' && state.rg && c.region !== state.rg) return false;
+    if (skip !== 'image' && state.image && !c._img) return false;
     if (skip !== 'award' && state.award && !c._award) return false;
     if (skip !== 'results' && state.results && !c._results) return false;
     if (skip !== 'pick' && state.pick && !c._pick) return false;
@@ -904,6 +930,7 @@ dialog#detail::backdrop { background: var(--scrim); }
     CARDS.forEach(function (c) {
       if (matches(c, T, 'ch')) { bump('ch:'); bump('ch:' + c._ch); }
       if (matches(c, T, 'rg')) { bump('rg:'); bump('rg:' + c.region); }
+      if (matches(c, T, 'image') && c._img) bump('t:image');
       if (matches(c, T, 'award') && c._award) bump('t:award');
       if (matches(c, T, 'results') && c._results) bump('t:results');
       if (matches(c, T, 'pick') && c._pick) bump('t:pick');
@@ -920,6 +947,7 @@ dialog#detail::backdrop { background: var(--scrim); }
     state.q = $('#q').value;
     state.ch = ($('input[name="ch"]:checked') || {}).value || '';
     state.rg = ($('input[name="rg"]:checked') || {}).value || '';
+    state.image = $('#t-image').checked;
     state.award = $('#t-award').checked;
     state.results = $('#t-results').checked;
     state.pick = $('#t-pick').checked;
@@ -930,7 +958,7 @@ dialog#detail::backdrop { background: var(--scrim); }
     $('#q').value = '';
     $('#ch-all').checked = true;
     $('#rg-all').checked = true;
-    ['t-award', 't-results', 't-pick', 'g-A', 'g-B', 'g-C', 'g-D'].forEach(function (id) { $('#' + id).checked = false; });
+    ['t-image', 't-award', 't-results', 't-pick', 'g-A', 'g-B', 'g-C', 'g-D'].forEach(function (id) { $('#' + id).checked = false; });
     readState();
   }
 
@@ -1046,10 +1074,11 @@ dialog#detail::backdrop { background: var(--scrim); }
     var shotHTML = shots.length ? '<ul class="urls">' + shots.map(function (x) { return urlRow(x.url, x.status); }).join('') + '</ul>'
       : '<p class="kicker">撮影元のURLがありません。公式サイトのURLを調べて指定してください。</p>';
     var flags = flagsHTML(c, true);
-    return slotHTML(c, true) +
+    return slotHTML(c, true) + captureHTML(c) +
       '<h2 class="dlg-name" id="dlg-name">' + esc(c.name) + '</h2>' +
       '<p class="dlg-meta">第' + g.n + '章 ' + esc(g.title) + (s.code ? '　' + esc(s.code) + ' ' + esc(s.title) : '') + '　' + (c.region === 'japan' ? '国内' : '海外') + '</p>' +
       (flags ? '<div class="dlg-flags">' + flags + '</div>' : '') +
+      (c.verification && c.verification.note ? '<section class="verification"><strong>実ページ確認による追記</strong><p>' + md(c.verification.note) + '</p></section>' : '') +
       '<dl class="fields">' +
       field('カテゴリ', md(c.category)) +
       field('年', md(c.year)) +
@@ -1062,7 +1091,7 @@ dialog#detail::backdrop { background: var(--scrim); }
       field('LPへの転用ポイント', md(c.borrow)) +
       field('確度', (c.grade ? gradeBadge(c.grade) + ' ' : '') + md(c.confidence)) +
       '</dl>' +
-      '<section class="shots"><h3>撮影元のURL</h3>' + shotHTML +
+      '<section class="shots"><h3>初回調査の候補URL</h3>' + shotHTML +
       '<p class="shots-file">画像ファイル：images/' + esc(c.id) + '.webp' + (c._img ? '（設定済み：' + esc(c._img) + '）' : '（未設定）') + '</p></section>';
   }
   function navList() { return visibleSet.has(current) ? visible : CARDS.map(function (c) { return c.id; }); }
@@ -1157,3 +1186,5 @@ dialog#detail::backdrop { background: var(--scrim); }
   init();
 })();
 </script>
+</body>
+</html>
