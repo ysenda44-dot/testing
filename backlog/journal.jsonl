@@ -723,3 +723,5 @@
 {"at": "2026-10-30T15:26:43+00:00", "event": "distill", "rules_added": 0, "rules_removed": 0, "skills": [], "pr": null, "note": "quiet day: only this firing's own log (no user turns); journal since 10-29 is heartbeats only; tests+validate pass. No rule written. 10-28 distiller run still has no end heartbeat."}
 {"at": "2026-10-30T15:26:43+00:00", "event": "heartbeat", "agent": "distiller", "phase": "end", "note": "quiet day"}
 {"at": "2026-10-30T22:11:37+00:00", "event": "heartbeat", "agent": "harvester", "phase": "start", "note": "scheduled run"}
+{"at": "2026-10-30T22:11:58+00:00", "event": "harvest", "added": 0, "sources": ["inbox", "github", "git", "session-logs"]}
+{"at": "2026-10-30T22:11:58+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": "added 0"}
