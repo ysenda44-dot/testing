@@ -786,3 +786,4 @@
 {"at": "2026-11-04T22:11:19+00:00", "event": "add", "id": "wl_8dd5fca3", "title": "PR #4（多ブランドLPデザインリファレンス調査）をレビューして ready にするか判断する", "source": "github"}
 {"at": "2026-11-04T22:11:22+00:00", "event": "harvest", "added": 1, "sources": ["inbox", "github", "git", "session-logs"]}
 {"at": "2026-11-04T22:11:22+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": "added 1 (PR #4 stalled)"}
+{"at": "2026-11-04T22:40:54+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "start", "note": "scheduled run"}
