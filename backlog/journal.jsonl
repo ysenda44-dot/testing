@@ -799,3 +799,5 @@
 {"at": "2026-11-05T14:35:12+00:00", "event": "heartbeat", "agent": "distiller", "phase": "end", "note": "quiet day, no changes"}
 {"at": "2026-11-05T14:36:31+00:00", "event": "add", "id": "wl_03d04c57", "title": "executor の「拾えなかった」をジャーナルに記録する（観測性の欠落）", "source": "conversation"}
 {"at": "2026-11-05T22:11:47+00:00", "event": "heartbeat", "agent": "harvester", "phase": "start", "note": "scheduled run"}
+{"at": "2026-11-05T22:12:06+00:00", "event": "harvest", "added": 0, "sources": ["inbox", "github", "git", "session-logs"]}
+{"at": "2026-11-05T22:12:06+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": "added 0"}
