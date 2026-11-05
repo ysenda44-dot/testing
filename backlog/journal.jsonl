@@ -802,3 +802,5 @@
 {"at": "2026-11-05T22:12:06+00:00", "event": "harvest", "added": 0, "sources": ["inbox", "github", "git", "session-logs"]}
 {"at": "2026-11-05T22:12:06+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": "added 0"}
 {"at": "2026-11-05T22:40:41+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "start", "note": "scheduled run"}
+{"at": "2026-11-05T22:40:59+00:00", "event": "gc", "archived": 1}
+{"at": "2026-11-05T22:41:10+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "end", "note": "inbox 0; no changes beyond gc"}
