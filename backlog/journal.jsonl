@@ -827,3 +827,4 @@
 {"at": "2026-11-07T22:11:11+00:00", "event": "harvest", "added": 0, "sources": ["INBOX.md", "github", "git-history", "session-logs"]}
 {"at": "2026-11-07T22:11:11+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": "nothing new"}
 {"at": "2026-11-07T22:42:03+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "start", "note": "scheduled run"}
+{"at": "2026-11-07T22:42:19+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "end", "note": "inbox empty; no input changes; all blockers still open"}
