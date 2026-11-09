@@ -850,3 +850,4 @@
 {"at": "2026-11-09T22:12:01+00:00", "event": "heartbeat", "agent": "harvester", "phase": "start", "note": "scheduled run"}
 {"at": "2026-11-09T22:12:35+00:00", "event": "harvest", "added": 0, "sources": ["INBOX.md", "github", "git-history", "session-logs"]}
 {"at": "2026-11-09T22:12:35+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": "0 added"}
+{"at": "2026-11-09T22:40:50+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "start", "note": "scheduled run"}
