@@ -854,3 +854,4 @@
 {"at": "2026-11-09T22:41:18+00:00", "event": "update", "id": "wl_8dd5fca3", "changed": {"status": ["ready", "blocked"]}, "note": "executor が10回連続で拾わず(ask かつ人間判断が本質)、ready に置く意味がないため blocked"}
 {"at": "2026-11-09T22:41:18+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "end", "note": "ready->blocked 1件"}
 {"at": "2026-11-10T00:20:42+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
+{"at": "2026-11-10T00:20:48+00:00", "event": "heartbeat", "agent": "executor", "phase": "end", "note": ""}
