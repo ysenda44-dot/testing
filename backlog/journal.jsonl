@@ -885,3 +885,5 @@
 {"at": "2026-11-12T14:34:13+00:00", "event": "distill", "rules_added": 0, "rules_removed": 0, "skills": [], "pr": null, "note": "quiet day: only this firing's own log (no user turns); journal since 11-11 is heartbeats, 2 empty-queue executors, harvester 0 added, prioritizer all 8 blocked on human decisions"}
 {"at": "2026-11-12T14:34:13+00:00", "event": "heartbeat", "agent": "distiller", "phase": "end", "note": ""}
 {"at": "2026-11-12T22:11:02+00:00", "event": "heartbeat", "agent": "harvester", "phase": "start", "note": "scheduled run"}
+{"at": "2026-11-12T22:11:19+00:00", "event": "harvest", "added": 0, "sources": ["inbox", "github", "git", "conversation-logs"]}
+{"at": "2026-11-12T22:11:19+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": "added 0"}
