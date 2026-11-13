@@ -889,3 +889,4 @@
 {"at": "2026-11-12T22:11:19+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": "added 0"}
 {"at": "2026-11-12T22:40:43+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "start", "note": "scheduled run"}
 {"at": "2026-11-12T22:40:59+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "end", "note": "no inbox, all 8 blocked on human decisions; no metadata change"}
+{"at": "2026-11-13T00:20:28+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
