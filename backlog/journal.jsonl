@@ -897,3 +897,5 @@
 {"at": "2026-11-13T15:00:48+00:00", "event": "distill", "rules_added": 0, "rules_removed": 0, "skills": [], "pr": null, "note": "quiet day: only this firing's own log (no user turns); journal since 11-12 is heartbeats, harvester 0 added, prioritizer no changes (all 8 blocked on human decisions), 2 empty-queue executors; tests 48 OK, validate OK"}
 {"at": "2026-11-13T15:00:48+00:00", "event": "heartbeat", "agent": "distiller", "phase": "end", "note": "quiet day, no changes"}
 {"at": "2026-11-13T22:13:39+00:00", "event": "heartbeat", "agent": "harvester", "phase": "start", "note": "scheduled run"}
+{"at": "2026-11-13T22:14:04+00:00", "event": "harvest", "added": 0, "sources": ["inbox", "github", "git", "conversation-logs"], "unreachable": ["gmail", "calendar", "notion", "drive"], "note": "PR #5 (2026-11-08) not yet >7d stale; reaches threshold 2026-11-15"}
+{"at": "2026-11-13T22:14:04+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": "added 0"}
