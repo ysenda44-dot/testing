@@ -899,3 +899,4 @@
 {"at": "2026-11-13T22:13:39+00:00", "event": "heartbeat", "agent": "harvester", "phase": "start", "note": "scheduled run"}
 {"at": "2026-11-13T22:14:04+00:00", "event": "harvest", "added": 0, "sources": ["inbox", "github", "git", "conversation-logs"], "unreachable": ["gmail", "calendar", "notion", "drive"], "note": "PR #5 (2026-11-08) not yet >7d stale; reaches threshold 2026-11-15"}
 {"at": "2026-11-13T22:14:04+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": "added 0"}
+{"at": "2026-11-13T22:40:42+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "start", "note": "scheduled run"}
