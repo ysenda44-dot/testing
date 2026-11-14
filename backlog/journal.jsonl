@@ -905,3 +905,4 @@
 {"at": "2026-11-14T00:20:47+00:00", "event": "heartbeat", "agent": "executor", "phase": "end", "note": "queue empty: no ready/in_progress items (8 blocked)"}
 {"at": "2026-11-14T05:21:01+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
 {"at": "2026-11-14T05:21:13+00:00", "event": "heartbeat", "agent": "executor", "phase": "end", "note": "queue empty (auto/propose/ask all empty, no inbox)"}
+{"at": "2026-11-14T14:34:05+00:00", "event": "heartbeat", "agent": "distiller", "phase": "start", "note": "scheduled run"}
