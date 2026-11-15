@@ -920,3 +920,4 @@
 {"at": "2026-11-15T14:33:40+00:00", "event": "heartbeat", "agent": "distiller", "phase": "start", "note": "scheduled run"}
 {"at": "2026-11-15T14:34:01+00:00", "event": "distill", "rules_added": 0, "rules_removed": 0, "skills": [], "pr": null, "note": "quiet day: only this firing's own log (no user turns); journal since 11-14 is heartbeats, harvester 0 added (gmail/calendar/notion/drive unreachable, already in AGENTS.md), prioritizer no-op (8/8 blocked on human decisions), 2 empty-queue executors; tests OK, validate OK"}
 {"at": "2026-11-15T14:34:01+00:00", "event": "heartbeat", "agent": "distiller", "phase": "end", "note": ""}
+{"at": "2026-11-15T22:10:47+00:00", "event": "heartbeat", "agent": "harvester", "phase": "start", "note": "scheduled run"}
