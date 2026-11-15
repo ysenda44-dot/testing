@@ -914,3 +914,4 @@
 {"at": "2026-11-14T22:40:52+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "start", "note": "scheduled run"}
 {"at": "2026-11-14T22:41:23+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "end", "note": "inbox empty; 8 blocked on human decisions, none unblocked (PR #2 still open); queue empty; no metadata changes"}
 {"at": "2026-11-15T00:20:54+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
+{"at": "2026-11-15T00:21:06+00:00", "event": "heartbeat", "agent": "executor", "phase": "end", "note": "queue empty: nothing ready/in_progress"}
