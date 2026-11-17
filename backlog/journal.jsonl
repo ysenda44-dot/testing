@@ -943,3 +943,4 @@
 {"at": "2026-11-17T00:20:49+00:00", "event": "heartbeat", "agent": "executor", "phase": "end", "note": "queue empty: nothing triaged"}
 {"at": "2026-11-17T05:20:52+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
 {"at": "2026-11-17T05:21:08+00:00", "event": "heartbeat", "agent": "executor", "phase": "end", "note": "queue empty: all items blocked"}
+{"at": "2026-11-17T14:34:07+00:00", "event": "heartbeat", "agent": "distiller", "phase": "start", "note": "scheduled run"}
