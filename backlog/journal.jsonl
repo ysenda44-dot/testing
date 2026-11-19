@@ -966,3 +966,4 @@
 {"at": "2026-11-19T00:20:51+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
 {"at": "2026-11-19T00:21:07+00:00", "event": "heartbeat", "agent": "executor", "phase": "end", "note": "queue empty"}
 {"at": "2026-11-19T05:21:03+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
+{"at": "2026-11-19T05:21:24+00:00", "event": "heartbeat", "agent": "executor", "phase": "end", "note": "queue empty (auto/propose/ask): all 9 items blocked"}
