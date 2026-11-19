@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { DEFAULT_FILTERS, isKidsOnly, matchesKeyword, nextDate, passesFilters } from './filter.js';
-import { addDays, formatDateList, range, todayISO } from './date.js';
+import { DEFAULT_FILTERS, isKidsOnly, nextDate, passesFilters } from './filter.js';
+import { addDays, formatDateList, formatHeading, range, scheduleHint, todayISO } from './date.js';
 import { hoursOn } from './links.js';
 
 const base = {
@@ -56,16 +56,6 @@ describe('isKidsOnly', () => {
   });
 });
 
-describe('matchesKeyword', () => {
-  const venue = { name: 'みやづ歴史の館', address: '京都府宮津市字鶴賀2164' };
-  it('会場名や全角・カタカナの揺れでも見つかる', () => {
-    expect(matchesKeyword({ ...base, title: 'シンポジウム' }, venue, 'しんぽじうむ')).toBe(true);
-    expect(matchesKeyword(base, venue, '歴史の館')).toBe(true);
-    expect(matchesKeyword({ ...base, title: 'SDGsフェスタ' }, venue, 'ｓｄｇｓ')).toBe(true);
-    expect(matchesKeyword(base, venue, '天橋立')).toBe(false);
-  });
-});
-
 describe('dates', () => {
   it('range は両端を含む', () => {
     expect(range('2026-12-30', '2027-01-02')).toEqual(['2026-12-30', '2026-12-31', '2027-01-01', '2027-01-02']);
@@ -80,6 +70,17 @@ describe('dates', () => {
   it('nextDate は指定日以降の最初の開催日', () => {
     expect(nextDate({ dates: ['2026-11-01', '2026-12-01'] }, '2026-11-19')).toBe('2026-12-01');
     expect(nextDate({ dates: ['2026-11-01'] }, '2026-11-19')).toBe(null);
+  });
+  it('scheduleHint は期間・毎週・その他を言い分ける', () => {
+    expect(scheduleHint(range('2026-11-25', '2026-11-29'), '2026-11-25')).toBe('11/29まで');
+    expect(scheduleHint(['2026-11-21', '2026-11-28', '2026-12-05'], '2026-11-21')).toBe('毎週土曜');
+    expect(scheduleHint(['2026-11-25', '2026-11-28', '2026-12-02'], '2026-11-25')).toBe('ほか2日');
+    expect(scheduleHint(['2026-11-29'], '2026-11-29')).toBe('');
+  });
+  it('formatHeading は今日・明日を添える', () => {
+    expect(formatHeading('2026-11-20', '2026-11-20')).toBe('今日 11月20日（金）');
+    expect(formatHeading('2026-11-21', '2026-11-20')).toBe('明日 11月21日（土）');
+    expect(formatHeading('2026-11-23', '2026-11-20')).toBe('11月23日（祝）');
   });
   it('addDays は月またぎに対応', () => {
     expect(addDays('2026-11-30', 1)).toBe('2026-12-01');

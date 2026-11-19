@@ -84,3 +84,22 @@ export function formatDateList(dates) {
     .map(([a, b]) => (a === b ? formatShort(a) : `${formatShort(a)}〜${formatShort(b)}`))
     .join('・');
 }
+
+/**
+ * 一覧用のひとこと。「11/29まで」「毎週土曜」「ほか4日」など。
+ * iso はいま表示している回の日付
+ */
+export function scheduleHint(dates, iso) {
+  const rest = dates.filter((d) => d > iso);
+  if (!rest.length) return '';
+  const last = rest.at(-1);
+  if (rest.every((d, i) => d === addDays(iso, i + 1))) return `${formatShort(last)}まで`;
+  if (rest.every((d, i) => d === addDays(iso, (i + 1) * 7))) return `毎週${dayInfo(iso).weekday}曜`;
+  return `ほか${rest.length}日`;
+}
+
+/** 見出し用。「今日 11月20日（金）」「明日 …」 */
+export function formatHeading(iso, today) {
+  const prefix = iso === today ? '今日 ' : iso === addDays(today, 1) ? '明日 ' : '';
+  return prefix + formatLong(iso);
+}

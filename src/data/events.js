@@ -14,6 +14,8 @@
 //   indoor / free   true / false / null（null = 公式情報に記載なし）
 //   reservation     none（不要）/ required（必要）/ closed（受付終了）/ unknown（記載なし）
 //   dateNotes       特定の日だけの注意書き（任意）
+//   priceChip       一覧のチップに出す料金の文言を個別に指定（任意。なければ free から「無料／有料」）
+//   keywords        検索で当てたい言葉（任意）
 
 import { range } from '../lib/date.js';
 
@@ -169,6 +171,7 @@ export const events = [
     indoor: true,
     free: false,
     priceLabel: '相談無料（会場の旧三上家住宅は入館料が必要）',
+    priceChip: '相談無料・入館料あり',
     reservation: 'closed',
     reservationNote: '要予約。申込期限は11/18（水）でした（電話またはメール）。',
     importantNote:

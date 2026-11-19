@@ -54,21 +54,6 @@ export function passesFilters(event, filters) {
   return true;
 }
 
-const normalize = (s) =>
-  (s || '')
-    .normalize('NFKC')
-    .toLowerCase()
-    .replace(/[ァ-ヶ]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0x60)); // カタカナ→ひらがな
-
-export function matchesKeyword(event, venue, keyword) {
-  const words = normalize(keyword).split(/\s+/).filter(Boolean);
-  if (!words.length) return true;
-  const haystack = normalize(
-    [event.title, event.description, event.room, event.ageLabel, venue?.name, venue?.address].join(' '),
-  );
-  return words.every((w) => haystack.includes(w));
-}
-
 /** 指定日以降で、次に開催される日 */
 export function nextDate(event, fromISO) {
   return event.dates.find((d) => d >= fromISO) || null;

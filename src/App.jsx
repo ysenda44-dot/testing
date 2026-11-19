@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import MapView from './components/MapView.jsx';
 import DateStrip from './components/DateStrip.jsx';
 import FilterBar from './components/FilterBar.jsx';
@@ -9,10 +9,12 @@ import Scenery from './components/Scenery.jsx';
 import Icon from './components/Icon.jsx';
 import { events } from './data/events.js';
 import { venues } from './data/venues.js';
-import { dataSources, site } from './config.js';
-import { addDays, dayInfo, formatLong, todayISO } from './lib/date.js';
-import { DEFAULT_FILTERS, isOnDate, matchesKeyword, nextDate, passesFilters } from './lib/filter.js';
-import { eventPageUrl, hoursOn } from './lib/links.js';
+import { categories, dataSources, site } from './config.js';
+import { addDays, dayInfo, formatHeading, formatLong } from './lib/date.js';
+import { DEFAULT_FILTERS, activeFilterCount, isOnDate, nextDate, passesFilters } from './lib/filter.js';
+import { matchesKeyword } from './lib/search.js';
+import { compareItems, displayDate, eventStatus, jstClock } from './lib/status.js';
+import { eventPageUrl } from './lib/links.js';
 import { useFavorites } from './lib/useFavorites.js';
 import { useMediaQuery } from './lib/useMediaQuery.js';
 
@@ -27,24 +29,26 @@ function readUrlState(today, lastDay) {
   return { date, event };
 }
 
-const startMinutes = (event, date) => {
-  const h = hoursOn(event, date);
-  if (!h) return 24 * 60;
-  const [hh, mm] = h.start.split(':').map(Number);
-  return hh * 60 + mm;
-};
-
-const byDateThenTime = (a, b) =>
-  a.date.localeCompare(b.date) || startMinutes(a.event, a.date) - startMinutes(b.event, b.date);
-
 export default function App() {
-  const today = useMemo(() => todayISO(), []);
+  // 現在時刻（日本時間）。1分ごとと、画面に戻ってきたときに更新する
+  const [now, setNow] = useState(() => new Date());
+  useEffect(() => {
+    const tick = () => setNow(new Date());
+    const timer = window.setInterval(tick, 60_000);
+    document.addEventListener('visibilitychange', tick);
+    return () => {
+      window.clearInterval(timer);
+      document.removeEventListener('visibilitychange', tick);
+    };
+  }, []);
+  const { date: today, minutes: nowMinutes } = jstClock(now);
+
   const days = useMemo(
     () => Array.from({ length: site.dateStripDays }, (_, i) => addDays(today, i)),
     [today],
   );
   const lastDay = days[days.length - 1];
-  const initial = useMemo(() => readUrlState(today, lastDay), [today, lastDay]);
+  const [initial] = useState(() => readUrlState(today, lastDay));
 
   const [selectedDate, setSelectedDate] = useState(() => {
     if (initial.date) return initial.date;
@@ -55,11 +59,12 @@ export default function App() {
     }
     return today;
   });
-  const [mode, setMode] = useState('date'); // date | search | favorites
+  // upcoming: これからの一覧（初期表示） / date: 日付ごと / search / favorites
+  const [mode, setMode] = useState(initial.date || initial.event ? 'date' : 'upcoming');
+  const backMode = useRef('upcoming'); // 検索・お気に入りを閉じたときに戻る先
   const [keyword, setKeyword] = useState('');
   const [filters, setFilters] = useState({ ...DEFAULT_FILTERS });
   const [activeEventId, setActiveEventId] = useState(initial.event);
-  const [activeVenueId, setActiveVenueId] = useState(null);
   const [infoOpen, setInfoOpen] = useState(false);
   const [toast, setToast] = useState('');
   const [sheet, setSheet] = useState('peek'); // スマホのパネル：peek | full
@@ -95,43 +100,74 @@ export default function App() {
     return (iso) => set.has(iso);
   }, []);
 
+  const kw = keyword.trim();
+
+  // これから開催される催し（1件につき次の回を1つ）。絞り込み前
+  const upcomingAll = useMemo(() => {
+    const clock = { date: today, minutes: nowMinutes };
+    return events
+      .map((e) => [e, displayDate(e, clock)])
+      .filter(([, d]) => d && d <= lastDay)
+      .map(([e, d]) => ({ event: e, venue: venues[e.venueId], date: d, status: eventStatus(e, d, clock) }))
+      .sort(compareItems);
+  }, [today, nowMinutes, lastDay]);
+
   // 表示するイベントの一覧
   const items = useMemo(() => {
-    const kw = keyword.trim();
-    if (mode === 'favorites') {
+    if (mode === 'favorites') return upcomingAll.filter((x) => favorites.has(x.event.id));
+    if (mode === 'date') {
+      const clock = { date: today, minutes: nowMinutes };
       return events
-        .filter((e) => favorites.has(e.id))
-        .map((e) => ({ event: e, venue: venues[e.venueId], date: nextDate(e, today) }))
-        .filter((x) => x.date)
-        .sort(byDateThenTime);
+        .filter((e) => isOnDate(e, selectedDate) && passesFilters(e, filters))
+        .map((e) => ({
+          event: e,
+          venue: venues[e.venueId],
+          date: selectedDate,
+          status: eventStatus(e, selectedDate, clock),
+        }))
+        .sort(compareItems);
     }
-    if (mode === 'search' && kw) {
-      return events
-        .map((e) => ({ event: e, venue: venues[e.venueId], date: nextDate(e, today) }))
-        .filter((x) => x.date && passesFilters(x.event, filters) && matchesKeyword(x.event, x.venue, kw))
-        .sort(byDateThenTime);
-    }
-    return events
-      .filter((e) => isOnDate(e, selectedDate) && passesFilters(e, filters))
-      .map((e) => ({ event: e, venue: venues[e.venueId], date: selectedDate }))
-      .sort(byDateThenTime);
-  }, [mode, keyword, filters, favorites, selectedDate, today]);
+    return upcomingAll.filter(
+      (x) => passesFilters(x.event, filters) && (mode !== 'search' || matchesKeyword(x.event, x.venue, kw, today)),
+    );
+  }, [mode, kw, filters, favorites, selectedDate, today, nowMinutes, upcomingAll]);
+
+  // 検索で、絞り込み条件のために隠れている件数
+  const hiddenByFilters = useMemo(() => {
+    if (mode !== 'search' || !kw) return 0;
+    return upcomingAll.filter((x) => matchesKeyword(x.event, x.venue, kw, today)).length - items.length;
+  }, [mode, kw, upcomingAll, items, today]);
+
+  // 検索の入口に出すカテゴリ（これからの催しがあるものだけ）
+  const searchCategories = useMemo(
+    () => Object.entries(categories).filter(([key]) => upcomingAll.some((x) => x.event.category === key)),
+    [upcomingAll],
+  );
 
   const listKey = items.map((x) => x.event.id).join(',');
 
-  // 一覧が変わったら、先頭のイベントを開いた状態にする
+  // 一覧が変わったとき：開いていた催しがなくなったら閉じる。1件だけなら開いておく
   useEffect(() => {
     if (!items.some((x) => x.event.id === activeEventId)) {
-      setActiveEventId(items[0]?.event.id ?? null);
+      setActiveEventId(items.length === 1 ? items[0].event.id : null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listKey]);
 
-  const activeItem = items.find((x) => x.event.id === activeEventId) || null;
+  const activeVenueId = items.find((x) => x.event.id === activeEventId)?.event.venueId ?? null;
 
+  // カードを開いたら、その先頭が見える位置までスクロールする
   useEffect(() => {
-    setActiveVenueId(activeItem?.event.venueId ?? null);
-  }, [activeItem]);
+    if (!activeEventId) return undefined;
+    const frame = requestAnimationFrame(() => {
+      const list = listRef.current;
+      const node = cardRefs.current.get(activeEventId);
+      if (!list || !node) return;
+      const top = list.scrollTop + node.getBoundingClientRect().top - list.getBoundingClientRect().top - 8;
+      list.scrollTo({ top, behavior: 'smooth' });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [activeEventId, listKey]);
 
   // 地図のピン（会場ごとにまとめる）
   const markers = useMemo(() => {
@@ -142,16 +178,18 @@ export default function App() {
       else map.set(event.venueId, { venueId: event.venueId, venue, count: 1, category: event.category });
     }
     return [...map.values()];
-  }, [items]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listKey]);
 
-  // URLに状態を残す（共有・再読み込み用）
+  // URLに状態を残す（共有・再読み込み用）。日付は「日付ごと」の表示のときだけ
   useEffect(() => {
     const url = new URL(window.location.href);
-    url.searchParams.set('d', selectedDate);
+    if (mode === 'date') url.searchParams.set('d', selectedDate);
+    else url.searchParams.delete('d');
     if (activeEventId) url.searchParams.set('e', activeEventId);
     else url.searchParams.delete('e');
     window.history.replaceState(null, '', url);
-  }, [selectedDate, activeEventId]);
+  }, [mode, selectedDate, activeEventId]);
 
   const toastTimer = useRef(0);
   const showToast = useCallback((msg) => {
@@ -160,20 +198,10 @@ export default function App() {
     toastTimer.current = window.setTimeout(() => setToast(''), 2400);
   }, []);
 
-  const scrollToCard = (id) => {
-    requestAnimationFrame(() => {
-      cardRefs.current.get(id)?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-    });
-  };
-
   const onSelectVenue = useCallback(
     (venueId) => {
       const first = items.find((x) => x.event.venueId === venueId);
-      setActiveVenueId(venueId);
-      if (first) {
-        setActiveEventId(first.event.id);
-        scrollToCard(first.event.id);
-      }
+      if (first) setActiveEventId(first.event.id);
       if (isMobile && sheet !== 'peek') setSheet('peek');
     },
     [items, isMobile, sheet],
@@ -201,15 +229,36 @@ export default function App() {
     listRef.current?.scrollTo({ top: 0 });
   };
 
+  const selectUpcoming = () => {
+    setMode('upcoming');
+    setKeyword('');
+    listRef.current?.scrollTo({ top: 0 });
+  };
+
+  const leaveTo = () => (backMode.current === 'date' ? 'date' : 'upcoming');
+
   const toggleSearch = () => {
     if (mode === 'search') {
-      setMode('date');
+      setMode(leaveTo());
       setKeyword('');
     } else {
+      if (mode !== 'favorites') backMode.current = mode;
       setMode('search');
       requestAnimationFrame(() => searchRef.current?.focus());
     }
   };
+
+  const toggleFavorites = () => {
+    if (mode === 'favorites') {
+      setMode(leaveTo());
+    } else {
+      if (mode !== 'search') backMode.current = mode;
+      setKeyword('');
+      setMode('favorites');
+    }
+  };
+
+  const resetFilters = () => setFilters({ ...DEFAULT_FILTERS });
 
   const nextEventDay = useMemo(
     () => days.find((d) => d > selectedDate && events.some((e) => isOnDate(e, d) && passesFilters(e, filters))),
@@ -218,14 +267,15 @@ export default function App() {
 
   const lastVerified = useMemo(() => events.map((e) => e.verifiedAt).sort().at(-1), []);
 
-  const kw = keyword.trim();
   const sel = dayInfo(selectedDate);
   let heading;
   if (mode === 'favorites') heading = 'お気に入り';
-  else if (mode === 'search' && kw) heading = `「${kw}」の検索結果`;
-  else heading = `${sel.month}月${sel.day}日のイベント`;
+  else if (mode === 'search') heading = kw ? `「${kw}」の検索結果` : 'キーワードで探す';
+  else if (mode === 'date') heading = `${sel.month}月${sel.day}日のイベント`;
+  else heading = 'これからのイベント';
 
-  const isListAcrossDates = mode === 'favorites' || (mode === 'search' && kw);
+  const acrossDates = mode !== 'date';
+  const filtersChanged = activeFilterCount(filters) > 0;
 
   return (
     <div className={`app${isMobile ? ' app--mobile' : ''}`}>
@@ -252,7 +302,7 @@ export default function App() {
             type="button"
             className={`pill-btn${mode === 'favorites' ? ' pill-btn--on' : ''}`}
             aria-pressed={mode === 'favorites'}
-            onClick={() => setMode(mode === 'favorites' ? 'date' : 'favorites')}
+            onClick={toggleFavorites}
           >
             <Icon name="heart" size={20} filled={mode === 'favorites'} />
             <span className="pill-btn__label">お気に入り</span>
@@ -294,8 +344,8 @@ export default function App() {
             </button>
           )}
           {mode === 'favorites' && (
-            <button type="button" className="link-button" onClick={() => setMode('date')}>
-              日付で探す
+            <button type="button" className="link-button" onClick={toggleFavorites}>
+              一覧に戻る
             </button>
           )}
         </div>
@@ -308,23 +358,49 @@ export default function App() {
               type="search"
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
-              placeholder="イベント名・会場・内容で検索"
+              placeholder="例：こども、無料、12月、展示"
               aria-label="キーワード検索"
               enterKeyHint="search"
             />
           </div>
         )}
 
-        {mode !== 'favorites' && !(mode === 'search' && kw) && (
-          <DateStrip days={days} selected={selectedDate} onSelect={selectDate} hasEvents={dateHasEvents} />
+        {mode === 'search' && (
+          <div className="search-cats" role="group" aria-label="カテゴリから探す">
+            {searchCategories.map(([key, cat]) => (
+              <button
+                key={key}
+                type="button"
+                className={`chip${kw === cat.label ? ' chip--on' : ''}`}
+                aria-pressed={kw === cat.label}
+                onClick={() => setKeyword(kw === cat.label ? '' : cat.label)}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {(mode === 'upcoming' || mode === 'date') && (
+          <DateStrip
+            days={days}
+            selected={mode === 'date' ? selectedDate : null}
+            onSelect={selectDate}
+            hasEvents={dateHasEvents}
+            upcomingSelected={mode === 'upcoming'}
+            onSelectUpcoming={selectUpcoming}
+          />
         )}
 
         {mode !== 'favorites' && <FilterBar filters={filters} onChange={setFilters} />}
 
         <div className="panel__list" ref={listRef}>
-          {items.map(({ event, venue, date }) => (
+          {items.map(({ event, venue, date, status }, i) => (
+            <Fragment key={event.id}>
+              {acrossDates && (i === 0 || items[i - 1].date !== date) && (
+                <h3 className="day-head">{formatHeading(date, today)}</h3>
+              )}
             <EventCard
-              key={event.id}
               ref={(node) => {
                 if (node) cardRefs.current.set(event.id, node);
                 else cardRefs.current.delete(event.id);
@@ -332,30 +408,52 @@ export default function App() {
               event={event}
               venue={venue}
               date={date}
+              status={status}
               expanded={event.id === activeEventId}
               favorite={favorites.has(event.id)}
               onToggleFavorite={() => toggleFavorite(event.id)}
-              onActivate={() => {
-                setActiveEventId(event.id);
-                if (isMobile && sheet === 'full') setSheet('peek');
-              }}
+              onActivate={() => setActiveEventId(event.id === activeEventId ? null : event.id)}
               onShare={onShare}
-              showDateLabel={Boolean(isListAcrossDates)}
             />
+            </Fragment>
           ))}
+
+          {mode === 'search' && hiddenByFilters > 0 && (
+            <p className="hint">
+              絞り込み条件のため、ほかに{hiddenByFilters}件が隠れています。
+              <button type="button" className="link-button" onClick={resetFilters}>
+                条件をリセット
+              </button>
+            </p>
+          )}
 
           {items.length === 0 && (
             <div className="empty">
               {mode === 'favorites' ? (
                 <p>お気に入りはまだありません。イベントのハートを押すと、ここに集まります。</p>
-              ) : mode === 'search' && kw ? (
-                <p>「{kw}」に合うイベントは見つかりませんでした。</p>
-              ) : (
+              ) : mode === 'search' ? (
+                <p>
+                  {kw ? `「${kw}」に合うイベントは見つかりませんでした。` : '条件に合うイベントはありません。'}
+                  {hiddenByFilters === 0 && kw && '上のカテゴリからも探せます。'}
+                </p>
+              ) : mode === 'date' ? (
                 <>
                   <p>この日のイベントは見つかりませんでした。</p>
                   {nextEventDay && (
                     <button type="button" className="btn btn--primary" onClick={() => selectDate(nextEventDay)}>
                       次にイベントがある日（{formatLong(nextEventDay)}）へ
+                    </button>
+                  )}
+                  <button type="button" className="btn" onClick={selectUpcoming}>
+                    これからのイベントを見る
+                  </button>
+                </>
+              ) : (
+                <>
+                  <p>条件に合うイベントはありません。</p>
+                  {filtersChanged && (
+                    <button type="button" className="btn btn--primary" onClick={resetFilters}>
+                      条件をリセット
                     </button>
                   )}
                 </>

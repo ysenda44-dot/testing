@@ -3,11 +3,15 @@ import Icon from './Icon.jsx';
 import { dayInfo } from '../lib/date.js';
 
 /** 横にスクロールする日付バー。イベントがある日には点を付ける */
-export default function DateStrip({ days, selected, onSelect, hasEvents }) {
+export default function DateStrip({ days, selected, onSelect, hasEvents, upcomingSelected, onSelectUpcoming }) {
   const scroller = useRef(null);
 
   // 選択した日が見えるようにスクロール
   useEffect(() => {
+    if (!selected) {
+      scroller.current?.scrollTo({ left: 0, behavior: 'smooth' });
+      return;
+    }
     const node = scroller.current?.querySelector(`[data-date="${selected}"]`);
     node?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
   }, [selected]);
@@ -17,18 +21,23 @@ export default function DateStrip({ days, selected, onSelect, hasEvents }) {
     if (s) s.scrollBy({ left: dir * s.clientWidth * 0.8, behavior: 'smooth' });
   };
 
-  const selectedInfo = dayInfo(selected);
-
   return (
     <div className="date-strip">
-      <span className="date-strip__month" aria-hidden="true">
-        {selectedInfo.month}月
-      </span>
+      <button
+        type="button"
+        className={`date-strip__all${upcomingSelected ? ' date-strip__all--on' : ''}`}
+        aria-pressed={upcomingSelected}
+        onClick={onSelectUpcoming}
+      >
+        これ
+        <br />
+        から
+      </button>
       <button type="button" className="date-strip__nav" onClick={() => scrollBy(-1)} aria-label="前の日付を表示">
         <Icon name="chevronLeft" size={18} />
       </button>
       <div className="date-strip__scroller" ref={scroller} role="group" aria-label="日付を選ぶ">
-        {days.map((iso) => {
+        {days.map((iso, i) => {
           const d = dayInfo(iso);
           const isSel = iso === selected;
           return (
@@ -43,7 +52,7 @@ export default function DateStrip({ days, selected, onSelect, hasEvents }) {
               }`}
               onClick={() => onSelect(iso)}
             >
-              {d.day === 1 && <span className="day__month">{d.month}月</span>}
+              {(d.day === 1 || i === 0) && <span className="day__month">{d.month}月</span>}
               <span className="day__dow">{d.holiday ? '祝' : d.weekday}</span>
               <span className="day__num">{d.day}</span>
               <span className={`day__dot${hasEvents(iso) ? ' day__dot--on' : ''}`} aria-hidden="true" />

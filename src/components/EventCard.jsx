@@ -1,15 +1,10 @@
 import { forwardRef } from 'react';
 import Icon from './Icon.jsx';
 import { categories } from '../config.js';
-import { formatDateList, formatLong } from '../lib/date.js';
+import { formatDateList, scheduleHint } from '../lib/date.js';
+import { RESERVATION, eventChips } from '../lib/chips.js';
+import { STATUS_LABEL } from '../lib/status.js';
 import { googleCalendarUrl, mapUrl, directionsUrl, eventPageUrl } from '../lib/links.js';
-
-const RESERVATION = {
-  none: { tone: 'ok', label: '予約不要' },
-  required: { tone: 'warn', label: '予約必須' },
-  closed: { tone: 'muted', label: '受付終了' },
-  unknown: { tone: 'muted', label: '申込の要否は記載なし' },
-};
 
 function Row({ icon, label, children }) {
   return (
@@ -24,7 +19,7 @@ function Row({ icon, label, children }) {
 }
 
 const EventCard = forwardRef(function EventCard(
-  { event, venue, date, expanded, favorite, onToggleFavorite, onActivate, onShare, showDateLabel },
+  { event, venue, date, status, expanded, favorite, onToggleFavorite, onActivate, onShare },
   ref,
 ) {
   const res = RESERVATION[event.reservation] || RESERVATION.unknown;
@@ -32,11 +27,25 @@ const EventCard = forwardRef(function EventCard(
   const time = event.timeByDate?.[date] || event.time;
   const dateNote = event.dateNotes?.[date];
   const venueLabel = [venue.name, event.room].filter(Boolean).join(' ');
+  const venueShort = [venue.shortName || venue.name, event.room].filter(Boolean).join(' ');
+  const hint = scheduleHint(event.dates, date);
+  // 一覧では、その日の開始〜終了だけを短く出す
+  const h = event.hours?.[date] || event.hours?.default;
+  const timeShort = h ? `${h[0]}〜${h[1] || ''}` : time;
+  const statusLabel = STATUS_LABEL[status];
+  const dim = status === 'ended' || event.reservation === 'closed';
+
+  const tag = cat && (
+    <span className="tag" style={{ '--tag': cat.color }}>
+      {cat.label}
+    </span>
+  );
+  const state = statusLabel && <span className={`state state--${status}`}>{statusLabel}</span>;
 
   return (
     <article
       ref={ref}
-      className={`card${expanded ? ' card--expanded' : ''}`}
+      className={`card${expanded ? ' card--expanded' : ''}${dim ? ' card--dim' : ''}`}
       aria-labelledby={`t-${event.id}`}
       onClick={(e) => {
         if (e.target.closest('a,button')) return;
@@ -45,14 +54,12 @@ const EventCard = forwardRef(function EventCard(
     >
       <header className="card__head">
         <div className="card__titles">
-          <div className="card__meta">
-            {cat && (
-              <span className="tag" style={{ '--tag': cat.color }}>
-                {cat.label}
-              </span>
-            )}
-            {showDateLabel && <span className="card__date">{formatLong(date)}</span>}
-          </div>
+          {expanded && (
+            <div className="card__meta">
+              {tag}
+              {state}
+            </div>
+          )}
           <h3 id={`t-${event.id}`} className="card__title">
             <button type="button" className="card__title-btn" onClick={onActivate} aria-expanded={expanded}>
               {event.title}
@@ -70,7 +77,32 @@ const EventCard = forwardRef(function EventCard(
         </button>
       </header>
 
-      <p className="card__desc">{event.description}</p>
+      {!expanded && (
+        <>
+          <p className="card__summary">
+            <span className="card__summary-time">{timeShort}</span>
+            {hint && <span className="card__summary-hint">{hint}</span>}
+            <span className="card__summary-venue">{venueShort}</span>
+          </p>
+          {dateNote && (
+            <p className="card__caution">
+              <Icon name="alert" size={14} />
+              この日は注意事項があります
+            </p>
+          )}
+          <ul className="chips" aria-label="カテゴリと条件">
+            {state && <li>{state}</li>}
+            {tag && <li>{tag}</li>}
+            {eventChips(event).map((c) => (
+              <li key={c.key} className={`chip-s chip-s--${c.tone}`}>
+                {c.label}
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+
+      {expanded && <p className="card__desc">{event.description}</p>}
 
       {expanded && (
         <p className={`badge badge--${res.tone}`}>
@@ -84,30 +116,28 @@ const EventCard = forwardRef(function EventCard(
         </p>
       )}
 
-      {dateNote && (
+      {expanded && dateNote && (
         <p className="badge badge--warn">
           <Icon name="alert" size={16} />
           <span>{dateNote}</span>
         </p>
       )}
 
-      <div className="card__rows">
-        <Row icon="clock" label="時間">
-          {time}
-        </Row>
-        {expanded && (
+      {expanded && (
+        <div className="card__rows">
+          <Row icon="clock" label="時間">
+            {time}
+          </Row>
           <Row icon="people" label="対象">
             {event.ageLabel}
             {event.residentsOnly && <span className="mini-tag">在住者向け</span>}
           </Row>
-        )}
-        <Row icon="pin" label="会場">
-          <a href={mapUrl(venue)} target="_blank" rel="noopener noreferrer" className="ext">
-            {venueLabel}
-            <Icon name="external" size={14} />
-          </a>
-        </Row>
-        {expanded && (
+          <Row icon="pin" label="会場">
+            <a href={mapUrl(venue)} target="_blank" rel="noopener noreferrer" className="ext">
+              {venueLabel}
+              <Icon name="external" size={14} />
+            </a>
+          </Row>
           <>
             <Row icon="pin" label="住所">
               {venue.address}
@@ -138,8 +168,8 @@ const EventCard = forwardRef(function EventCard(
               </span>
             </Row>
           </>
-        )}
-      </div>
+        </div>
+      )}
 
       {expanded && (
         <div className="card__actions">
