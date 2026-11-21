@@ -992,3 +992,4 @@
 {"at": "2026-11-21T00:20:38+00:00", "event": "heartbeat", "agent": "executor", "phase": "end", "note": "queue empty: 9 items, all blocked"}
 {"at": "2026-11-21T05:20:51+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
 {"at": "2026-11-21T05:21:04+00:00", "event": "heartbeat", "agent": "executor", "phase": "end", "note": "queue empty: nothing ready/in_progress; 9 items blocked on human decisions"}
+{"at": "2026-11-21T14:33:41+00:00", "event": "heartbeat", "agent": "distiller", "phase": "start", "note": "scheduled run"}
