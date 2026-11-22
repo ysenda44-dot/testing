@@ -10,6 +10,7 @@ export const RESERVATION = {
 export function eventChips(event) {
   const chips = [];
   if (event.reservation === 'closed') chips.push({ key: 'res', ...RESERVATION.closed });
+  if (event.annual) chips.push({ key: 'annual', tone: 'note', label: '例年の行事' });
   if (event.priceChip) chips.push({ key: 'price', tone: 'plain', label: event.priceChip });
   else if (event.free === true) chips.push({ key: 'price', tone: 'ok', label: '無料' });
   else if (event.free === false) chips.push({ key: 'price', tone: 'plain', label: '有料' });

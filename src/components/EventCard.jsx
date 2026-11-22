@@ -116,6 +116,18 @@ const EventCard = forwardRef(function EventCard(
         </p>
       )}
 
+      {expanded && event.annual && (
+        <p className="badge badge--note">
+          <Icon name="calendar" size={16} />
+          <span>
+            <strong>例年の行事</strong>
+            <span className="badge__note">
+              毎年この日に行われる行事として掲載しています。今年の時間や内容は、公式サイトでご確認ください。
+            </span>
+          </span>
+        </p>
+      )}
+
       {expanded && dateNote && (
         <p className="badge badge--warn">
           <Icon name="alert" size={16} />

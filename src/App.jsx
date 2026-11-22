@@ -3,12 +3,14 @@ import MapView from './components/MapView.jsx';
 import DateStrip from './components/DateStrip.jsx';
 import FilterBar from './components/FilterBar.jsx';
 import EventCard from './components/EventCard.jsx';
+import ExperienceCard from './components/ExperienceCard.jsx';
 import InfoModal from './components/InfoModal.jsx';
 import Logo from './components/Logo.jsx';
 import Scenery from './components/Scenery.jsx';
 import Icon from './components/Icon.jsx';
 import { events } from './data/events.js';
 import { venues } from './data/venues.js';
+import { experiences } from './data/experiences.js';
 import { categories, dataSources, site } from './config.js';
 import { addDays, dayInfo, formatHeading, formatLong } from './lib/date.js';
 import { DEFAULT_FILTERS, activeFilterCount, isOnDate, nextDate, passesFilters } from './lib/filter.js';
@@ -25,7 +27,7 @@ function readUrlState(today, lastDay) {
   const d = p.get('d');
   const e = p.get('e');
   const date = d && ISO_RE.test(d) && d >= today && d <= lastDay ? d : null;
-  const event = e && events.some((x) => x.id === e) ? e : null;
+  const event = e && [...events, ...experiences].some((x) => x.id === e) ? e : null;
   return { date, event };
 }
 
@@ -54,13 +56,16 @@ export default function App() {
     if (initial.date) return initial.date;
     if (initial.event) {
       const ev = events.find((x) => x.id === initial.event);
-      const next = nextDate(ev, today);
+      const next = ev && nextDate(ev, today);
       if (next && next <= lastDay) return next;
     }
     return today;
   });
-  // upcoming: これからの一覧（初期表示） / date: 日付ごと / search / favorites
-  const [mode, setMode] = useState(initial.date || initial.event ? 'date' : 'upcoming');
+  // upcoming: これからの一覧（初期表示） / date: 日付ごと / search / favorites / experiences: 予約制の体験
+  const [mode, setMode] = useState(() => {
+    if (initial.event?.startsWith('exp-')) return 'experiences';
+    return initial.date || initial.event ? 'date' : 'upcoming';
+  });
   const backMode = useRef('upcoming'); // 検索・お気に入りを閉じたときに戻る先
   const [keyword, setKeyword] = useState('');
   const [filters, setFilters] = useState({ ...DEFAULT_FILTERS });
@@ -114,6 +119,9 @@ export default function App() {
 
   // 表示するイベントの一覧
   const items = useMemo(() => {
+    if (mode === 'experiences') {
+      return experiences.map((e) => ({ event: e, venue: venues[e.venueId], date: null, status: null, kind: 'exp' }));
+    }
     if (mode === 'favorites') return upcomingAll.filter((x) => favorites.has(x.event.id));
     if (mode === 'date') {
       const clock = { date: today, minutes: nowMinutes };
@@ -172,10 +180,13 @@ export default function App() {
   // 地図のピン（会場ごとにまとめる）
   const markers = useMemo(() => {
     const map = new Map();
-    for (const { event, venue } of items) {
+    for (const { event, venue, kind } of items) {
       const m = map.get(event.venueId);
       if (m) m.count += 1;
-      else map.set(event.venueId, { venueId: event.venueId, venue, count: 1, category: event.category });
+      else {
+        const category = kind === 'exp' ? 'experience' : event.category;
+        map.set(event.venueId, { venueId: event.venueId, venue, count: 1, category });
+      }
     }
     return [...map.values()];
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -271,6 +282,7 @@ export default function App() {
   let heading;
   if (mode === 'favorites') heading = 'お気に入り';
   else if (mode === 'search') heading = kw ? `「${kw}」の検索結果` : 'キーワードで探す';
+  else if (mode === 'experiences') heading = '予約してできる体験';
   else if (mode === 'date') heading = `${sel.month}月${sel.day}日のイベント`;
   else heading = 'これからのイベント';
 
@@ -327,12 +339,35 @@ export default function App() {
           </button>
         )}
 
+        <div className="tabs" role="group" aria-label="表示の切り替え">
+          <button
+            type="button"
+            className={`tabs__btn${mode !== 'experiences' ? ' tabs__btn--on' : ''}`}
+            aria-pressed={mode !== 'experiences'}
+            onClick={() => mode === 'experiences' && selectUpcoming()}
+          >
+            イベント
+          </button>
+          <button
+            type="button"
+            className={`tabs__btn${mode === 'experiences' ? ' tabs__btn--on' : ''}`}
+            aria-pressed={mode === 'experiences'}
+            onClick={() => {
+              setKeyword('');
+              setMode('experiences');
+              listRef.current?.scrollTo({ top: 0 });
+            }}
+          >
+            体験
+          </button>
+        </div>
+
         <div className="panel__head">
           <h2 className="panel__title" aria-live="polite">
             {heading}
             <span className="count">{items.length}件</span>
           </h2>
-          {mode !== 'favorites' && (
+          {mode !== 'favorites' && mode !== 'experiences' && (
             <button
               type="button"
               className={`icon-btn${mode === 'search' ? ' icon-btn--on' : ''}`}
@@ -392,14 +427,31 @@ export default function App() {
           />
         )}
 
-        {mode !== 'favorites' && <FilterBar filters={filters} onChange={setFilters} />}
+        {mode !== 'favorites' && mode !== 'experiences' && <FilterBar filters={filters} onChange={setFilters} />}
+
+        {mode === 'experiences' && (
+          <p className="panel__lead">日付の決まった催しとは別に、予約すれば参加できる体験です。実施日は公式の予約ページで確認してください。</p>
+        )}
 
         <div className="panel__list" ref={listRef}>
-          {items.map(({ event, venue, date, status }, i) => (
+          {items.map(({ event, venue, date, status, kind }, i) => (
             <Fragment key={event.id}>
-              {acrossDates && (i === 0 || items[i - 1].date !== date) && (
+              {kind === 'exp' && (
+                <ExperienceCard
+                  ref={(node) => {
+                    if (node) cardRefs.current.set(event.id, node);
+                    else cardRefs.current.delete(event.id);
+                  }}
+                  item={event}
+                  venue={venue}
+                  expanded={event.id === activeEventId}
+                  onActivate={() => setActiveEventId(event.id === activeEventId ? null : event.id)}
+                />
+              )}
+              {kind !== 'exp' && acrossDates && (i === 0 || items[i - 1].date !== date) && (
                 <h3 className="day-head">{formatHeading(date, today)}</h3>
               )}
+            {kind !== 'exp' && (
             <EventCard
               ref={(node) => {
                 if (node) cardRefs.current.set(event.id, node);
@@ -415,6 +467,7 @@ export default function App() {
               onActivate={() => setActiveEventId(event.id === activeEventId ? null : event.id)}
               onShare={onShare}
             />
+            )}
             </Fragment>
           ))}
 

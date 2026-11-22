@@ -16,6 +16,11 @@ export const dataSources = [
   { name: '宮津市公式サイト「カレンダーでさがす」', url: 'https://www.city.miyazu.kyoto.jp/calendar/' },
   { name: '天橋立観光協会 イベント情報', url: 'https://www.amanohashidate.jp/events/' },
   { name: '海の京都DMO イベント情報（エリア：宮津市）', url: 'https://www.uminokyoto.jp/event/' },
+  { name: '天橋立観光協会 体験プログラム', url: 'https://www.amanohashidate.jp/taiken' },
+  { name: '京都府丹後広域振興局 月ごとのイベント情報', url: 'https://www.pref.kyoto.jp/tango/no-shoko/7gatu-ibento.html' },
+  { name: '智恩寺 年中行事', url: 'https://www.monjudo-chionji.jp/event/' },
+  { name: '成相寺 年中行事', url: 'https://www.nariaiji.jp/schedule/index.php' },
+  { name: '京都丹後鉄道 イベント情報', url: 'https://trains.willer.co.jp/event/' },
 ];
 
 export const mapConfig = {
@@ -43,4 +48,7 @@ export const categories = {
   festival: { label: 'まつり・催し', color: '#d9a21b' },
   volunteer: { label: 'ボランティア', color: '#2f8a5b' },
   consult: { label: '相談会', color: '#5f6f7a' },
+  tradition: { label: '寺社の行事', color: '#b0492f' },
+  train: { label: '列車・周遊', color: '#3d6a8c' },
+  experience: { label: '体験', color: '#1f8a8a' },
 };

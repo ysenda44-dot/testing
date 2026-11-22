@@ -30,13 +30,19 @@ Google Maps に切り替えたい場合は `src/components/MapView.jsx` を差�
 
 - 掲載するのは、**公式の告知ページで確認できた情報だけ**です。各イベントに `sourceUrl`（出典）と `verifiedAt`（確認日）を必ず付けます。
 - 公式情報に書かれていない項目は推測で埋めず、`null`（記載なし）にします。たとえば料金の記載がない催しは、「無料」フィルタをONにすると表示されません。
-- 2026年11月19日時点で確認できた **13件**（2026/11/19〜2027/3/27）を収録しています。
+- 2026年11月22日時点で、日付のある催し **20件**（〜2027/3/27）と、予約制の体験 **15件**を収録しています。
+- 寺社の年中行事のように毎年決まった日に行われ、今年の詳細が未発表のものは `annual: true` を付け、画面に「例年の行事」と表示します。
+- 体験（`src/data/experiences.js`）は日付を持たず、「イベント／体験」の切り替えで別の一覧に出します。実施日は公式の予約カレンダーに任せています。
 
 ### 情報源（イベント探しの巡回先）
 
 - [宮津市公式サイト「カレンダーでさがす」](https://www.city.miyazu.kyoto.jp/calendar/)（月切替：`/calendar/index.php?y=2026&m=12&d=1`）
 - [天橋立観光協会 イベント情報](https://www.amanohashidate.jp/events/)
 - [海の京都DMO イベント情報](https://www.uminokyoto.jp/event/)（エリア「宮津市」）
+- [天橋立観光協会 体験プログラム](https://www.amanohashidate.jp/taiken)
+- [京都府丹後広域振興局 月ごとのイベント情報](https://www.pref.kyoto.jp/tango/no-shoko/7gatu-ibento.html)（PDF。前年同月分は「例年」の手がかりになります）
+- [智恩寺 年中行事](https://www.monjudo-chionji.jp/event/)／[成相寺 年中行事](https://www.nariaiji.jp/schedule/index.php)
+- [京都丹後鉄道 イベント情報](https://trains.willer.co.jp/event/)
 
 ## イベントの追加方法
 

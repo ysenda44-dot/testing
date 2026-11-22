@@ -46,6 +46,7 @@ for (const e of events) {
     if (!Array.isArray(v) || !v.length || v.some((t) => !HM.test(t))) err(id, `hours.${k} は ['10:00', '12:00'] の形式です`);
   }
   for (const k of Object.keys(e.timeByDate || {})) if (!e.dates.includes(k)) err(id, `timeByDate の日付 ${k} が dates にありません`);
+  if (e.annual !== undefined && typeof e.annual !== 'boolean') err(id, 'annual は true / false です');
   if (e.priceChip !== undefined && typeof e.priceChip !== 'string') err(id, 'priceChip は文字列です');
   if (e.keywords !== undefined && !(Array.isArray(e.keywords) && e.keywords.every((k) => typeof k === 'string'))) err(id, 'keywords は文字列の配列です');
   for (const k of Object.keys(e.dateNotes || {})) if (!e.dates.includes(k)) err(id, `dateNotes の日付 ${k} が dates にありません`);
