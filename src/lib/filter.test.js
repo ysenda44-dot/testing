@@ -35,14 +35,14 @@ describe('passesFilters', () => {
     for (const r of ['required', 'closed', 'unknown']) expect(passesFilters({ ...base, reservation: r }, f)).toBe(false);
   });
 
-  it('居住者向けOFFで在住者向けを隠す', () => {
-    const f = { ...DEFAULT_FILTERS, residents: false };
+  it('「在住者向けを除く」で在住者向けを隠す', () => {
+    const f = { ...DEFAULT_FILTERS, hideResidents: true };
     expect(passesFilters({ ...base, residentsOnly: true }, f)).toBe(false);
     expect(passesFilters(base, f)).toBe(true);
   });
 
-  it('子ども向けOFFで子どもだけの催しを隠し、大人も対象なら残す', () => {
-    const f = { ...DEFAULT_FILTERS, kids: false };
+  it('「子ども向けを除く」で子どもだけの催しを隠し、大人も対象なら残す', () => {
+    const f = { ...DEFAULT_FILTERS, hideKids: true };
     expect(passesFilters({ ...base, ages: ['baby'] }, f)).toBe(false);
     expect(passesFilters({ ...base, ages: ['preschool', 'elementary'] }, f)).toBe(false);
     expect(passesFilters({ ...base, ages: ['elementary', 'adult'] }, f)).toBe(true);

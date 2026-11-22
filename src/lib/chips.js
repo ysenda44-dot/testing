@@ -10,14 +10,14 @@ export const RESERVATION = {
 export function eventChips(event) {
   const chips = [];
   if (event.reservation === 'closed') chips.push({ key: 'res', ...RESERVATION.closed });
-  if (event.annual) chips.push({ key: 'annual', tone: 'note', label: '例年の行事' });
+  if (event.annual) chips.push({ key: 'annual', tone: 'plain', label: '例年の行事' });
   if (event.priceChip) chips.push({ key: 'price', tone: 'plain', label: event.priceChip });
   else if (event.free === true) chips.push({ key: 'price', tone: 'ok', label: '無料' });
   else if (event.free === false) chips.push({ key: 'price', tone: 'plain', label: '有料' });
   if (event.reservation === 'required') chips.push({ key: 'res', ...RESERVATION.required });
-  if (event.reservation === 'none') chips.push({ key: 'res', ...RESERVATION.none });
+  if (event.reservation === 'none') chips.push({ key: 'res', tone: 'plain', label: RESERVATION.none.label });
   if (event.indoor === true) chips.push({ key: 'indoor', tone: 'plain', label: '屋内' });
   if (event.indoor === false) chips.push({ key: 'indoor', tone: 'plain', label: '屋外' });
-  if (event.residentsOnly) chips.push({ key: 'residents', tone: 'note', label: '在住者向け' });
+  if (event.residentsOnly) chips.push({ key: 'residents', tone: 'plain', label: '在住者向け' });
   return chips;
 }

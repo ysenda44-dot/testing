@@ -6,7 +6,6 @@ import EventCard from './components/EventCard.jsx';
 import ExperienceCard from './components/ExperienceCard.jsx';
 import InfoModal from './components/InfoModal.jsx';
 import Logo from './components/Logo.jsx';
-import Scenery from './components/Scenery.jsx';
 import Icon from './components/Icon.jsx';
 import { events } from './data/events.js';
 import { venues } from './data/venues.js';
@@ -71,6 +70,7 @@ export default function App() {
   const [filters, setFilters] = useState({ ...DEFAULT_FILTERS });
   const [activeEventId, setActiveEventId] = useState(initial.event);
   const [infoOpen, setInfoOpen] = useState(false);
+  const [filterOpen, setFilterOpen] = useState(false);
   const [toast, setToast] = useState('');
   const [sheet, setSheet] = useState('peek'); // スマホのパネル：peek | full
   const [favorites, toggleFavorite] = useFavorites(site.favoritesStorageKey);
@@ -180,13 +180,13 @@ export default function App() {
   // 地図のピン（会場ごとにまとめる）
   const markers = useMemo(() => {
     const map = new Map();
-    for (const { event, venue, kind } of items) {
+    for (const { event, venue, kind, date, status } of items) {
       const m = map.get(event.venueId);
       if (m) m.count += 1;
-      else {
-        const category = kind === 'exp' ? 'experience' : event.category;
-        map.set(event.venueId, { venueId: event.venueId, venue, count: 1, category });
-      }
+      else map.set(event.venueId, { venueId: event.venueId, venue, count: 1, kind: 'upcoming' });
+      const entry = map.get(event.venueId);
+      if (kind === 'exp') entry.kind = 'exp';
+      else if (date === today && status !== 'ended') entry.kind = 'today';
     }
     return [...map.values()];
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -283,7 +283,7 @@ export default function App() {
   if (mode === 'favorites') heading = 'お気に入り';
   else if (mode === 'search') heading = kw ? `「${kw}」の検索結果` : 'キーワードで探す';
   else if (mode === 'experiences') heading = '予約してできる体験';
-  else if (mode === 'date') heading = `${sel.month}月${sel.day}日のイベント`;
+  else if (mode === 'date') heading = `${sel.month}月${sel.day}日（${sel.holiday ? '祝' : sel.weekday}）のイベント`;
   else heading = 'これからのイベント';
 
   const acrossDates = mode !== 'date';
@@ -302,7 +302,6 @@ export default function App() {
         bottomInset={mapBottomInset}
         rightInset={mapRightInset}
       />
-      <Scenery />
 
       <header className="topbar">
         <h1 className="topbar__title">
@@ -339,51 +338,59 @@ export default function App() {
           </button>
         )}
 
-        <div className="tabs" role="group" aria-label="表示の切り替え">
-          <button
-            type="button"
-            className={`tabs__btn${mode !== 'experiences' ? ' tabs__btn--on' : ''}`}
-            aria-pressed={mode !== 'experiences'}
-            onClick={() => mode === 'experiences' && selectUpcoming()}
-          >
-            イベント
-          </button>
-          <button
-            type="button"
-            className={`tabs__btn${mode === 'experiences' ? ' tabs__btn--on' : ''}`}
-            aria-pressed={mode === 'experiences'}
-            onClick={() => {
-              setKeyword('');
-              setMode('experiences');
-              listRef.current?.scrollTo({ top: 0 });
-            }}
-          >
-            体験
-          </button>
-        </div>
-
-        <div className="panel__head">
-          <h2 className="panel__title" aria-live="polite">
-            {heading}
-            <span className="count">{items.length}件</span>
-          </h2>
-          {mode !== 'favorites' && mode !== 'experiences' && (
+        <div className="bar">
+          <div className="seg" role="group" aria-label="表示の切り替え">
             <button
               type="button"
-              className={`icon-btn${mode === 'search' ? ' icon-btn--on' : ''}`}
-              onClick={toggleSearch}
-              aria-label={mode === 'search' ? '検索を閉じる' : 'キーワード検索'}
-              aria-expanded={mode === 'search'}
+              className={`seg__btn${mode !== 'experiences' ? ' seg__btn--on' : ''}`}
+              aria-pressed={mode !== 'experiences'}
+              onClick={() => mode === 'experiences' && selectUpcoming()}
             >
-              <Icon name={mode === 'search' ? 'close' : 'search'} size={20} />
+              イベント
             </button>
-          )}
-          {mode === 'favorites' && (
-            <button type="button" className="link-button" onClick={toggleFavorites}>
-              一覧に戻る
+            <button
+              type="button"
+              className={`seg__btn${mode === 'experiences' ? ' seg__btn--on' : ''}`}
+              aria-pressed={mode === 'experiences'}
+              onClick={() => {
+                setKeyword('');
+                setFilterOpen(false);
+                setMode('experiences');
+                listRef.current?.scrollTo({ top: 0 });
+              }}
+            >
+              体験
             </button>
+          </div>
+          {mode !== 'favorites' && mode !== 'experiences' && (
+            <>
+              <button
+                type="button"
+                className={`icon-btn${filterOpen || filtersChanged ? ' icon-btn--on' : ''}`}
+                onClick={() => setFilterOpen((v) => !v)}
+                aria-label="絞り込み条件"
+                aria-expanded={filterOpen}
+                aria-controls="filters"
+              >
+                <Icon name="sliders" size={20} />
+                {filtersChanged && <span className="icon-btn__badge">{activeFilterCount(filters)}</span>}
+              </button>
+              <button
+                type="button"
+                className={`icon-btn${mode === 'search' ? ' icon-btn--on' : ''}`}
+                onClick={toggleSearch}
+                aria-label={mode === 'search' ? '検索を閉じる' : 'キーワード検索'}
+                aria-expanded={mode === 'search'}
+              >
+                <Icon name={mode === 'search' ? 'close' : 'search'} size={20} />
+              </button>
+            </>
           )}
         </div>
+
+        {filterOpen && mode !== 'favorites' && mode !== 'experiences' && (
+          <FilterBar filters={filters} onChange={setFilters} />
+        )}
 
         {mode === 'search' && (
           <div className="search">
@@ -427,13 +434,23 @@ export default function App() {
           />
         )}
 
-        {mode !== 'favorites' && mode !== 'experiences' && <FilterBar filters={filters} onChange={setFilters} />}
-
-        {mode === 'experiences' && (
-          <p className="panel__lead">日付の決まった催しとは別に、予約すれば参加できる体験です。実施日は公式の予約ページで確認してください。</p>
-        )}
-
         <div className="panel__list" ref={listRef}>
+          <div className="list-head">
+            <h2 className="panel__title" aria-live="polite">
+              {heading}
+              <span className="count">{items.length}件</span>
+            </h2>
+            {mode === 'favorites' && (
+              <button type="button" className="link-button" onClick={toggleFavorites}>
+                一覧に戻る
+              </button>
+            )}
+          </div>
+          {mode === 'experiences' && (
+            <p className="panel__lead">
+              日付の決まった催しとは別に、予約すれば参加できる体験です。実施日は公式の予約ページで確認してください。
+            </p>
+          )}
           {items.map(({ event, venue, date, status, kind }, i) => (
             <Fragment key={event.id}>
               {kind === 'exp' && (

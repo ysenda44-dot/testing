@@ -46,10 +46,11 @@ export default function InfoModal({ open, onClose, sources, lastVerified }) {
         <section>
           <h3>使い方</h3>
           <ul className="bullets">
-            <li>上の日付バーで日にちを選びます。点が付いている日はイベントがあります。</li>
-            <li>「屋内」「無料」「予約不要」をONにすると、その条件に合う催しだけになります。</li>
-            <li>「居住者向け」「子ども向け」をOFFにすると、市内在住者向け・子どもだけが対象の催しを隠します。</li>
-            <li>虫めがねボタンでキーワード検索、ハートでお気に入りに保存できます（この端末のブラウザに保存）。</li>
+            <li>開くと、これからのイベントが日付順に並びます。日付バーで日にちを選ぶと、その日の催しだけになります。</li>
+            <li>「体験」に切り替えると、予約すれば参加できる体験プログラムが見られます。</li>
+            <li>絞り込みボタンで「屋内」「無料」「予約不要」などの条件を付けられます。虫めがねでキーワード検索ができます。</li>
+            <li>地図のピンは、赤が今日ある催し、紺がこれからの催し、青緑が体験です。数字は件数で、押すと拡大して分かれます。</li>
+            <li>経路はカードの「経路」から Google マップで調べられます。ハートでお気に入りに保存できます（この端末のブラウザに保存）。</li>
           </ul>
         </section>
 
@@ -79,10 +80,11 @@ export default function InfoModal({ open, onClose, sources, lastVerified }) {
         <section>
           <h3>地図データ</h3>
           <p className="muted">
-            背景地図：
-            <a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank" rel="noopener noreferrer">
-              国土地理院 地理院タイル（淡色地図）
+            地図の下絵：
+            <a href="https://maps.gsi.go.jp/development/vt.html" target="_blank" rel="noopener noreferrer">
+              国土地理院ベクトルタイル
             </a>
+            から海・道路・鉄道・川・地名の位置を取り出し、独自の配色で描画
             ／ 行政区域：
             <a
               href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-2026.html"

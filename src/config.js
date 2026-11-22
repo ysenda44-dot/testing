@@ -26,18 +26,16 @@ export const dataSources = [
 export const mapConfig = {
   center: [35.548, 135.19],
   zoom: 13,
-  minZoom: 10,
-  maxZoom: 18,
-  // これより外へはスクロールしない（宮津市全体＋少し余白）
+  minZoom: 11,
+  maxZoom: 16.5,
+  // これより外へはスクロールしない（宮津市の範囲。詳細な下絵データがあるのはこの中だけ）
   maxBounds: [
-    [35.36, 134.98],
-    [35.79, 135.43],
+    [35.43, 135.09],
+    [35.72, 135.32],
   ],
-  // 国土地理院「淡色地図」タイル
-  tileUrl: 'https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png',
-  tileAttribution:
-    '<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank" rel="noopener">地理院タイル</a>',
-  boundaryAttribution: '行政区域：国土数値情報（国土交通省）を加工',
+  // 下絵は scripts/build-basemap.mjs で国土地理院ベクトルタイルから作ったもの
+  attribution:
+    '<a href="https://maps.gsi.go.jp/development/vt.html" target="_blank" rel="noopener">国土地理院ベクトルタイル</a>・国土数値情報（国土交通省）を加工',
 };
 
 export const categories = {
