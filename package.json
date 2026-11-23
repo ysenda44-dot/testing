@@ -1,0 +1,27 @@
+{
+  "name": "miyazu-mikke",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "宮津市のイベントを日付・条件・地図から探せるサイト",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run check-data && vite build",
+    "preview": "vite preview",
+    "check-data": "node scripts/check-data.mjs",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "japanese-holidays": "^1.0.10",
+    "leaflet": "^1.9.4",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@mapbox/vector-tile": "^3.0.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "pbf": "^5.2.0",
+    "vite": "^8.3.8",
+    "vitest": "^5.1.1"
+  }
+}

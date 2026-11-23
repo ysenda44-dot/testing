@@ -1,0 +1,32 @@
+import { site } from '../config.js';
+
+/** 天橋立（松並木の砂州）をかたどったマーク */
+export function Mark({ size = 40 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+      <circle cx="24" cy="24" r="23" fill="#0e4f80" />
+      <path d="M1.5 29c7-2 12 1.5 22.5 0s15-3 22.5-1.5V30A23 23 0 0 1 1.5 30Z" fill="#2f7fb8" />
+      <path d="M6 31.5c9-6 19-12 34-14.5-12 4.5-20 10-28 15.5Z" fill="#f6efe2" />
+      <g fill="#7cc79b">
+        <circle cx="14" cy="27" r="2.2" />
+        <circle cx="19" cy="23.6" r="2.2" />
+        <circle cx="24.2" cy="20.6" r="2.2" />
+        <circle cx="29.6" cy="18.4" r="2.1" />
+        <circle cx="34.8" cy="17" r="1.9" />
+      </g>
+      <circle cx="35" cy="10.5" r="3.2" fill="#ffd27a" />
+    </svg>
+  );
+}
+
+export default function Logo() {
+  return (
+    <div className="logo">
+      <Mark size={40} />
+      <div className="logo__text">
+        <span className="logo__name">{site.name}</span>
+        <span className="logo__tagline">{site.tagline}</span>
+      </div>
+    </div>
+  );
+}

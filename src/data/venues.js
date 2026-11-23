@@ -1,0 +1,111 @@
+// 会場マスター
+// coordinates は [緯度, 経度]。国土地理院「住所検索API」で住所から取得した値です。
+// 番地単位の代表点のため、建物の入口とは数十m ずれることがあります。
+
+export const venues = {
+  mipple: {
+    name: '宮津市福祉・教育総合プラザ（ミップル）',
+    shortName: 'ミップル',
+    address: '京都府宮津市字浜町3012',
+    coordinates: [35.539089, 135.193909],
+    addressSourceUrl: 'https://www.city.miyazu.kyoto.jp/site/tosyokan/17630.html',
+    note: '宮津市立図書館・浜町ギャラリー・コミュニティルームは3階です。',
+  },
+  rekishi: {
+    name: 'みやづ歴史の館',
+    shortName: 'みやづ歴史の館',
+    address: '京都府宮津市字鶴賀2164',
+    coordinates: [35.538624, 135.197601],
+    addressSourceUrl: 'https://www.city.miyazu.kyoto.jp/uploaded/life/31726_73453_misc.pdf',
+  },
+  mikami: {
+    name: '重要文化財 旧三上家住宅',
+    shortName: '旧三上家住宅',
+    address: '京都府宮津市字河原1850',
+    coordinates: [35.537952, 135.191269],
+    addressSourceUrl: 'https://online.bunka.go.jp/heritages/detail/196490',
+  },
+  hashidate: {
+    name: '天橋立公園',
+    shortName: '天橋立公園',
+    address: '京都府宮津市字文珠 天橋立公園',
+    // 文珠側の受付「小天橋」付近
+    coordinates: [35.557851, 135.185481],
+    addressSourceUrl: 'https://www.amanohashidate.jp/event/clean-hashidate20/',
+    note: '地図の位置は文珠側の受付（小天橋）付近です。府中側の受付は船越です。',
+  },
+  chionji: {
+    name: '智恩寺（文殊堂）',
+    shortName: '智恩寺',
+    address: '京都府宮津市字文珠466',
+    coordinates: [35.558655, 135.183365],
+    addressSourceUrl: 'https://www.monjudo-chionji.jp/event/',
+  },
+  nariaiji: {
+    name: '成相寺',
+    shortName: '成相寺',
+    address: '京都府宮津市成相寺339',
+    coordinates: [35.596767, 135.194458],
+    addressSourceUrl: 'https://www.nariaiji.jp/schedule/index.php',
+  },
+  hashidateStation: {
+    name: '京都丹後鉄道 天橋立駅',
+    shortName: '天橋立駅',
+    address: '京都府宮津市字文珠314-2',
+    coordinates: [35.55711, 135.18248],
+    addressSourceUrl: 'https://www.amanohashidate.jp/taiken/monju-2h/',
+  },
+  activityCenter: {
+    name: '天橋立アクティビティセンター',
+    shortName: '天橋立アクティビティセンター',
+    address: '京都府宮津市字中野934-1',
+    coordinates: [35.583263, 135.188751],
+    addressSourceUrl: 'https://www.amanohashidate.jp/taiken/sea-kayak/',
+    note: '地図の位置は「中野」地区の代表点で、建物の位置とはずれています。',
+  },
+  tsuruya: {
+    name: 'つるや食堂',
+    shortName: 'つるや食堂',
+    address: '京都府宮津市中野848',
+    coordinates: [35.5836, 135.1893],
+    addressSourceUrl: 'https://www.amanohashidate.jp/taiken/mizuhiki/',
+    note: '地図の位置は「中野」地区の代表点付近で、建物の位置とはずれています。',
+  },
+  infoStation: {
+    name: '天橋立観光情報ステーション（元伊勢籠神社 茶房かむながら内）',
+    shortName: '籠神社前 観光情報ステーション',
+    address: '京都府宮津市字大垣430',
+    coordinates: [35.582565, 135.196136],
+    addressSourceUrl: 'https://www.amanohashidate.jp/taiken/manaihara/',
+  },
+  kirakusou: {
+    name: '嬉楽創',
+    shortName: '嬉楽創',
+    address: '京都府宮津市日置578',
+    coordinates: [35.601284, 135.218643],
+    addressSourceUrl: 'https://www.amanohashidate.jp/taiken/kirakusou-lamp/',
+  },
+  aikaCraft: {
+    name: 'AIKA CRAFT',
+    shortName: 'AIKA CRAFT',
+    address: '京都府宮津市今福299',
+    coordinates: [35.509384, 135.189362],
+    addressSourceUrl: 'https://www.amanohashidate.jp/taiken/tougei/',
+  },
+  shimazakiPark: {
+    name: '島崎公園',
+    shortName: '島崎公園',
+    address: '京都府宮津市字島崎（宮津ミップル駐車場隣）',
+    coordinates: [35.537678, 135.196136],
+    addressSourceUrl: 'https://www.amanohashidate.jp/taiken/park-yoga/',
+    note: '地図の位置は「島崎」地区の代表点です。集合はリングのオブジェ前。',
+  },
+  kanabiki: {
+    name: '金引の滝',
+    shortName: '金引の滝',
+    address: '京都府宮津市字滝馬',
+    coordinates: [35.52647, 135.177383],
+    addressSourceUrl: 'https://www.amanohashidate.jp/taiken/takigyoutaiken/',
+    note: '地図の位置は「滝馬」地区の代表点で、滝の位置とはずれています。',
+  },
+};
