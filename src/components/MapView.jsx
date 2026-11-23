@@ -4,49 +4,11 @@ import 'leaflet/dist/leaflet.css';
 import { mapConfig } from '../config.js';
 import boundary from '../data/miyazu-boundary.json';
 import { labels } from '../data/basemap/labels.js';
+import { createBasemapLayer } from '../lib/basemapLayer.js';
 
-// 下絵は3段階。ズームに合わせて読み込み、自前の配色で描く
-const LEVELS = [
-  { name: 'wide', maxZoom: 11.5, load: () => import('../data/basemap/wide.json') },
-  { name: 'mid', maxZoom: 13.5, load: () => import('../data/basemap/mid.json') },
-  { name: 'detail', maxZoom: 99, load: () => import('../data/basemap/detail.json') },
-];
-const levelFor = (zoom) => LEVELS.find((l) => zoom <= l.maxZoom);
-
-const COLOR = {
-  sea: '#bfdcec',
-  river: '#a9cfe3',
-  roadCasing: '#e2d9c6',
-  road: '#ffffff',
-  rail: '#8b97a0',
-  boundary: '#0e4f80',
-};
 const PIN = { today: '#d9523a', upcoming: '#0e4f80', exp: '#1f8a8a' };
 
 const toLatLngs = (ring) => ring.map(([lng, lat]) => [lat, lng]);
-
-/** 1段階ぶんの下絵を、重ねる順にレイヤーにする */
-function buildLevel(data, renderer) {
-  const base = { renderer, interactive: false };
-  const line = (lines, style) => L.polyline(lines, { ...base, lineCap: 'round', lineJoin: 'round', ...style });
-  const g = L.layerGroup();
-  // 海の面はタイルごとに少し重なっている。既定の塗り方（evenodd）だと重なりが抜けるので nonzero にする
-  const water = { ...base, stroke: false, fillOpacity: 1, fillRule: 'nonzero' };
-  L.polygon(data.sea, { ...water, fillColor: COLOR.sea }).addTo(g);
-  if (data.lake.length) L.polygon(data.lake, { ...water, fillColor: COLOR.sea }).addTo(g);
-  if (data.river.length) line(data.river, { color: COLOR.river, weight: 1.2 }).addTo(g);
-  if (data.roadMinor.length) line(data.roadMinor, { color: COLOR.road, weight: 1.6 }).addTo(g);
-  if (data.roadMid.length) {
-    line(data.roadMid, { color: COLOR.roadCasing, weight: 3.6 }).addTo(g);
-    line(data.roadMid, { color: COLOR.road, weight: 2.2 }).addTo(g);
-  }
-  line(data.roadMajor, { color: COLOR.roadCasing, weight: 5 }).addTo(g);
-  line(data.roadMajor, { color: '#fff7e3', weight: 3.4 }).addTo(g);
-  if (data.ropeway.length) line(data.ropeway, { color: COLOR.rail, weight: 1, dashArray: '2 5' }).addTo(g);
-  line(data.rail, { color: COLOR.rail, weight: 2.6 }).addTo(g);
-  line(data.rail, { color: '#ffffff', weight: 1.2, dashArray: '7 7', lineCap: 'butt' }).addTo(g);
-  return g;
-}
 
 function pinHtml({ color, count, active }) {
   return `
@@ -96,59 +58,18 @@ export default function MapView({ markers, activeVenueId, onSelectVenue, bottomI
       minZoom: mapConfig.minZoom,
       maxZoom: mapConfig.maxZoom,
       maxBounds: mapConfig.maxBounds,
-      maxBoundsViscosity: 0.9,
+      maxBoundsViscosity: 0.7,
       zoomControl: false,
       attributionControl: false,
-      zoomSnap: 0.5,
     });
     L.control.attribution({ position: 'bottomleft', prefix: false }).addTo(map).addAttribution(mapConfig.attribution);
     L.control.zoom({ position: 'topleft', zoomInTitle: '拡大', zoomOutTitle: '縮小' }).addTo(map);
 
-    // 重ね順：市外を淡くする面 → 下絵（海・道路・線路） → 市境の線 → 地名
-    map.createPane('mask').style.zIndex = 150;
-    map.createPane('base').style.zIndex = 200;
-    map.createPane('outline').style.zIndex = 300;
+    // 下絵（海・道路・線路・市境）。タイル単位で描いて使い回す
+    createBasemapLayer({ minZoom: mapConfig.minZoom, maxZoom: mapConfig.maxZoom }).addTo(map);
     map.createPane('labels').style.zIndex = 450;
     map.getPane('labels').style.pointerEvents = 'none';
-    const baseRenderer = L.canvas({ pane: 'base', padding: 0.3 });
-
-    // 下絵：ズームに合う段階を読み込んで差し替える
-    const loaded = new Map();
-    let shown = null;
-    let alive = true;
-    const showLevel = async () => {
-      const level = levelFor(map.getZoom());
-      if (shown === level.name) return;
-      if (!loaded.has(level.name)) {
-        const mod = await level.load();
-        if (!alive) return;
-        loaded.set(level.name, buildLevel(mod.default, baseRenderer));
-      }
-      if (levelFor(map.getZoom()) !== level) return; // 読み込み中にズームが変わった
-      if (shown) map.removeLayer(loaded.get(shown));
-      loaded.get(level.name).addTo(map);
-      shown = level.name;
-    };
-
-    // 宮津市の外側を淡く覆い、市境を細い線で示す
-    const rings = boundary.geometry.coordinates.map((poly) => toLatLngs(poly[0]));
-    const world = [
-      [85, -180],
-      [85, 180],
-      [-85, 180],
-      [-85, -180],
-    ];
-    L.polygon([world, ...rings], { pane: 'mask', stroke: false, fillColor: '#ffffff', fillOpacity: 0.55, interactive: false }).addTo(map);
-    const outline = L.polygon(rings, {
-      pane: 'outline',
-      color: COLOR.boundary,
-      weight: 1.2,
-      opacity: 0.45,
-      dashArray: '2 5',
-      fill: false,
-      interactive: false,
-    }).addTo(map);
-    boundsRef.current = outline.getBounds();
+    boundsRef.current = L.latLngBounds(boundary.geometry.coordinates.flatMap((poly) => toLatLngs(poly[0])));
 
     // 地名
     const labelLayer = L.layerGroup().addTo(map);
@@ -170,7 +91,6 @@ export default function MapView({ markers, activeVenueId, onSelectVenue, bottomI
     mapRef.current = map;
 
     const onZoom = () => {
-      showLevel();
       drawLabels();
       drawPinsRef.current();
     };
@@ -180,7 +100,6 @@ export default function MapView({ markers, activeVenueId, onSelectVenue, bottomI
     const ro = new ResizeObserver(() => map.invalidateSize());
     ro.observe(el.current);
     return () => {
-      alive = false;
       ro.disconnect();
       map.remove();
     };
@@ -222,7 +141,7 @@ export default function MapView({ markers, activeVenueId, onSelectVenue, bottomI
           className: 'pin-tooltip',
         });
         marker.on('click', () => {
-          const canSplit = items.length > 1 && map.getZoom() < map.getMaxZoom() - 0.5;
+          const canSplit = items.length > 1 && map.getZoom() < map.getMaxZoom();
           if (canSplit) {
             const { bottom, right } = insetRef.current;
             map.flyToBounds(L.latLngBounds(items.map((m) => m.venue.coordinates)), {

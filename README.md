@@ -28,13 +28,15 @@
 
 ### 地図の下絵について
 
-`src/data/basemap/` の JSON は、国土地理院ベクトルタイルから宮津市周辺の海・湖・道路・鉄道・川だけを取り出したものです。広域・中域・詳細の3段階があり、ズームに合わせて読み込みます（圧縮後で合計約760KB、詳細は拡大したときだけ読み込み）。
+`src/data/basemap/` の JSON は、国土地理院ベクトルタイルから宮津市周辺の海・湖・道路・鉄道・川だけを取り出したものです。広域・中域・詳細の3段階があり、圧縮後で合計約710KBです。
+
+描画は `src/lib/basemapLayer.js` が担当します。普通の地図と同じく256px四方のタイル単位で描き、一度描いたタイルは使い回すので、ドラッグやズームのたびに全体を描き直しません。描画は1コマあたり数ミリ秒ずつに分けています。
 
 ```bash
 node scripts/build-basemap.mjs   # 下絵データを作り直す（curl で地理院のタイルを取得。.cache/ に保存）
 ```
 
-地名は `src/data/basemap/labels.js` で選んだものだけを載せています。色や線の太さは `src/components/MapView.jsx` の `COLOR` と `buildLevel` で変えられます。
+地名は `src/data/basemap/labels.js` で選んだものだけを載せています。色や線の太さは `src/lib/basemapLayer.js` の `COLOR` と `WIDTH` で変えられます。
 
 ## データの方針
 
