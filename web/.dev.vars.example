@@ -1,0 +1,3 @@
+# 手元で `npx wrangler dev` するときだけ使う。.dev.vars にコピーして使う（.dev.vars は git に入らない）
+ALLOW_UNAUTHENTICATED=true
+INGEST_TOKEN=dev-token

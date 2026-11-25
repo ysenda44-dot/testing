@@ -1,0 +1,9 @@
+node_modules/
+.wrangler/
+.dev.vars
+.clasp.json
+.DS_Store
+
+# 実データ（明細 CSV など）はリポジトリに入れない
+private/
+*.csv

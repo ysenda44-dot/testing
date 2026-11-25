@@ -1,0 +1,18 @@
+{
+  // Cloudflare Workers の設定。セットアップ手順は README.md を参照。
+  "name": "kakeibo",
+  "main": "src/worker.js",
+  "compatibility_date": "2025-06-01",
+  "workers_dev": true,
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS"
+  },
+  "kv_namespaces": [
+    {
+      "binding": "DATA",
+      // `npx wrangler kv namespace create DATA` で表示される id に置き換える
+      "id": "REPLACE_WITH_KV_NAMESPACE_ID"
+    }
+  ]
+}

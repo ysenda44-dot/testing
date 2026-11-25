@@ -1,0 +1,13 @@
+{
+  "name": "kakeibo",
+  "private": true,
+  "type": "module",
+  "description": "個人用の資産管理アプリ（GAS + Google Sheets + Cloudflare Workers）",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.js\"",
+    "sample": "node scripts/make-sample.mjs"
+  }
+}

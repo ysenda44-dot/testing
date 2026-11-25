@@ -1,0 +1,3389 @@
+{
+ "version": 1,
+ "generatedAt": "2026-11-25T07:00:00+09:00",
+ "classes": [
+  {
+   "id": "realestate",
+   "name": "不動産",
+   "color": "#e59bb5"
+  },
+  {
+   "id": "cash",
+   "name": "現金・預金",
+   "color": "#7fb08a"
+  },
+  {
+   "id": "fund",
+   "name": "債券・ファンド",
+   "color": "#6d9fc4"
+  },
+  {
+   "id": "stock",
+   "name": "上場株式",
+   "color": "#d98a4b"
+  },
+  {
+   "id": "private",
+   "name": "非上場株式",
+   "color": "#8d84c4"
+  },
+  {
+   "id": "point",
+   "name": "ポイント",
+   "color": "#e8a13a"
+  }
+ ],
+ "institutions": [
+  {
+   "id": "himawari",
+   "name": "ひまわり銀行",
+   "type": "bank",
+   "colors": [
+    "#0f6fb4",
+    "#0a4f82"
+   ],
+   "chip": "",
+   "accounts": [
+    {
+     "id": "himawari-futsu",
+     "name": "普通預金",
+     "assetClass": "cash",
+     "balance": 3352000,
+     "fxAmount": null,
+     "fxCurrency": "",
+     "asOf": "2026-11-25",
+     "source": "推定",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "komorebi",
+   "name": "こもれび銀行",
+   "type": "bank",
+   "colors": [
+    "#3f9e4d",
+    "#2c7a39"
+   ],
+   "chip": "",
+   "accounts": [
+    {
+     "id": "komorebi-futsu",
+     "name": "普通預金",
+     "assetClass": "cash",
+     "balance": 1380000,
+     "fxAmount": null,
+     "fxCurrency": "",
+     "asOf": "2026-11-10",
+     "source": "推定",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "akane",
+   "name": "あかね銀行",
+   "type": "bank",
+   "colors": [
+    "#c8102e",
+    "#9c0b23"
+   ],
+   "chip": "",
+   "accounts": [
+    {
+     "id": "akane-futsu",
+     "name": "普通預金",
+     "assetClass": "cash",
+     "balance": 3428400,
+     "fxAmount": null,
+     "fxCurrency": "",
+     "asOf": "2026-11-05",
+     "source": "推定",
+     "note": ""
+    },
+    {
+     "id": "akane-usd",
+     "name": "外貨普通預金",
+     "assetClass": "cash",
+     "balance": 1580000,
+     "fxAmount": 10367.45,
+     "fxCurrency": "USD",
+     "asOf": "2026-11-01",
+     "source": "手入力",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "hoshizora",
+   "name": "ほしぞら証券",
+   "type": "securities",
+   "colors": [
+    "#5c7a2e",
+    "#42591f"
+   ],
+   "chip": "",
+   "accounts": [
+    {
+     "id": "hoshizora-fund",
+     "name": "投資信託",
+     "assetClass": "fund",
+     "balance": 26600000,
+     "fxAmount": null,
+     "fxCurrency": "",
+     "asOf": "2026-11-24",
+     "source": "手入力",
+     "note": ""
+    },
+    {
+     "id": "hoshizora-jp",
+     "name": "国内株式",
+     "assetClass": "stock",
+     "balance": 9400000,
+     "fxAmount": null,
+     "fxCurrency": "",
+     "asOf": "2026-11-24",
+     "source": "手入力",
+     "note": ""
+    },
+    {
+     "id": "hoshizora-us",
+     "name": "米国株式",
+     "assetClass": "stock",
+     "balance": 8800000,
+     "fxAmount": null,
+     "fxCurrency": "",
+     "asOf": "2026-11-24",
+     "source": "手入力",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "tsubasa",
+   "name": "つばさカード",
+   "type": "card",
+   "colors": [
+    "#b9975b",
+    "#b9975b"
+   ],
+   "chip": "つばさ\nGOLD",
+   "accounts": [
+    {
+     "id": "tsubasa-gold",
+     "name": "ゴールド",
+     "assetClass": "liability",
+     "balance": -96527,
+     "fxAmount": null,
+     "fxCurrency": "",
+     "asOf": "2026-11-24",
+     "source": "推定",
+     "note": "毎月26日 引き落とし"
+    }
+   ]
+  },
+  {
+   "id": "sora",
+   "name": "そらカード",
+   "type": "card",
+   "colors": [
+    "#00a0e9",
+    "#00a0e9"
+   ],
+   "chip": "SORA\nCard",
+   "accounts": [
+    {
+     "id": "sora-family",
+     "name": "家族カード",
+     "assetClass": "liability",
+     "balance": -182881,
+     "fxAmount": null,
+     "fxCurrency": "",
+     "asOf": "2026-11-23",
+     "source": "推定",
+     "note": "毎月27日 引き落とし"
+    },
+    {
+     "id": "sora-personal",
+     "name": "個人カード",
+     "assetClass": "liability",
+     "balance": -56926,
+     "fxAmount": null,
+     "fxCurrency": "",
+     "asOf": "2026-11-10",
+     "source": "手入力",
+     "note": "毎月27日 引き落とし"
+    }
+   ]
+  },
+  {
+   "id": "samplepay",
+   "name": "サンプルPay",
+   "type": "emoney",
+   "colors": [
+    "#e60012",
+    "#e60012"
+   ],
+   "chip": "Pay",
+   "accounts": [
+    {
+     "id": "samplepay-balance",
+     "name": "残高",
+     "assetClass": "cash",
+     "balance": 15050,
+     "fxAmount": null,
+     "fxCurrency": "",
+     "asOf": "2026-11-24",
+     "source": "推定",
+     "note": ""
+    }
+   ]
+  },
+  {
+   "id": "manual",
+   "name": "自分で管理する資産",
+   "type": "other",
+   "colors": [
+    "#6b7686",
+    "#6b7686"
+   ],
+   "chip": "資産",
+   "accounts": [
+    {
+     "id": "home",
+     "name": "自宅マンション",
+     "assetClass": "realestate",
+     "balance": 52000000,
+     "fxAmount": null,
+     "fxCurrency": "",
+     "asOf": "2026-04-01",
+     "source": "手入力",
+     "note": "年1回見直し"
+    },
+    {
+     "id": "startup",
+     "name": "非上場株式",
+     "assetClass": "private",
+     "balance": 6500000,
+     "fxAmount": null,
+     "fxCurrency": "",
+     "asOf": "2026-06-30",
+     "source": "手入力",
+     "note": "エンジェル投資"
+    },
+    {
+     "id": "points",
+     "name": "ポイント",
+     "assetClass": "point",
+     "balance": 312000,
+     "fxAmount": null,
+     "fxCurrency": "",
+     "asOf": "2026-11-01",
+     "source": "手入力",
+     "note": ""
+    }
+   ]
+  }
+ ],
+ "transactions": [
+  {
+   "id": "sample-0075",
+   "date": "2026-11-25",
+   "time": "",
+   "accountId": "himawari-futsu",
+   "name": "給与 サンプル株式会社",
+   "amount": 512000,
+   "fx": "",
+   "category": "給与",
+   "subcategory": "本給",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0108",
+   "date": "2026-11-24",
+   "time": "19:17",
+   "accountId": "tsubasa-gold",
+   "name": "サンプルストア",
+   "amount": -587,
+   "fx": "",
+   "category": "未分類",
+   "subcategory": "未分類",
+   "status": "速報",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0098",
+   "date": "2026-11-24",
+   "time": "09:28",
+   "accountId": "samplepay-balance",
+   "name": "喫茶つばさ",
+   "amount": -1000,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "カフェ",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0095",
+   "date": "2026-11-24",
+   "time": "09:10",
+   "accountId": "samplepay-balance",
+   "name": "喫茶つばさ",
+   "amount": -440,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "カフェ",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0087",
+   "date": "2026-11-23",
+   "time": "18:35",
+   "accountId": "sora-family",
+   "name": "ひまわりマート",
+   "amount": -7240,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0089",
+   "date": "2026-11-22",
+   "time": "18:45",
+   "accountId": "sora-family",
+   "name": "ひまわりマート",
+   "amount": -4270,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0085",
+   "date": "2026-11-22",
+   "time": "18:25",
+   "accountId": "sora-family",
+   "name": "ひまわりマート",
+   "amount": -2340,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0091",
+   "date": "2026-11-21",
+   "time": "12:10",
+   "accountId": "tsubasa-gold",
+   "name": "ラーメンほしぞら",
+   "amount": -3660,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "外食",
+   "status": "速報",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0102",
+   "date": "2026-11-20",
+   "time": "",
+   "accountId": "tsubasa-gold",
+   "name": "交通系ICチャージ",
+   "amount": -3000,
+   "fx": "",
+   "category": "交通費",
+   "subcategory": "電車",
+   "status": "速報",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0104",
+   "date": "2026-11-20",
+   "time": "",
+   "accountId": "tsubasa-gold",
+   "name": "交通系ICチャージ",
+   "amount": -3000,
+   "fx": "",
+   "category": "交通費",
+   "subcategory": "電車",
+   "status": "速報",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0079",
+   "date": "2026-11-18",
+   "time": "",
+   "accountId": "tsubasa-gold",
+   "name": "サンプルガス",
+   "amount": -5280,
+   "fx": "",
+   "category": "水道・光熱費",
+   "subcategory": "ガス",
+   "status": "速報",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0094",
+   "date": "2026-11-17",
+   "time": "12:38",
+   "accountId": "tsubasa-gold",
+   "name": "ラーメンほしぞら",
+   "amount": -6140,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "外食",
+   "status": "速報",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0090",
+   "date": "2026-11-16",
+   "time": "18:50",
+   "accountId": "sora-family",
+   "name": "サンプルスーパー",
+   "amount": -6160,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0078",
+   "date": "2026-11-15",
+   "time": "",
+   "accountId": "tsubasa-gold",
+   "name": "サンプル電力",
+   "amount": -11300,
+   "fx": "",
+   "category": "水道・光熱費",
+   "subcategory": "電気",
+   "status": "速報",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0097",
+   "date": "2026-11-14",
+   "time": "09:22",
+   "accountId": "samplepay-balance",
+   "name": "喫茶つばさ",
+   "amount": -950,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "カフェ",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0081",
+   "date": "2026-11-14",
+   "time": "",
+   "accountId": "tsubasa-gold",
+   "name": "AIサブスク",
+   "amount": -15240,
+   "fx": "100.00 USD",
+   "category": "趣味・娯楽",
+   "subcategory": "サブスク",
+   "status": "速報",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0096",
+   "date": "2026-11-12",
+   "time": "09:16",
+   "accountId": "samplepay-balance",
+   "name": "サンプルカフェ",
+   "amount": -430,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "カフェ",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0076",
+   "date": "2026-11-10",
+   "time": "",
+   "accountId": "komorebi-futsu",
+   "name": "業務委託 報酬",
+   "amount": 120000,
+   "fx": "",
+   "category": "副収入",
+   "subcategory": "業務委託",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0092",
+   "date": "2026-11-09",
+   "time": "12:17",
+   "accountId": "tsubasa-gold",
+   "name": "サンプル食堂",
+   "amount": -5950,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "外食",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0100",
+   "date": "2026-11-09",
+   "time": "09:40",
+   "accountId": "samplepay-balance",
+   "name": "サンプルカフェ",
+   "amount": -550,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "カフェ",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0082",
+   "date": "2026-11-07",
+   "time": "18:10",
+   "accountId": "sora-family",
+   "name": "まちの八百屋",
+   "amount": -7640,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0086",
+   "date": "2026-11-06",
+   "time": "18:30",
+   "accountId": "sora-family",
+   "name": "サンプルスーパー",
+   "amount": -2270,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0084",
+   "date": "2026-11-06",
+   "time": "18:20",
+   "accountId": "sora-family",
+   "name": "サンプルスーパー",
+   "amount": -3450,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0083",
+   "date": "2026-11-05",
+   "time": "18:15",
+   "accountId": "sora-family",
+   "name": "ひまわりマート",
+   "amount": -3460,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0077",
+   "date": "2026-11-05",
+   "time": "",
+   "accountId": "akane-futsu",
+   "name": "ポイント交換",
+   "amount": 8400,
+   "fx": "",
+   "category": "ポイント・その他",
+   "subcategory": "ポイント",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0105",
+   "date": "2026-11-04",
+   "time": "",
+   "accountId": "sora-family",
+   "name": "サンプルドラッグ",
+   "amount": -1320,
+   "fx": "",
+   "category": "日用品",
+   "subcategory": "ドラッグストア",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0088",
+   "date": "2026-11-03",
+   "time": "18:40",
+   "accountId": "sora-family",
+   "name": "まちの八百屋",
+   "amount": -3160,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0093",
+   "date": "2026-11-03",
+   "time": "12:31",
+   "accountId": "tsubasa-gold",
+   "name": "ラーメンほしぞら",
+   "amount": -4540,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "外食",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0080",
+   "date": "2026-11-03",
+   "time": "",
+   "accountId": "sora-personal",
+   "name": "サンプル音楽配信",
+   "amount": -980,
+   "fx": "",
+   "category": "趣味・娯楽",
+   "subcategory": "映画・音楽・ゲーム",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0103",
+   "date": "2026-11-03",
+   "time": "",
+   "accountId": "sora-family",
+   "name": "サンプルドラッグ",
+   "amount": -1290,
+   "fx": "",
+   "category": "日用品",
+   "subcategory": "ドラッグストア",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0099",
+   "date": "2026-11-01",
+   "time": "09:34",
+   "accountId": "samplepay-balance",
+   "name": "喫茶つばさ",
+   "amount": -910,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "カフェ",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0101",
+   "date": "2026-11-01",
+   "time": "",
+   "accountId": "sora-family",
+   "name": "サンプルドラッグ",
+   "amount": -1360,
+   "fx": "",
+   "category": "日用品",
+   "subcategory": "ドラッグストア",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0106",
+   "date": "2026-11-01",
+   "time": "",
+   "accountId": "tsubasa-gold",
+   "name": "交通系ICチャージ",
+   "amount": -3000,
+   "fx": "",
+   "category": "交通費",
+   "subcategory": "電車",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0047",
+   "date": "2026-10-28",
+   "time": "18:10",
+   "accountId": "sora-family",
+   "name": "サンプルスーパー",
+   "amount": -4280,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0068",
+   "date": "2026-10-28",
+   "time": "",
+   "accountId": "tsubasa-gold",
+   "name": "交通系ICチャージ",
+   "amount": -3000,
+   "fx": "",
+   "category": "交通費",
+   "subcategory": "電車",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0064",
+   "date": "2026-10-27",
+   "time": "09:28",
+   "accountId": "samplepay-balance",
+   "name": "喫茶つばさ",
+   "amount": -950,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "カフェ",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0041",
+   "date": "2026-10-27",
+   "time": "",
+   "accountId": "himawari-futsu",
+   "name": "住宅ローン返済",
+   "amount": -112400,
+   "fx": "",
+   "category": "住宅",
+   "subcategory": "ローン返済",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0042",
+   "date": "2026-10-27",
+   "time": "",
+   "accountId": "himawari-futsu",
+   "name": "マンション管理費",
+   "amount": -32500,
+   "fx": "",
+   "category": "住宅",
+   "subcategory": "管理費・積立金",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0074",
+   "date": "2026-10-27",
+   "time": "",
+   "accountId": "akane-futsu",
+   "name": "そらカード 引き落とし",
+   "amount": -153850,
+   "fx": "",
+   "category": "振替",
+   "subcategory": "カード引き落とし",
+   "status": "確定",
+   "transfer": true,
+   "memo": ""
+  },
+  {
+   "id": "sample-0073",
+   "date": "2026-10-26",
+   "time": "",
+   "accountId": "himawari-futsu",
+   "name": "つばさカード 引き落とし",
+   "amount": -47720,
+   "fx": "",
+   "category": "振替",
+   "subcategory": "カード引き落とし",
+   "status": "確定",
+   "transfer": true,
+   "memo": ""
+  },
+  {
+   "id": "sample-0059",
+   "date": "2026-10-25",
+   "time": "12:31",
+   "accountId": "tsubasa-gold",
+   "name": "サンプル食堂",
+   "amount": -1970,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "外食",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0038",
+   "date": "2026-10-25",
+   "time": "",
+   "accountId": "himawari-futsu",
+   "name": "給与 サンプル株式会社",
+   "amount": 512000,
+   "fx": "",
+   "category": "給与",
+   "subcategory": "本給",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0072",
+   "date": "2026-10-25",
+   "time": "",
+   "accountId": "tsubasa-gold",
+   "name": "交通系ICチャージ",
+   "amount": -3000,
+   "fx": "",
+   "category": "交通費",
+   "subcategory": "電車",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0050",
+   "date": "2026-10-24",
+   "time": "18:25",
+   "accountId": "sora-family",
+   "name": "ひまわりマート",
+   "amount": -6090,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0070",
+   "date": "2026-10-20",
+   "time": "",
+   "accountId": "tsubasa-gold",
+   "name": "交通系ICチャージ",
+   "amount": -3000,
+   "fx": "",
+   "category": "交通費",
+   "subcategory": "電車",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0065",
+   "date": "2026-10-18",
+   "time": "09:34",
+   "accountId": "samplepay-balance",
+   "name": "喫茶つばさ",
+   "amount": -810,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "カフェ",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0044",
+   "date": "2026-10-18",
+   "time": "",
+   "accountId": "tsubasa-gold",
+   "name": "サンプルガス",
+   "amount": -5090,
+   "fx": "",
+   "category": "水道・光熱費",
+   "subcategory": "ガス",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0069",
+   "date": "2026-10-18",
+   "time": "",
+   "accountId": "sora-family",
+   "name": "サンプルドラッグ",
+   "amount": -1490,
+   "fx": "",
+   "category": "日用品",
+   "subcategory": "ドラッグストア",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0055",
+   "date": "2026-10-17",
+   "time": "18:50",
+   "accountId": "sora-family",
+   "name": "ひまわりマート",
+   "amount": -7720,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0056",
+   "date": "2026-10-17",
+   "time": "12:10",
+   "accountId": "tsubasa-gold",
+   "name": "サンプル食堂",
+   "amount": -1950,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "外食",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0051",
+   "date": "2026-10-15",
+   "time": "18:30",
+   "accountId": "sora-family",
+   "name": "まちの八百屋",
+   "amount": -5770,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0066",
+   "date": "2026-10-15",
+   "time": "09:40",
+   "accountId": "samplepay-balance",
+   "name": "サンプルカフェ",
+   "amount": -600,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "カフェ",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0043",
+   "date": "2026-10-15",
+   "time": "",
+   "accountId": "tsubasa-gold",
+   "name": "サンプル電力",
+   "amount": -10070,
+   "fx": "",
+   "category": "水道・光熱費",
+   "subcategory": "電気",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0052",
+   "date": "2026-10-14",
+   "time": "18:35",
+   "accountId": "sora-family",
+   "name": "サンプルスーパー",
+   "amount": -3410,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0058",
+   "date": "2026-10-14",
+   "time": "12:24",
+   "accountId": "tsubasa-gold",
+   "name": "ラーメンほしぞら",
+   "amount": -5060,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "外食",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0046",
+   "date": "2026-10-14",
+   "time": "",
+   "accountId": "tsubasa-gold",
+   "name": "AIサブスク",
+   "amount": -15240,
+   "fx": "100.00 USD",
+   "category": "趣味・娯楽",
+   "subcategory": "サブスク",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0060",
+   "date": "2026-10-13",
+   "time": "12:38",
+   "accountId": "tsubasa-gold",
+   "name": "定食屋こもれび",
+   "amount": -6630,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "外食",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0063",
+   "date": "2026-10-13",
+   "time": "09:22",
+   "accountId": "samplepay-balance",
+   "name": "喫茶つばさ",
+   "amount": -430,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "カフェ",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0107",
+   "date": "2026-10-12",
+   "time": "",
+   "accountId": "tsubasa-gold",
+   "name": "サンプル旅行社",
+   "amount": -57900,
+   "fx": "",
+   "category": "趣味・娯楽",
+   "subcategory": "旅行",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0048",
+   "date": "2026-10-10",
+   "time": "18:15",
+   "accountId": "sora-family",
+   "name": "サンプルスーパー",
+   "amount": -4490,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0061",
+   "date": "2026-10-10",
+   "time": "09:10",
+   "accountId": "samplepay-balance",
+   "name": "喫茶つばさ",
+   "amount": -860,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "カフェ",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0039",
+   "date": "2026-10-10",
+   "time": "",
+   "accountId": "komorebi-futsu",
+   "name": "業務委託 報酬",
+   "amount": 98872,
+   "fx": "",
+   "category": "副収入",
+   "subcategory": "業務委託",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0054",
+   "date": "2026-10-09",
+   "time": "18:45",
+   "accountId": "sora-family",
+   "name": "まちの八百屋",
+   "amount": -6940,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0071",
+   "date": "2026-10-09",
+   "time": "",
+   "accountId": "sora-family",
+   "name": "サンプルドラッグ",
+   "amount": -2920,
+   "fx": "",
+   "category": "日用品",
+   "subcategory": "ドラッグストア",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0040",
+   "date": "2026-10-05",
+   "time": "",
+   "accountId": "akane-futsu",
+   "name": "ポイント交換",
+   "amount": 5200,
+   "fx": "",
+   "category": "ポイント・その他",
+   "subcategory": "ポイント",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0057",
+   "date": "2026-10-03",
+   "time": "12:17",
+   "accountId": "tsubasa-gold",
+   "name": "ラーメンほしぞら",
+   "amount": -5220,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "外食",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0045",
+   "date": "2026-10-03",
+   "time": "",
+   "accountId": "sora-personal",
+   "name": "サンプル音楽配信",
+   "amount": -980,
+   "fx": "",
+   "category": "趣味・娯楽",
+   "subcategory": "映画・音楽・ゲーム",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0067",
+   "date": "2026-10-03",
+   "time": "",
+   "accountId": "sora-family",
+   "name": "サンプルドラッグ",
+   "amount": -1800,
+   "fx": "",
+   "category": "日用品",
+   "subcategory": "ドラッグストア",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0062",
+   "date": "2026-10-02",
+   "time": "09:16",
+   "accountId": "samplepay-balance",
+   "name": "サンプルカフェ",
+   "amount": -880,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "カフェ",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0053",
+   "date": "2026-10-01",
+   "time": "18:40",
+   "accountId": "sora-family",
+   "name": "ひまわりマート",
+   "amount": -5240,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0049",
+   "date": "2026-10-01",
+   "time": "18:20",
+   "accountId": "sora-family",
+   "name": "まちの八百屋",
+   "amount": -4590,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0027",
+   "date": "2026-09-27",
+   "time": "09:28",
+   "accountId": "samplepay-balance",
+   "name": "サンプルカフェ",
+   "amount": -690,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "カフェ",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0004",
+   "date": "2026-09-27",
+   "time": "",
+   "accountId": "himawari-futsu",
+   "name": "住宅ローン返済",
+   "amount": -112400,
+   "fx": "",
+   "category": "住宅",
+   "subcategory": "ローン返済",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0005",
+   "date": "2026-09-27",
+   "time": "",
+   "accountId": "himawari-futsu",
+   "name": "マンション管理費",
+   "amount": -32500,
+   "fx": "",
+   "category": "住宅",
+   "subcategory": "管理費・積立金",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0037",
+   "date": "2026-09-27",
+   "time": "",
+   "accountId": "akane-futsu",
+   "name": "そらカード 引き落とし",
+   "amount": -151560,
+   "fx": "",
+   "category": "振替",
+   "subcategory": "カード引き落とし",
+   "status": "確定",
+   "transfer": true,
+   "memo": ""
+  },
+  {
+   "id": "sample-0032",
+   "date": "2026-09-26",
+   "time": "",
+   "accountId": "sora-family",
+   "name": "サンプルドラッグ",
+   "amount": -3730,
+   "fx": "",
+   "category": "日用品",
+   "subcategory": "ドラッグストア",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0036",
+   "date": "2026-09-26",
+   "time": "",
+   "accountId": "himawari-futsu",
+   "name": "つばさカード 引き落とし",
+   "amount": -42150,
+   "fx": "",
+   "category": "振替",
+   "subcategory": "カード引き落とし",
+   "status": "確定",
+   "transfer": true,
+   "memo": ""
+  },
+  {
+   "id": "sample-0001",
+   "date": "2026-09-25",
+   "time": "",
+   "accountId": "himawari-futsu",
+   "name": "給与 サンプル株式会社",
+   "amount": 512000,
+   "fx": "",
+   "category": "給与",
+   "subcategory": "本給",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0015",
+   "date": "2026-09-24",
+   "time": "18:35",
+   "accountId": "sora-family",
+   "name": "まちの八百屋",
+   "amount": -4710,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0025",
+   "date": "2026-09-24",
+   "time": "09:16",
+   "accountId": "samplepay-balance",
+   "name": "サンプルカフェ",
+   "amount": -420,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "カフェ",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0023",
+   "date": "2026-09-23",
+   "time": "12:38",
+   "accountId": "tsubasa-gold",
+   "name": "定食屋こもれび",
+   "amount": -6220,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "外食",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0029",
+   "date": "2026-09-23",
+   "time": "09:40",
+   "accountId": "samplepay-balance",
+   "name": "喫茶つばさ",
+   "amount": -960,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "カフェ",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0034",
+   "date": "2026-09-23",
+   "time": "",
+   "accountId": "sora-family",
+   "name": "サンプルドラッグ",
+   "amount": -1460,
+   "fx": "",
+   "category": "日用品",
+   "subcategory": "ドラッグストア",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0017",
+   "date": "2026-09-22",
+   "time": "18:45",
+   "accountId": "sora-family",
+   "name": "まちの八百屋",
+   "amount": -6830,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0020",
+   "date": "2026-09-22",
+   "time": "12:17",
+   "accountId": "tsubasa-gold",
+   "name": "定食屋こもれび",
+   "amount": -4300,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "外食",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0013",
+   "date": "2026-09-20",
+   "time": "18:25",
+   "accountId": "sora-family",
+   "name": "まちの八百屋",
+   "amount": -4170,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0010",
+   "date": "2026-09-20",
+   "time": "18:10",
+   "accountId": "sora-family",
+   "name": "まちの八百屋",
+   "amount": -6140,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0022",
+   "date": "2026-09-19",
+   "time": "12:31",
+   "accountId": "tsubasa-gold",
+   "name": "ラーメンほしぞら",
+   "amount": -6320,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "外食",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0028",
+   "date": "2026-09-18",
+   "time": "09:34",
+   "accountId": "samplepay-balance",
+   "name": "喫茶つばさ",
+   "amount": -930,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "カフェ",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0007",
+   "date": "2026-09-18",
+   "time": "",
+   "accountId": "tsubasa-gold",
+   "name": "サンプルガス",
+   "amount": -5830,
+   "fx": "",
+   "category": "水道・光熱費",
+   "subcategory": "ガス",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0011",
+   "date": "2026-09-15",
+   "time": "18:15",
+   "accountId": "sora-family",
+   "name": "ひまわりマート",
+   "amount": -2290,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0006",
+   "date": "2026-09-15",
+   "time": "",
+   "accountId": "tsubasa-gold",
+   "name": "サンプル電力",
+   "amount": -10560,
+   "fx": "",
+   "category": "水道・光熱費",
+   "subcategory": "電気",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0026",
+   "date": "2026-09-14",
+   "time": "09:22",
+   "accountId": "samplepay-balance",
+   "name": "サンプルカフェ",
+   "amount": -540,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "カフェ",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0009",
+   "date": "2026-09-14",
+   "time": "",
+   "accountId": "tsubasa-gold",
+   "name": "AIサブスク",
+   "amount": -15240,
+   "fx": "100.00 USD",
+   "category": "趣味・娯楽",
+   "subcategory": "サブスク",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0024",
+   "date": "2026-09-12",
+   "time": "09:10",
+   "accountId": "samplepay-balance",
+   "name": "喫茶つばさ",
+   "amount": -530,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "カフェ",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0035",
+   "date": "2026-09-12",
+   "time": "",
+   "accountId": "tsubasa-gold",
+   "name": "交通系ICチャージ",
+   "amount": -3000,
+   "fx": "",
+   "category": "交通費",
+   "subcategory": "電車",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0002",
+   "date": "2026-09-10",
+   "time": "",
+   "accountId": "komorebi-futsu",
+   "name": "業務委託 報酬",
+   "amount": 86400,
+   "fx": "",
+   "category": "副収入",
+   "subcategory": "業務委託",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0016",
+   "date": "2026-09-08",
+   "time": "18:40",
+   "accountId": "sora-family",
+   "name": "まちの八百屋",
+   "amount": -2270,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0014",
+   "date": "2026-09-08",
+   "time": "18:30",
+   "accountId": "sora-family",
+   "name": "ひまわりマート",
+   "amount": -7400,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0012",
+   "date": "2026-09-07",
+   "time": "18:20",
+   "accountId": "sora-family",
+   "name": "ひまわりマート",
+   "amount": -7980,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0033",
+   "date": "2026-09-07",
+   "time": "",
+   "accountId": "tsubasa-gold",
+   "name": "交通系ICチャージ",
+   "amount": -3000,
+   "fx": "",
+   "category": "交通費",
+   "subcategory": "電車",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0003",
+   "date": "2026-09-05",
+   "time": "",
+   "accountId": "akane-futsu",
+   "name": "ポイント交換",
+   "amount": 8700,
+   "fx": "",
+   "category": "ポイント・その他",
+   "subcategory": "ポイント",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0018",
+   "date": "2026-09-04",
+   "time": "18:50",
+   "accountId": "sora-family",
+   "name": "サンプルスーパー",
+   "amount": -5900,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "食料品",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0008",
+   "date": "2026-09-03",
+   "time": "",
+   "accountId": "sora-personal",
+   "name": "サンプル音楽配信",
+   "amount": -980,
+   "fx": "",
+   "category": "趣味・娯楽",
+   "subcategory": "映画・音楽・ゲーム",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0030",
+   "date": "2026-09-03",
+   "time": "",
+   "accountId": "sora-family",
+   "name": "サンプルドラッグ",
+   "amount": -1610,
+   "fx": "",
+   "category": "日用品",
+   "subcategory": "ドラッグストア",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0031",
+   "date": "2026-09-03",
+   "time": "",
+   "accountId": "tsubasa-gold",
+   "name": "交通系ICチャージ",
+   "amount": -3000,
+   "fx": "",
+   "category": "交通費",
+   "subcategory": "電車",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0019",
+   "date": "2026-09-02",
+   "time": "12:10",
+   "accountId": "tsubasa-gold",
+   "name": "定食屋こもれび",
+   "amount": -4230,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "外食",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  },
+  {
+   "id": "sample-0021",
+   "date": "2026-09-01",
+   "time": "12:24",
+   "accountId": "tsubasa-gold",
+   "name": "サンプル食堂",
+   "amount": -4530,
+   "fx": "",
+   "category": "食費",
+   "subcategory": "外食",
+   "status": "確定",
+   "transfer": false,
+   "memo": ""
+  }
+ ],
+ "history": [
+  {
+   "date": "2017-12-31",
+   "values": {
+    "realestate": 45000000,
+    "cash": 3000000,
+    "fund": 1500000,
+    "stock": 800000,
+    "private": 0,
+    "point": 20000,
+    "liability": -80000
+   }
+  },
+  {
+   "date": "2018-01-31",
+   "values": {
+    "realestate": 45066769,
+    "cash": 3064437,
+    "fund": 1537059,
+    "stock": 822147,
+    "private": 0,
+    "point": 22785,
+    "liability": -82445
+   }
+  },
+  {
+   "date": "2018-02-28",
+   "values": {
+    "realestate": 45127077,
+    "cash": 3122637,
+    "fund": 1580544,
+    "stock": 849699,
+    "private": 0,
+    "point": 25301,
+    "liability": -84653
+   }
+  },
+  {
+   "date": "2018-03-31",
+   "values": {
+    "realestate": 45193846,
+    "cash": 3187074,
+    "fund": 1632557,
+    "stock": 884041,
+    "private": 0,
+    "point": 28086,
+    "liability": -87098
+   }
+  },
+  {
+   "date": "2018-04-30",
+   "values": {
+    "realestate": 45258462,
+    "cash": 3249432,
+    "fund": 1683676,
+    "stock": 919133,
+    "private": 0,
+    "point": 30782,
+    "liability": -89465
+   }
+  },
+  {
+   "date": "2018-05-31",
+   "values": {
+    "realestate": 45325231,
+    "cash": 3313869,
+    "fund": 1736892,
+    "stock": 956825,
+    "private": 0,
+    "point": 33567,
+    "liability": -91910
+   }
+  },
+  {
+   "date": "2018-06-30",
+   "values": {
+    "realestate": 45389846,
+    "cash": 3376227,
+    "fund": 1790742,
+    "stock": 995565,
+    "private": 0,
+    "point": 36262,
+    "liability": -94276
+   }
+  },
+  {
+   "date": "2018-07-31",
+   "values": {
+    "realestate": 45456615,
+    "cash": 3440663,
+    "fund": 1852421,
+    "stock": 1039803,
+    "private": 0,
+    "point": 39047,
+    "liability": -96721
+   }
+  },
+  {
+   "date": "2018-08-31",
+   "values": {
+    "realestate": 45523385,
+    "cash": 3505100,
+    "fund": 1924076,
+    "stock": 1090422,
+    "private": 0,
+    "point": 41833,
+    "liability": -99166
+   }
+  },
+  {
+   "date": "2018-09-30",
+   "values": {
+    "realestate": 45588000,
+    "cash": 3567458,
+    "fund": 2005307,
+    "stock": 1146859,
+    "private": 0,
+    "point": 44528,
+    "liability": -101532
+   }
+  },
+  {
+   "date": "2018-10-31",
+   "values": {
+    "realestate": 45654769,
+    "cash": 3631894,
+    "fund": 2101495,
+    "stock": 1212920,
+    "private": 0,
+    "point": 47313,
+    "liability": -103977
+   }
+  },
+  {
+   "date": "2018-11-30",
+   "values": {
+    "realestate": 45719385,
+    "cash": 3694252,
+    "fund": 2203635,
+    "stock": 1282781,
+    "private": 0,
+    "point": 50009,
+    "liability": -106343
+   }
+  },
+  {
+   "date": "2018-12-31",
+   "values": {
+    "realestate": 45786154,
+    "cash": 3758689,
+    "fund": 2313286,
+    "stock": 1358045,
+    "private": 0,
+    "point": 52794,
+    "liability": -108788
+   }
+  },
+  {
+   "date": "2019-01-31",
+   "values": {
+    "realestate": 45852923,
+    "cash": 3823126,
+    "fund": 2420886,
+    "stock": 1432707,
+    "private": 0,
+    "point": 55579,
+    "liability": -111233
+   }
+  },
+  {
+   "date": "2019-02-28",
+   "values": {
+    "realestate": 45913231,
+    "cash": 3881326,
+    "fund": 2511981,
+    "stock": 1496943,
+    "private": 0,
+    "point": 58095,
+    "liability": -113442
+   }
+  },
+  {
+   "date": "2019-03-31",
+   "values": {
+    "realestate": 45980000,
+    "cash": 3945763,
+    "fund": 2604020,
+    "stock": 1563117,
+    "private": 0,
+    "point": 60880,
+    "liability": -115887
+   }
+  },
+  {
+   "date": "2019-04-30",
+   "values": {
+    "realestate": 46044615,
+    "cash": 4008121,
+    "fund": 2685921,
+    "stock": 1623038,
+    "private": 0,
+    "point": 63575,
+    "liability": -118253
+   }
+  },
+  {
+   "date": "2019-05-31",
+   "values": {
+    "realestate": 46111385,
+    "cash": 4072558,
+    "fund": 2768785,
+    "stock": 1683995,
+    "private": 0,
+    "point": 66361,
+    "liability": -120698
+   }
+  },
+  {
+   "date": "2019-06-30",
+   "values": {
+    "realestate": 46176000,
+    "cash": 4134916,
+    "fund": 2855158,
+    "stock": 1746828,
+    "private": 0,
+    "point": 69056,
+    "liability": -123064
+   }
+  },
+  {
+   "date": "2019-07-31",
+   "values": {
+    "realestate": 46242769,
+    "cash": 4199352,
+    "fund": 2959314,
+    "stock": 1821002,
+    "private": 0,
+    "point": 71841,
+    "liability": -125509
+   }
+  },
+  {
+   "date": "2019-08-31",
+   "values": {
+    "realestate": 46309538,
+    "cash": 4263789,
+    "fund": 3084852,
+    "stock": 1908553,
+    "private": 0,
+    "point": 74626,
+    "liability": -127954
+   }
+  },
+  {
+   "date": "2019-09-30",
+   "values": {
+    "realestate": 46374154,
+    "cash": 4326147,
+    "fund": 3228358,
+    "stock": 2007207,
+    "private": 0,
+    "point": 77322,
+    "liability": -130320
+   }
+  },
+  {
+   "date": "2019-10-31",
+   "values": {
+    "realestate": 46440923,
+    "cash": 4390583,
+    "fund": 3395908,
+    "stock": 2121523,
+    "private": 0,
+    "point": 80107,
+    "liability": -132765
+   }
+  },
+  {
+   "date": "2019-11-30",
+   "values": {
+    "realestate": 46505538,
+    "cash": 4452941,
+    "fund": 3569290,
+    "stock": 2239596,
+    "private": 0,
+    "point": 82802,
+    "liability": -135132
+   }
+  },
+  {
+   "date": "2019-12-31",
+   "values": {
+    "realestate": 46572308,
+    "cash": 4517378,
+    "fund": 3750515,
+    "stock": 2363323,
+    "private": 0,
+    "point": 85588,
+    "liability": -137577
+   }
+  },
+  {
+   "date": "2020-01-31",
+   "values": {
+    "realestate": 46639077,
+    "cash": 4581815,
+    "fund": 3925548,
+    "stock": 2483522,
+    "private": 0,
+    "point": 88373,
+    "liability": -140022
+   }
+  },
+  {
+   "date": "2020-02-29",
+   "values": {
+    "realestate": 46701538,
+    "cash": 4642094,
+    "fund": 4080144,
+    "stock": 2590445,
+    "private": 0,
+    "point": 90978,
+    "liability": -142309
+   }
+  },
+  {
+   "date": "2020-03-31",
+   "values": {
+    "realestate": 46768308,
+    "cash": 4706531,
+    "fund": 4237619,
+    "stock": 2700012,
+    "private": 0,
+    "point": 93764,
+    "liability": -144754
+   }
+  },
+  {
+   "date": "2020-04-30",
+   "values": {
+    "realestate": 46832923,
+    "cash": 4768889,
+    "fund": 4389583,
+    "stock": 2805933,
+    "private": 0,
+    "point": 96459,
+    "liability": -147120
+   }
+  },
+  {
+   "date": "2020-05-31",
+   "values": {
+    "realestate": 46899692,
+    "cash": 4833325,
+    "fund": 4557091,
+    "stock": 2922250,
+    "private": 0,
+    "point": 99244,
+    "liability": -149565
+   }
+  },
+  {
+   "date": "2020-06-30",
+   "values": {
+    "realestate": 46964308,
+    "cash": 4895683,
+    "fund": 4739453,
+    "stock": 3048004,
+    "private": 0,
+    "point": 101940,
+    "liability": -151931
+   }
+  },
+  {
+   "date": "2020-07-31",
+   "values": {
+    "realestate": 47031077,
+    "cash": 4960120,
+    "fund": 4955094,
+    "stock": 3195711,
+    "private": 0,
+    "point": 104725,
+    "liability": -154376
+   }
+  },
+  {
+   "date": "2020-08-31",
+   "values": {
+    "realestate": 47097846,
+    "cash": 5024556,
+    "fund": 5197421,
+    "stock": 3360969,
+    "private": 0,
+    "point": 107510,
+    "liability": -156821
+   }
+  },
+  {
+   "date": "2020-09-30",
+   "values": {
+    "realestate": 47162462,
+    "cash": 5086914,
+    "fund": 5448837,
+    "stock": 3532189,
+    "private": 0,
+    "point": 110206,
+    "liability": -159187
+   }
+  },
+  {
+   "date": "2020-10-31",
+   "values": {
+    "realestate": 47229231,
+    "cash": 5151351,
+    "fund": 5711319,
+    "stock": 3711229,
+    "private": 0,
+    "point": 112991,
+    "liability": -161633
+   }
+  },
+  {
+   "date": "2020-11-30",
+   "values": {
+    "realestate": 47293846,
+    "cash": 5213709,
+    "fund": 5951965,
+    "stock": 3876118,
+    "private": 0,
+    "point": 115686,
+    "liability": -163999
+   }
+  },
+  {
+   "date": "2020-12-31",
+   "values": {
+    "realestate": 47360615,
+    "cash": 5278146,
+    "fund": 6173237,
+    "stock": 4028897,
+    "private": 0,
+    "point": 118471,
+    "liability": -166444
+   }
+  },
+  {
+   "date": "2021-01-31",
+   "values": {
+    "realestate": 47427385,
+    "cash": 5342582,
+    "fund": 6360498,
+    "stock": 4159612,
+    "private": 0,
+    "point": 121257,
+    "liability": -168889
+   }
+  },
+  {
+   "date": "2021-02-28",
+   "values": {
+    "realestate": 47487692,
+    "cash": 5400783,
+    "fund": 6503351,
+    "stock": 4260522,
+    "private": 0,
+    "point": 123772,
+    "liability": -171097
+   }
+  },
+  {
+   "date": "2021-03-31",
+   "values": {
+    "realestate": 47554462,
+    "cash": 5465220,
+    "fund": 6644058,
+    "stock": 4360783,
+    "private": 0,
+    "point": 126558,
+    "liability": -173542
+   }
+  },
+  {
+   "date": "2021-04-30",
+   "values": {
+    "realestate": 47619077,
+    "cash": 5527578,
+    "fund": 6779212,
+    "stock": 4457096,
+    "private": 0,
+    "point": 129253,
+    "liability": -175908
+   }
+  },
+  {
+   "date": "2021-05-31",
+   "values": {
+    "realestate": 47685846,
+    "cash": 5592014,
+    "fund": 6935260,
+    "stock": 4567361,
+    "private": 0,
+    "point": 132038,
+    "liability": -178353
+   }
+  },
+  {
+   "date": "2021-06-30",
+   "values": {
+    "realestate": 47750462,
+    "cash": 5654372,
+    "fund": 7113338,
+    "stock": 4691904,
+    "private": 0,
+    "point": 134734,
+    "liability": -180720
+   }
+  },
+  {
+   "date": "2021-07-31",
+   "values": {
+    "realestate": 47817231,
+    "cash": 5718809,
+    "fund": 7327279,
+    "stock": 4840403,
+    "private": 0,
+    "point": 137519,
+    "liability": -183165
+   }
+  },
+  {
+   "date": "2021-08-31",
+   "values": {
+    "realestate": 47884000,
+    "cash": 5783245,
+    "fund": 7562764,
+    "stock": 5003243,
+    "private": 0,
+    "point": 140304,
+    "liability": -185610
+   }
+  },
+  {
+   "date": "2021-09-30",
+   "values": {
+    "realestate": 47948615,
+    "cash": 5845603,
+    "fund": 7795122,
+    "stock": 5163905,
+    "private": 0,
+    "point": 142999,
+    "liability": -187976
+   }
+  },
+  {
+   "date": "2021-10-31",
+   "values": {
+    "realestate": 48015385,
+    "cash": 5910040,
+    "fund": 8021059,
+    "stock": 5320641,
+    "private": 0,
+    "point": 145785,
+    "liability": -190421
+   }
+  },
+  {
+   "date": "2021-11-30",
+   "values": {
+    "realestate": 48080000,
+    "cash": 5972398,
+    "fund": 8212425,
+    "stock": 5454280,
+    "private": 0,
+    "point": 148480,
+    "liability": -192787
+   }
+  },
+  {
+   "date": "2021-12-31",
+   "values": {
+    "realestate": 48146769,
+    "cash": 6036835,
+    "fund": 8378098,
+    "stock": 5571076,
+    "private": 0,
+    "point": 151265,
+    "liability": -195232
+   }
+  },
+  {
+   "date": "2022-01-31",
+   "values": {
+    "realestate": 48213538,
+    "cash": 6101271,
+    "fund": 8520421,
+    "stock": 5672304,
+    "private": 0,
+    "point": 154050,
+    "liability": -197677
+   }
+  },
+  {
+   "date": "2022-02-28",
+   "values": {
+    "realestate": 48273846,
+    "cash": 6159472,
+    "fund": 8646204,
+    "stock": 5761841,
+    "private": 0,
+    "point": 156566,
+    "liability": -199885
+   }
+  },
+  {
+   "date": "2022-03-31",
+   "values": {
+    "realestate": 48340615,
+    "cash": 6223909,
+    "fund": 8807129,
+    "stock": 5875365,
+    "private": 0,
+    "point": 159351,
+    "liability": -202330
+   }
+  },
+  {
+   "date": "2022-04-30",
+   "values": {
+    "realestate": 48405231,
+    "cash": 6286267,
+    "fund": 9007352,
+    "stock": 6014907,
+    "private": 0,
+    "point": 162047,
+    "liability": -204697
+   }
+  },
+  {
+   "date": "2022-05-31",
+   "values": {
+    "realestate": 48472000,
+    "cash": 6350703,
+    "fund": 9275258,
+    "stock": 6199909,
+    "private": 0,
+    "point": 164832,
+    "liability": -207142
+   }
+  },
+  {
+   "date": "2022-06-30",
+   "values": {
+    "realestate": 48536615,
+    "cash": 6413061,
+    "fund": 9593954,
+    "stock": 6418806,
+    "private": 0,
+    "point": 167527,
+    "liability": -209508
+   }
+  },
+  {
+   "date": "2022-07-31",
+   "values": {
+    "realestate": 48603385,
+    "cash": 6477498,
+    "fund": 9969599,
+    "stock": 6676190,
+    "private": 0,
+    "point": 170313,
+    "liability": -211953
+   }
+  },
+  {
+   "date": "2022-08-31",
+   "values": {
+    "realestate": 48670154,
+    "cash": 6541934,
+    "fund": 10365272,
+    "stock": 6947210,
+    "private": 0,
+    "point": 173098,
+    "liability": -214398
+   }
+  },
+  {
+   "date": "2022-09-30",
+   "values": {
+    "realestate": 48734769,
+    "cash": 6604292,
+    "fund": 10738026,
+    "stock": 7202888,
+    "private": 0,
+    "point": 175793,
+    "liability": -216764
+   }
+  },
+  {
+   "date": "2022-10-31",
+   "values": {
+    "realestate": 48801538,
+    "cash": 6668729,
+    "fund": 11088252,
+    "stock": 7443817,
+    "private": 0,
+    "point": 178578,
+    "liability": -219209
+   }
+  },
+  {
+   "date": "2022-11-30",
+   "values": {
+    "realestate": 48866154,
+    "cash": 6731087,
+    "fund": 11382734,
+    "stock": 7647256,
+    "private": 0,
+    "point": 181274,
+    "liability": -221575
+   }
+  },
+  {
+   "date": "2022-12-31",
+   "values": {
+    "realestate": 48932923,
+    "cash": 6795524,
+    "fund": 11646854,
+    "stock": 7830555,
+    "private": 0,
+    "point": 184059,
+    "liability": -224020
+   }
+  },
+  {
+   "date": "2023-01-31",
+   "values": {
+    "realestate": 48999692,
+    "cash": 6859960,
+    "fund": 11891121,
+    "stock": 8000543,
+    "private": 0,
+    "point": 186844,
+    "liability": -226465
+   }
+  },
+  {
+   "date": "2023-02-28",
+   "values": {
+    "realestate": 49060000,
+    "cash": 6918161,
+    "fund": 12118883,
+    "stock": 8158906,
+    "private": 0,
+    "point": 189360,
+    "liability": -228674
+   }
+  },
+  {
+   "date": "2023-03-31",
+   "values": {
+    "realestate": 49126769,
+    "cash": 6982598,
+    "fund": 12403797,
+    "stock": 8356328,
+    "private": 0,
+    "point": 192145,
+    "liability": -231119
+   }
+  },
+  {
+   "date": "2023-04-30",
+   "values": {
+    "realestate": 49191385,
+    "cash": 7044956,
+    "fund": 12726103,
+    "stock": 8578837,
+    "private": 0,
+    "point": 194841,
+    "liability": -233485
+   }
+  },
+  {
+   "date": "2023-05-31",
+   "values": {
+    "realestate": 49258154,
+    "cash": 7109392,
+    "fund": 13104449,
+    "stock": 8839409,
+    "private": 0,
+    "point": 197626,
+    "liability": -235930
+   }
+  },
+  {
+   "date": "2023-06-30",
+   "values": {
+    "realestate": 49322769,
+    "cash": 7171750,
+    "fund": 13494040,
+    "stock": 9107519,
+    "private": 4014000,
+    "point": 200321,
+    "liability": -238296
+   }
+  },
+  {
+   "date": "2023-07-31",
+   "values": {
+    "realestate": 49389538,
+    "cash": 7236187,
+    "fund": 13886676,
+    "stock": 9377987,
+    "private": 4076000,
+    "point": 203106,
+    "liability": -240741
+   }
+  },
+  {
+   "date": "2023-08-31",
+   "values": {
+    "realestate": 49456308,
+    "cash": 7300623,
+    "fund": 14231850,
+    "stock": 9616506,
+    "private": 4138000,
+    "point": 205892,
+    "liability": -243186
+   }
+  },
+  {
+   "date": "2023-09-30",
+   "values": {
+    "realestate": 49520923,
+    "cash": 7362981,
+    "fund": 14494109,
+    "stock": 9798878,
+    "private": 4198000,
+    "point": 208587,
+    "liability": -245552
+   }
+  },
+  {
+   "date": "2023-10-31",
+   "values": {
+    "realestate": 49587692,
+    "cash": 7427418,
+    "fund": 14682437,
+    "stock": 9931428,
+    "private": 4260000,
+    "point": 211372,
+    "liability": -247997
+   }
+  },
+  {
+   "date": "2023-11-30",
+   "values": {
+    "realestate": 49652308,
+    "cash": 7489776,
+    "fund": 14798405,
+    "stock": 10014808,
+    "private": 4320000,
+    "point": 214068,
+    "liability": -250364
+   }
+  },
+  {
+   "date": "2023-12-31",
+   "values": {
+    "realestate": 49719077,
+    "cash": 7554213,
+    "fund": 14883807,
+    "stock": 10077574,
+    "private": 4382000,
+    "point": 216853,
+    "liability": -252809
+   }
+  },
+  {
+   "date": "2024-01-31",
+   "values": {
+    "realestate": 49785846,
+    "cash": 7618649,
+    "fund": 14979288,
+    "stock": 10147067,
+    "private": 4444000,
+    "point": 219638,
+    "liability": -255254
+   }
+  },
+  {
+   "date": "2024-02-29",
+   "values": {
+    "realestate": 49848308,
+    "cash": 7678929,
+    "fund": 15115589,
+    "stock": 10243831,
+    "private": 4502000,
+    "point": 222244,
+    "liability": -257541
+   }
+  },
+  {
+   "date": "2024-03-31",
+   "values": {
+    "realestate": 49915077,
+    "cash": 7743365,
+    "fund": 15337150,
+    "stock": 10398647,
+    "private": 4564000,
+    "point": 225029,
+    "liability": -259986
+   }
+  },
+  {
+   "date": "2024-04-30",
+   "values": {
+    "realestate": 49979692,
+    "cash": 7805723,
+    "fund": 15629408,
+    "stock": 10601260,
+    "private": 4624000,
+    "point": 227724,
+    "liability": -262352
+   }
+  },
+  {
+   "date": "2024-05-31",
+   "values": {
+    "realestate": 50046462,
+    "cash": 7870160,
+    "fund": 15991634,
+    "stock": 10851530,
+    "private": 4686000,
+    "point": 230510,
+    "liability": -264797
+   }
+  },
+  {
+   "date": "2024-06-30",
+   "values": {
+    "realestate": 50111077,
+    "cash": 7932518,
+    "fund": 16365013,
+    "stock": 11109293,
+    "private": 4746000,
+    "point": 233205,
+    "liability": -267163
+   }
+  },
+  {
+   "date": "2024-07-31",
+   "values": {
+    "realestate": 50177846,
+    "cash": 7996954,
+    "fund": 16733311,
+    "stock": 11363819,
+    "private": 4808000,
+    "point": 235990,
+    "liability": -269608
+   }
+  },
+  {
+   "date": "2024-08-31",
+   "values": {
+    "realestate": 50244615,
+    "cash": 8061391,
+    "fund": 17052543,
+    "stock": 11585074,
+    "private": 4870000,
+    "point": 238775,
+    "liability": -272053
+   }
+  },
+  {
+   "date": "2024-09-30",
+   "values": {
+    "realestate": 50309231,
+    "cash": 8123749,
+    "fund": 17305937,
+    "stock": 11761479,
+    "private": 4930000,
+    "point": 241471,
+    "liability": -274419
+   }
+  },
+  {
+   "date": "2024-10-31",
+   "values": {
+    "realestate": 50376000,
+    "cash": 8188186,
+    "fund": 17527484,
+    "stock": 11916374,
+    "private": 4992000,
+    "point": 244256,
+    "liability": -276865
+   }
+  },
+  {
+   "date": "2024-11-30",
+   "values": {
+    "realestate": 50440615,
+    "cash": 8250544,
+    "fund": 17740024,
+    "stock": 12064992,
+    "private": 5052000,
+    "point": 246951,
+    "liability": -279231
+   }
+  },
+  {
+   "date": "2024-12-31",
+   "values": {
+    "realestate": 50507385,
+    "cash": 8314980,
+    "fund": 18006270,
+    "stock": 12250266,
+    "private": 5114000,
+    "point": 249737,
+    "liability": -281676
+   }
+  },
+  {
+   "date": "2025-01-31",
+   "values": {
+    "realestate": 50574154,
+    "cash": 8379417,
+    "fund": 18362923,
+    "stock": 12497072,
+    "private": 5176000,
+    "point": 252522,
+    "liability": -284121
+   }
+  },
+  {
+   "date": "2025-02-28",
+   "values": {
+    "realestate": 50634462,
+    "cash": 8437618,
+    "fund": 18781423,
+    "stock": 12785631,
+    "private": 5232000,
+    "point": 255038,
+    "liability": -286329
+   }
+  },
+  {
+   "date": "2025-03-31",
+   "values": {
+    "realestate": 50701231,
+    "cash": 8502054,
+    "fund": 19344274,
+    "stock": 13172955,
+    "private": 5294000,
+    "point": 257823,
+    "liability": -288774
+   }
+  },
+  {
+   "date": "2025-04-30",
+   "values": {
+    "realestate": 50765846,
+    "cash": 8564412,
+    "fund": 19954198,
+    "stock": 13592338,
+    "private": 5354000,
+    "point": 260518,
+    "liability": -291140
+   }
+  },
+  {
+   "date": "2025-05-31",
+   "values": {
+    "realestate": 50832615,
+    "cash": 8628849,
+    "fund": 20595302,
+    "stock": 14033237,
+    "private": 5416000,
+    "point": 263303,
+    "liability": -293585
+   }
+  },
+  {
+   "date": "2025-06-30",
+   "values": {
+    "realestate": 50897231,
+    "cash": 8691207,
+    "fund": 21167927,
+    "stock": 14427475,
+    "private": 5476000,
+    "point": 265999,
+    "liability": -295952
+   }
+  },
+  {
+   "date": "2025-07-31",
+   "values": {
+    "realestate": 50964000,
+    "cash": 8755643,
+    "fund": 21662994,
+    "stock": 14769084,
+    "private": 5538000,
+    "point": 268784,
+    "liability": -298397
+   }
+  },
+  {
+   "date": "2025-08-31",
+   "values": {
+    "realestate": 51030769,
+    "cash": 8820080,
+    "fund": 22040249,
+    "stock": 15030429,
+    "private": 5600000,
+    "point": 271569,
+    "liability": -300842
+   }
+  },
+  {
+   "date": "2025-09-30",
+   "values": {
+    "realestate": 51095385,
+    "cash": 8882438,
+    "fund": 22306793,
+    "stock": 15216156,
+    "private": 5660000,
+    "point": 274265,
+    "liability": -303208
+   }
+  },
+  {
+   "date": "2025-10-31",
+   "values": {
+    "realestate": 51162154,
+    "cash": 8946875,
+    "fund": 22523062,
+    "stock": 15367703,
+    "private": 5722000,
+    "point": 277050,
+    "liability": -305653
+   }
+  },
+  {
+   "date": "2025-11-30",
+   "values": {
+    "realestate": 51226769,
+    "cash": 9009233,
+    "fund": 22729507,
+    "stock": 15512393,
+    "private": 5782000,
+    "point": 279745,
+    "liability": -308019
+   }
+  },
+  {
+   "date": "2025-12-31",
+   "values": {
+    "realestate": 51293538,
+    "cash": 9073669,
+    "fund": 22991900,
+    "stock": 15695376,
+    "private": 5844000,
+    "point": 282530,
+    "liability": -310464
+   }
+  },
+  {
+   "date": "2026-01-31",
+   "values": {
+    "realestate": 51360308,
+    "cash": 9138106,
+    "fund": 23334016,
+    "stock": 15932785,
+    "private": 5906000,
+    "point": 285316,
+    "liability": -312909
+   }
+  },
+  {
+   "date": "2026-02-28",
+   "values": {
+    "realestate": 51420615,
+    "cash": 9196307,
+    "fund": 23709003,
+    "stock": 16192294,
+    "private": 5962000,
+    "point": 287831,
+    "liability": -315117
+   }
+  },
+  {
+   "date": "2026-03-31",
+   "values": {
+    "realestate": 51487385,
+    "cash": 9260743,
+    "fund": 24163719,
+    "stock": 16506662,
+    "private": 6024000,
+    "point": 290617,
+    "liability": -317562
+   }
+  },
+  {
+   "date": "2026-04-30",
+   "values": {
+    "realestate": 51552000,
+    "cash": 9323101,
+    "fund": 24590247,
+    "stock": 16801698,
+    "private": 6084000,
+    "point": 293312,
+    "liability": -319929
+   }
+  },
+  {
+   "date": "2026-05-31",
+   "values": {
+    "realestate": 51618769,
+    "cash": 9387538,
+    "fund": 24957400,
+    "stock": 17056316,
+    "private": 6146000,
+    "point": 296097,
+    "liability": -322374
+   }
+  },
+  {
+   "date": "2026-06-30",
+   "values": {
+    "realestate": 51683385,
+    "cash": 9449896,
+    "fund": 25201122,
+    "stock": 17226463,
+    "private": 6206000,
+    "point": 298793,
+    "liability": -324740
+   }
+  },
+  {
+   "date": "2026-07-31",
+   "values": {
+    "realestate": 51750154,
+    "cash": 9514332,
+    "fund": 25328979,
+    "stock": 17317494,
+    "private": 6268000,
+    "point": 301578,
+    "liability": -327185
+   }
+  },
+  {
+   "date": "2026-08-31",
+   "values": {
+    "realestate": 51816923,
+    "cash": 9578769,
+    "fund": 25362218,
+    "stock": 17343772,
+    "private": 6330000,
+    "point": 304363,
+    "liability": -329630
+   }
+  },
+  {
+   "date": "2026-09-30",
+   "values": {
+    "realestate": 51881538,
+    "cash": 9641127,
+    "fund": 25365685,
+    "stock": 17349503,
+    "private": 6390000,
+    "point": 307058,
+    "liability": -331996
+   }
+  },
+  {
+   "date": "2026-10-31",
+   "values": {
+    "realestate": 51948308,
+    "cash": 9705564,
+    "fund": 25418171,
+    "stock": 17388802,
+    "private": 6452000,
+    "point": 309844,
+    "liability": -334441
+   }
+  },
+  {
+   "date": "2026-11-01",
+   "values": {
+    "realestate": 51950462,
+    "cash": 9707642,
+    "fund": 25421557,
+    "stock": 17391226,
+    "private": 6454000,
+    "point": 309934,
+    "liability": -334520
+   }
+  },
+  {
+   "date": "2026-11-02",
+   "values": {
+    "realestate": 51952615,
+    "cash": 9709721,
+    "fund": 25425073,
+    "stock": 17393740,
+    "private": 6456000,
+    "point": 310023,
+    "liability": -334599
+   }
+  },
+  {
+   "date": "2026-11-03",
+   "values": {
+    "realestate": 51954769,
+    "cash": 9711799,
+    "fund": 25428722,
+    "stock": 17396345,
+    "private": 6458000,
+    "point": 310113,
+    "liability": -334678
+   }
+  },
+  {
+   "date": "2026-11-04",
+   "values": {
+    "realestate": 51956923,
+    "cash": 9713878,
+    "fund": 25432506,
+    "stock": 17399042,
+    "private": 6460000,
+    "point": 310203,
+    "liability": -334757
+   }
+  },
+  {
+   "date": "2026-11-05",
+   "values": {
+    "realestate": 51959077,
+    "cash": 9715957,
+    "fund": 25436427,
+    "stock": 17401832,
+    "private": 6462000,
+    "point": 310293,
+    "liability": -334835
+   }
+  },
+  {
+   "date": "2026-11-06",
+   "values": {
+    "realestate": 51961231,
+    "cash": 9718035,
+    "fund": 25440486,
+    "stock": 17404718,
+    "private": 6464000,
+    "point": 310383,
+    "liability": -334914
+   }
+  },
+  {
+   "date": "2026-11-07",
+   "values": {
+    "realestate": 51963385,
+    "cash": 9720114,
+    "fund": 25444687,
+    "stock": 17407699,
+    "private": 6466000,
+    "point": 310473,
+    "liability": -334993
+   }
+  },
+  {
+   "date": "2026-11-08",
+   "values": {
+    "realestate": 51965538,
+    "cash": 9722192,
+    "fund": 25449030,
+    "stock": 17410778,
+    "private": 6468000,
+    "point": 310562,
+    "liability": -335072
+   }
+  },
+  {
+   "date": "2026-11-09",
+   "values": {
+    "realestate": 51967692,
+    "cash": 9724271,
+    "fund": 25453517,
+    "stock": 17413956,
+    "private": 6470000,
+    "point": 310652,
+    "liability": -335151
+   }
+  },
+  {
+   "date": "2026-11-10",
+   "values": {
+    "realestate": 51969846,
+    "cash": 9726350,
+    "fund": 25458150,
+    "stock": 17417233,
+    "private": 6472000,
+    "point": 310742,
+    "liability": -335230
+   }
+  },
+  {
+   "date": "2026-11-11",
+   "values": {
+    "realestate": 51972000,
+    "cash": 9728428,
+    "fund": 25462931,
+    "stock": 17420612,
+    "private": 6474000,
+    "point": 310832,
+    "liability": -335309
+   }
+  },
+  {
+   "date": "2026-11-12",
+   "values": {
+    "realestate": 51974154,
+    "cash": 9730507,
+    "fund": 25467861,
+    "stock": 17424093,
+    "private": 6476000,
+    "point": 310922,
+    "liability": -335388
+   }
+  },
+  {
+   "date": "2026-11-13",
+   "values": {
+    "realestate": 51976308,
+    "cash": 9732585,
+    "fund": 25472943,
+    "stock": 17427677,
+    "private": 6478000,
+    "point": 311012,
+    "liability": -335466
+   }
+  },
+  {
+   "date": "2026-11-14",
+   "values": {
+    "realestate": 51978462,
+    "cash": 9734664,
+    "fund": 25478177,
+    "stock": 17431366,
+    "private": 6480000,
+    "point": 311102,
+    "liability": -335545
+   }
+  },
+  {
+   "date": "2026-11-15",
+   "values": {
+    "realestate": 51980615,
+    "cash": 9736743,
+    "fund": 25483566,
+    "stock": 17435160,
+    "private": 6482000,
+    "point": 311191,
+    "liability": -335624
+   }
+  },
+  {
+   "date": "2026-11-16",
+   "values": {
+    "realestate": 51982769,
+    "cash": 9738821,
+    "fund": 25489110,
+    "stock": 17439061,
+    "private": 6484000,
+    "point": 311281,
+    "liability": -335703
+   }
+  },
+  {
+   "date": "2026-11-17",
+   "values": {
+    "realestate": 51984923,
+    "cash": 9740900,
+    "fund": 25494811,
+    "stock": 17443069,
+    "private": 6486000,
+    "point": 311371,
+    "liability": -335782
+   }
+  },
+  {
+   "date": "2026-11-18",
+   "values": {
+    "realestate": 51987077,
+    "cash": 9742978,
+    "fund": 25500671,
+    "stock": 17447185,
+    "private": 6488000,
+    "point": 311461,
+    "liability": -335861
+   }
+  },
+  {
+   "date": "2026-11-19",
+   "values": {
+    "realestate": 51989231,
+    "cash": 9745057,
+    "fund": 25506691,
+    "stock": 17451411,
+    "private": 6490000,
+    "point": 311551,
+    "liability": -335940
+   }
+  },
+  {
+   "date": "2026-11-20",
+   "values": {
+    "realestate": 51991385,
+    "cash": 9747136,
+    "fund": 25512872,
+    "stock": 17455748,
+    "private": 6492000,
+    "point": 311641,
+    "liability": -336019
+   }
+  },
+  {
+   "date": "2026-11-21",
+   "values": {
+    "realestate": 51993538,
+    "cash": 9749214,
+    "fund": 25519216,
+    "stock": 17460195,
+    "private": 6494000,
+    "point": 311730,
+    "liability": -336097
+   }
+  },
+  {
+   "date": "2026-11-22",
+   "values": {
+    "realestate": 51995692,
+    "cash": 9751293,
+    "fund": 25525724,
+    "stock": 17464755,
+    "private": 6496000,
+    "point": 311820,
+    "liability": -336176
+   }
+  },
+  {
+   "date": "2026-11-23",
+   "values": {
+    "realestate": 51997846,
+    "cash": 9753371,
+    "fund": 25532396,
+    "stock": 17469427,
+    "private": 6498000,
+    "point": 311910,
+    "liability": -336255
+   }
+  },
+  {
+   "date": "2026-11-24",
+   "values": {
+    "realestate": 52000000,
+    "cash": 9755450,
+    "fund": 25539235,
+    "stock": 17474214,
+    "private": 6500000,
+    "point": 312000,
+    "liability": -336334
+   }
+  },
+  {
+   "date": "2026-11-25",
+   "values": {
+    "realestate": 52000000,
+    "cash": 9755450,
+    "fund": 26600000,
+    "stock": 18200000,
+    "private": 6500000,
+    "point": 312000,
+    "liability": -336334
+   }
+  }
+ ],
+ "warnings": []
+}

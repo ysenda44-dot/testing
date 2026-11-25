@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" href="data:," />
+<title>資産管理</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#e9ebee; --shell:#ffffff; --surface:#ffffff; --surface2:#f6f7f8; --line:#e6e8eb;
+    --text:#1c2430; --sub:#6b7686; --faint:#9aa3b0;
+    --accent:#f08300; --accent-soft:#fff3e2;
+    --blue:#1f7ae0; --red:#e5484d; --green:#2f9e63;
+    --shadow:0 18px 50px rgba(20,30,50,.18);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0d1117; --shell:#161b22; --surface:#1b212b; --surface2:#212936; --line:#2b3442;
+      --text:#eef1f5; --sub:#9aa7b8; --faint:#6e7b8d;
+      --accent:#ff9a2e; --accent-soft:#33240f;
+      --shadow:0 18px 50px rgba(0,0,0,.5);
+      color-scheme: dark;
+    }
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+  html,body{height:100%}
+  body{margin:0; background:var(--bg); font-family:"Noto Sans JP",-apple-system,"Hiragino Kaku Gothic ProN",sans-serif; color:var(--text); display:flex; align-items:center; justify-content:center}
+  button{font-family:inherit; cursor:pointer; border:none; background:none; color:inherit; min-height:36px}
+  .shell{position:relative; width:100%; max-width:430px; height:100dvh; background:var(--shell); display:flex; flex-direction:column; overflow:hidden}
+  @media (min-width:560px){
+    .shell{height:min(880px,94dvh); border-radius:30px; box-shadow:var(--shadow); border:1px solid var(--line)}
+  }
+  .views{flex:1; overflow:hidden; position:relative}
+  .view{position:absolute; inset:0; overflow-y:auto; padding-bottom:18px; display:none; scrollbar-width:none}
+  .view::-webkit-scrollbar{display:none}
+  .view.active{display:block}
+  .appbar{position:sticky; top:0; z-index:5; background:var(--shell); padding:14px 18px 10px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line)}
+  .appbar h1{font-size:19px; font-weight:900; margin:0; letter-spacing:.02em}
+  .appbar .tools{display:flex; gap:4px; align-items:center}
+  .iconbtn{width:38px; height:38px; border-radius:50%; display:grid; place-items:center; color:var(--sub)}
+  .iconbtn:active{background:var(--surface2)}
+  .iconbtn svg{width:20px; height:20px}
+  .dummy{display:none; align-items:center; gap:5px; font-size:10px; font-weight:700; letter-spacing:.08em; color:var(--accent); background:var(--accent-soft); border:1px solid color-mix(in srgb, var(--accent) 35%, transparent); padding:4px 8px; border-radius:999px}
+  .dummy::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--accent)}
+  body.demo .dummy{display:inline-flex}
+  .updated{font-size:10.5px; color:var(--faint); padding:6px 18px 0}
+  .note{font-size:11px; color:var(--faint); padding:10px 18px 0; line-height:1.6}
+  .empty{font-size:13px; color:var(--sub); padding:28px 18px; text-align:center; line-height:1.7}
+  /* 入出金 */
+  .searchbar{padding:10px 16px 4px; display:none}
+  .searchbar.open{display:block}
+  .searchbar input{width:100%; height:42px; border-radius:10px; border:1px solid var(--line); background:var(--surface2); padding:0 14px; font-size:16px; color:var(--text); outline:none}
+  .datehead{display:flex; justify-content:space-between; align-items:baseline; padding:16px 18px 4px; font-size:12px; color:var(--sub); font-weight:700}
+  .datehead .dsum{font-weight:500; color:var(--faint); font-size:11px}
+  .tx{display:flex; align-items:center; gap:12px; padding:10px 18px; width:100%; text-align:left}
+  .tx .ic{flex:none; width:38px; height:38px; border-radius:50%; display:grid; place-items:center; color:#fff}
+  .tx .ic svg{width:19px; height:19px}
+  .tx .mid{flex:1; min-width:0}
+  .tx .name{display:block; font-size:14.5px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .tx .meta{display:block; font-size:11px; color:var(--faint); margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .tx .tag{display:inline-block; font-size:9.5px; font-weight:700; color:var(--accent); border:1px solid color-mix(in srgb, var(--accent) 45%, transparent); border-radius:4px; padding:0 4px; margin-right:4px; vertical-align:1px}
+  .tx .amt{text-align:right; flex:none}
+  .tx .amt .v{display:block; font-size:14.5px; font-weight:700; font-variant-numeric:tabular-nums}
+  .tx .amt .fx{display:block; font-size:10.5px; color:var(--faint); font-variant-numeric:tabular-nums}
+  .tx .amt.income .v{color:var(--blue)}
+  .tx .amt.transfer .v{color:var(--faint)}
+  .monthtotal{margin:14px 16px 2px; background:var(--surface2); border-radius:12px; padding:12px 16px; display:flex; justify-content:space-between; font-size:13px}
+  .monthtotal b{font-variant-numeric:tabular-nums}
+  .morebtn{display:block; margin:12px auto 0; padding:0 18px; height:38px; border-radius:999px; background:var(--surface2); font-size:13px; font-weight:700; color:var(--sub)}
+  /* 家計簿 */
+  .monthnav{display:flex; align-items:center; justify-content:space-between; padding:12px 12px 2px}
+  .monthnav .cur{font-size:16px; font-weight:900; text-align:center}
+  .monthnav .cur small{display:block; font-size:10.5px; color:var(--faint); font-weight:500}
+  .arrowbtn{width:40px; height:40px; border-radius:50%; display:grid; place-items:center; color:var(--sub)}
+  .arrowbtn:disabled{opacity:.25; cursor:default}
+  .arrowbtn svg{width:20px; height:20px}
+  .seg{display:flex; background:var(--surface2); border-radius:999px; padding:3px; margin:10px 16px 0}
+  .seg button{flex:1; height:36px; border-radius:999px; font-size:13.5px; font-weight:700; color:var(--sub)}
+  .seg button.on{background:var(--surface); color:var(--text); box-shadow:0 1px 4px rgba(0,0,0,.14)}
+  .donutwrap{display:flex; align-items:center; gap:8px; padding:18px 18px 6px}
+  .donutbox{position:relative; width:168px; height:168px; flex:none}
+  .donutbox svg{transform:rotate(-90deg)}
+  .donutcenter{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center}
+  .donutcenter .lb{font-size:11px; color:var(--sub)}
+  .donutcenter .vl{font-size:19px; font-weight:900; font-variant-numeric:tabular-nums}
+  .summary{flex:1; display:flex; flex-direction:column; gap:9px; padding-left:8px}
+  .summary .row{display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px dashed var(--line); padding-bottom:7px}
+  .summary .row:last-child{border-bottom:none}
+  .summary .k{font-size:12.5px; color:var(--sub)}
+  .summary .v{font-size:15.5px; font-weight:800; font-variant-numeric:tabular-nums}
+  .summary .v.inc{color:var(--blue)} .summary .v.exp{color:var(--red)}
+  .catlist{padding:6px 8px 0}
+  .cat{display:block; width:100%; text-align:left; padding:9px 10px; border-radius:10px}
+  .cat:active{background:var(--surface2)}
+  .cat .r1{display:flex; align-items:center; gap:9px}
+  .cat .dot{width:10px; height:10px; border-radius:3px; flex:none}
+  .cat .nm{flex:1; font-size:14px; font-weight:500}
+  .cat .pc{font-size:11px; color:var(--faint); font-variant-numeric:tabular-nums}
+  .cat .am{font-size:14.5px; font-weight:700; font-variant-numeric:tabular-nums}
+  .cat .bar{display:block; height:4px; border-radius:2px; background:var(--surface2); margin:7px 0 0 19px; overflow:hidden}
+  .cat .bar i{display:block; height:100%; border-radius:2px}
+  .cat .subs{display:none; padding:6px 0 2px 19px}
+  .cat.open .subs{display:block}
+  .cat .sub{display:flex; justify-content:space-between; font-size:12.5px; color:var(--sub); padding:4px 0}
+  .cat .sub b{color:var(--text); font-weight:500; font-variant-numeric:tabular-nums}
+  /* 口座 */
+  .netcard{margin:14px 16px 4px; background:linear-gradient(135deg,#243b55,#3c5a7d); color:#fff; border-radius:16px; padding:18px}
+  .netcard .lb{font-size:11.5px; opacity:.75}
+  .netcard .big{font-size:29px; font-weight:900; font-variant-numeric:tabular-nums; margin:3px 0 2px}
+  .netcard .diff{font-size:12px; opacity:.9}
+  .secttl{font-size:12px; font-weight:700; color:var(--sub); padding:18px 18px 8px; letter-spacing:.04em}
+  .bank{margin:0 16px 12px; border-radius:14px; overflow:hidden; color:#fff}
+  .bank .bhead{display:flex; justify-content:space-between; align-items:center; padding:13px 16px 9px; font-weight:800; font-size:15px}
+  .bank .acct{display:flex; justify-content:space-between; align-items:baseline; padding:7px 16px; border-top:1px solid rgba(255,255,255,.22)}
+  .bank .acct:last-child{padding-bottom:13px}
+  .bank .acct .an{font-size:13px; opacity:.92}
+  .bank .acct .av{text-align:right}
+  .bank .acct .av .j{display:block; font-size:15px; font-weight:700; font-variant-numeric:tabular-nums}
+  .bank .acct .av .f{display:block; font-size:10.5px; opacity:.75; font-variant-numeric:tabular-nums}
+  .bank .upd{font-size:10px; opacity:.7; font-weight:500}
+  .banktotal{display:flex; justify-content:space-between; align-items:baseline; margin:0 16px 2px; padding:2px 2px 0; font-size:12.5px; color:var(--sub)}
+  .banktotal b{color:var(--text); font-size:13.5px; font-variant-numeric:tabular-nums}
+  .cardrow{display:flex; align-items:center; gap:12px; margin:0 16px 10px; background:var(--surface2); border-radius:12px; padding:13px 15px}
+  .cardrow .chip{flex:none; width:42px; height:30px; border-radius:6px; display:grid; place-items:center; color:#fff; font-size:9px; font-weight:900; letter-spacing:.03em; text-align:center; line-height:1.25; white-space:pre-line; overflow:hidden}
+  .cardrow .cm{flex:1; min-width:0}
+  .cardrow .cn{display:block; font-size:13.5px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .cardrow .cd{display:block; font-size:11px; color:var(--faint)}
+  .cardrow .ca{text-align:right; flex:none}
+  .cardrow .ca .v{display:block; font-size:14.5px; font-weight:800; font-variant-numeric:tabular-nums}
+  .cardrow .ca .d{display:block; font-size:10.5px; color:var(--faint)}
+  /* 資産 */
+  .astotal{padding:16px 18px 0}
+  .astotal .lb{font-size:11.5px; color:var(--sub); display:flex; gap:14px}
+  .astotal .big{font-size:31px; font-weight:900; font-variant-numeric:tabular-nums; margin:2px 0 6px}
+  .astotal .chips{display:flex; flex-wrap:wrap; gap:6px 16px; font-size:12px; color:var(--sub)}
+  .astotal .chips b{font-variant-numeric:tabular-nums; font-weight:700}
+  .up{color:var(--blue)} .down{color:var(--red)} .flat{color:var(--faint)}
+  .periods{display:flex; gap:6px; padding:14px 16px 0; align-items:center}
+  .periods .plabel{font-size:11.5px; color:var(--sub); margin-right:2px}
+  .periods button{height:34px; padding:0 13px; border-radius:999px; font-size:12.5px; font-weight:700; color:var(--sub); background:var(--surface2)}
+  .periods button.on{background:var(--accent); color:#fff}
+  .chartbox{padding:10px 8px 0}
+  .chartbox svg{width:100%; height:auto; display:block}
+  .breaklist{padding:8px 8px 0}
+  .brow{display:flex; align-items:center; gap:10px; padding:11px 10px; border-bottom:1px solid var(--line)}
+  .brow:last-child{border-bottom:none}
+  .brow .dot{width:10px; height:10px; border-radius:50%; flex:none}
+  .brow .nm{flex:1; font-size:14px; font-weight:500}
+  .brow .nm small{display:block; font-size:10.5px; color:var(--faint); font-weight:400}
+  .brow .av{text-align:right}
+  .brow .av .j{display:block; font-size:14.5px; font-weight:700; font-variant-numeric:tabular-nums}
+  .brow .av .c{display:block; font-size:11px; font-variant-numeric:tabular-nums}
+  .prevmonth{margin:12px 16px 0; display:flex; justify-content:space-between; font-size:12.5px; color:var(--sub); background:var(--surface2); border-radius:10px; padding:11px 14px}
+  .prevmonth b{color:var(--text); font-variant-numeric:tabular-nums}
+  .stackbar{display:flex; height:26px; border-radius:8px; overflow:hidden; margin:14px 16px 4px; background:var(--surface2)}
+  .stackbar i{display:block; height:100%}
+  /* 下のタブ */
+  .tabbar{flex:none; display:flex; background:var(--shell); border-top:1px solid var(--line); padding:6px 8px calc(8px + env(safe-area-inset-bottom))}
+  .tabbar button{flex:1; display:flex; flex-direction:column; align-items:center; gap:2px; padding:6px 0 2px; border-radius:12px; font-size:10.5px; font-weight:700; color:var(--faint); min-height:52px; justify-content:center}
+  .tabbar button svg{width:22px; height:22px}
+  .tabbar button.on{color:var(--accent)}
+  .tabbar button.on .pill{background:var(--accent-soft)}
+  .tabbar .pill{display:grid; place-items:center; width:52px; height:30px; border-radius:999px}
+  /* 読み込み・エラー */
+  .overlay{position:absolute; inset:0; z-index:30; background:var(--shell); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; padding:24px; text-align:center}
+  .overlay[hidden]{display:none}
+  .overlay p{margin:0; font-size:14px; line-height:1.7; color:var(--sub)}
+  .overlay a{color:var(--accent); font-weight:700; font-size:13px}
+  .overlay .retry{height:40px; padding:0 20px; border-radius:999px; background:var(--accent); color:#fff; font-weight:700; font-size:14px}
+  .toast{position:absolute; left:50%; bottom:92px; transform:translate(-50%,16px); background:#222b38; color:#fff; font-size:12.5px; font-weight:500; padding:10px 16px; border-radius:999px; opacity:0; pointer-events:none; transition:.25s; z-index:20; white-space:nowrap; box-shadow:0 8px 24px rgba(0,0,0,.25)}
+  .toast.show{opacity:1; transform:translate(-50%,0)}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .spinning svg{animation:spin .7s linear}
+  @media (prefers-reduced-motion: reduce){ .spinning svg{animation:none} .toast{transition:none} }
+</style>
+</head>
+<body>
+<div class="shell" id="shell">
+  <div class="views">
+    <section class="view active" id="view-tx">
+      <div class="appbar">
+        <h1>入出金</h1>
+        <div class="tools">
+          <span class="dummy">DEMO</span>
+          <button class="iconbtn" id="searchBtn" aria-label="検索">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+          </button>
+          <button class="iconbtn refreshBtn" aria-label="再読み込み">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.3"/><path d="M21 3v6h-6"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="searchbar" id="searchbar"><input type="search" id="searchInput" placeholder="店名・分類・メモで検索"></div>
+      <div id="txList"></div>
+      <div class="monthtotal"><span id="txMonthLabel">今月の支出合計</span><b id="txMonthTotal"></b></div>
+      <p class="note" id="txNote"></p>
+    </section>
+
+    <section class="view" id="view-budget">
+      <div class="appbar">
+        <h1>家計簿</h1>
+        <div class="tools"><span class="dummy">DEMO</span></div>
+      </div>
+      <div class="monthnav">
+        <button class="arrowbtn" id="mPrev" aria-label="前の月"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg></button>
+        <div class="cur"><span id="mLabel"></span><small id="mRange"></small></div>
+        <button class="arrowbtn" id="mNext" aria-label="次の月"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m10 6 6 6-6 6"/></svg></button>
+      </div>
+      <div class="seg" id="eiSeg">
+        <button class="on" data-ei="expense">支出</button>
+        <button data-ei="income">収入</button>
+      </div>
+      <div class="donutwrap">
+        <div class="donutbox">
+          <svg id="donut" width="168" height="168" viewBox="0 0 168 168"></svg>
+          <div class="donutcenter"><span class="lb" id="donutLabel">支出合計</span><span class="vl" id="donutValue"></span></div>
+        </div>
+        <div class="summary">
+          <div class="row"><span class="k">収入</span><span class="v inc" id="sumInc"></span></div>
+          <div class="row"><span class="k">支出</span><span class="v exp" id="sumExp"></span></div>
+          <div class="row"><span class="k">収支</span><span class="v" id="sumBal"></span></div>
+        </div>
+      </div>
+      <div class="catlist" id="catList"></div>
+      <p class="note">振替（カードの引き落とし・自分の口座間の移動）は収支に含めません。カテゴリをタップすると中項目が開きます。</p>
+    </section>
+
+    <section class="view" id="view-accounts">
+      <div class="appbar">
+        <h1>口座</h1>
+        <div class="tools">
+          <span class="dummy">DEMO</span>
+          <button class="iconbtn refreshBtn" aria-label="再読み込み">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.3"/><path d="M21 3v6h-6"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="netcard">
+        <div class="lb">純資産（資産 − 負債）</div>
+        <div class="big" id="netValue"></div>
+        <div class="diff" id="netDetail"></div>
+      </div>
+      <div id="accountSections"></div>
+      <p class="note">「推定」は最後に入力した残高に、その後の取引を足した値です。月1回の明細 CSV で確定させます。</p>
+    </section>
+
+    <section class="view" id="view-assets">
+      <div class="appbar">
+        <h1>資産</h1>
+        <div class="tools"><span class="dummy">DEMO</span></div>
+      </div>
+      <div class="seg" id="assetSeg" style="margin-top:14px">
+        <button class="on" data-av="trend">推移</button>
+        <button data-av="breakdown">内訳</button>
+      </div>
+      <div id="trendPane">
+        <div class="astotal">
+          <div class="lb"><span>資産合計</span><span id="asOfLabel"></span></div>
+          <div class="big" id="assetTotal"></div>
+          <div class="chips" id="assetChips"></div>
+        </div>
+        <div class="periods" id="periods">
+          <span class="plabel">積み上げ面グラフ</span>
+          <button data-p="1y">1年</button>
+          <button data-p="3y">3年</button>
+          <button data-p="5y">5年</button>
+          <button class="on" data-p="all">全期間</button>
+        </div>
+        <div class="chartbox" id="chartBox"></div>
+        <div class="breaklist" id="trendList"></div>
+        <div class="prevmonth"><span>前月末の資産</span><b id="prevMonthValue"></b></div>
+      </div>
+      <div id="breakPane" style="display:none">
+        <div class="astotal">
+          <div class="lb"><span>資産構成</span><span id="breakTotal"></span></div>
+        </div>
+        <div class="stackbar" id="stackbar"></div>
+        <div class="breaklist" id="breakList"></div>
+      </div>
+    </section>
+  </div>
+
+  <nav class="tabbar" aria-label="メイン">
+    <button class="on" data-view="view-tx"><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v4M16 3v4M4 9h16"/><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 14h4M8 17.5h6"/></svg></span>入出金</button>
+    <button data-view="view-budget"><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></span>家計簿</button>
+    <button data-view="view-accounts"><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10.5h18"/><path d="M7 15.5h4"/></svg></span>口座</button>
+    <button data-view="view-assets"><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-8M21 20H3"/></svg></span>資産</button>
+  </nav>
+
+  <div class="overlay" id="overlay">
+    <p id="overlayText">読み込み中…</p>
+    <button class="retry" id="retryBtn" hidden>再読み込み</button>
+    <a href="?demo" id="demoLink" hidden>サンプルデータで画面を見る</a>
+  </div>
+  <div class="toast" id="toast"></div>
+</div>
+<script src="lib.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
