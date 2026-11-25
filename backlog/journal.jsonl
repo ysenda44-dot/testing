@@ -1036,3 +1036,4 @@
 {"at": "2026-11-24T22:11:24+00:00", "event": "heartbeat", "agent": "harvester", "phase": "end", "note": ""}
 {"at": "2026-11-24T22:40:46+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "start", "note": "scheduled run"}
 {"at": "2026-11-24T22:41:23+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "end", "note": "no-op: inbox empty, 9/9 blocked on human decisions, no blocker resolved (PR #1-#5 open, #2 unmerged); PR #6 deferred by harvester until 11-30; 19 empty executor runs in 7d"}
+{"at": "2026-11-25T00:20:24+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
