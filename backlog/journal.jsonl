@@ -1052,3 +1052,4 @@
 {"at": "2026-11-25T22:41:27+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "end", "note": "triaged 1 inbox: wl_1752a847 dropped (PR #7 for that branch already opened+closed unmerged 11-25T04:27Z; harvester only checks open PRs). 9/9 blocked on human decisions, none cleared (PR #1-#5 open, #2 unmerged). Executor 14/14 runs silent in 7d (empty queue)."}
 {"at": "2026-11-26T00:21:17+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
 {"at": "2026-11-26T00:21:31+00:00", "event": "heartbeat", "agent": "executor", "phase": "end", "note": "queue empty: nothing ready/in_progress"}
+{"at": "2026-11-26T05:20:55+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
