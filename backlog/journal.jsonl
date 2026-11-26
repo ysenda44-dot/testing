@@ -1055,3 +1055,5 @@
 {"at": "2026-11-26T05:20:55+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
 {"at": "2026-11-26T05:21:10+00:00", "event": "heartbeat", "agent": "executor", "phase": "end", "note": "queue empty (auto/propose/ask): nothing triaged"}
 {"at": "2026-11-26T14:34:26+00:00", "event": "heartbeat", "agent": "distiller", "phase": "start", "note": "scheduled run"}
+{"at": "2026-11-26T14:35:37+00:00", "event": "distill", "rules_added": 0, "rules_removed": 0, "rules_sharpened": 1, "skills": [], "pr": "https://github.com/ysenda44-dot/testing/pull/2", "note": "sharpened harvester.md stalled-branch check to include closed PRs (d2497f4), from wl_1752a847 harvested 11-25 then dropped by prioritizer because PR #7 had been closed by user; logs: only this firing's own (no user turns); executor 14/14 silent (empty queue, 9/9 blocked) - known, not new; tests OK, validate OK"}
+{"at": "2026-11-26T14:35:37+00:00", "event": "heartbeat", "agent": "distiller", "phase": "end", "note": "1 sharpen (harvester closed-PR check)"}
