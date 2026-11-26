@@ -46,7 +46,10 @@ event; if there is none, use the last 14 days).
    became the bottleneck. For each repo in scope:
    - open PRs with no update in >7 days, especially ones carrying a review
      that was never acted on
-   - branches ahead of `main` with no PR at all
+   - branches ahead of `main` with no PR at all — check with
+     `list_pull_requests` `state: all`, not just open ones. A branch whose
+     PR was closed unmerged is a decision the user already made, not stalled
+     work; skip it unless the branch gained commits after the close.
    - open issues assigned to the user with no recent comment
    Capture each as its own item, tagged `stalled`, with the PR/issue URL as
    `--ref`.
