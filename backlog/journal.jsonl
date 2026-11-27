@@ -1065,3 +1065,4 @@
 {"at": "2026-11-27T00:20:45+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
 {"at": "2026-11-27T00:20:57+00:00", "event": "heartbeat", "agent": "executor", "phase": "end", "note": "queue empty: nothing triaged (auto/propose/ask all empty)"}
 {"at": "2026-11-27T05:20:41+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
+{"at": "2026-11-27T05:20:53+00:00", "event": "heartbeat", "agent": "executor", "phase": "end", "note": "queue empty: 0 ready/in_progress; 9 items blocked on human decisions"}
