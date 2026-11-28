@@ -1075,3 +1075,4 @@
 {"at": "2026-11-27T22:40:44+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "start", "note": "scheduled run"}
 {"at": "2026-11-27T22:41:19+00:00", "event": "heartbeat", "agent": "prioritizer", "phase": "end", "note": "no input changes: inbox empty; 9/9 blocked on human decisions, none cleared (PR #1-#5 unchanged, #2 unmerged). 7d net_change +1 (wl_1752a847 added+dropped, 0 completed) -- 3rd run running; recommended cuts wl_7e1625fe, wl_8dd5fca3. Executor 14/14 silent (empty queue). PR #6 untracked, harvester re-checks after 11-30."}
 {"at": "2026-11-28T00:20:55+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
+{"at": "2026-11-28T00:21:08+00:00", "event": "heartbeat", "agent": "executor", "phase": "end", "note": "queue empty: no ready/in_progress items (auto/propose/ask)"}
