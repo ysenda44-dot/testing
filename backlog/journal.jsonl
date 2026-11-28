@@ -1077,3 +1077,4 @@
 {"at": "2026-11-28T00:20:55+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
 {"at": "2026-11-28T00:21:08+00:00", "event": "heartbeat", "agent": "executor", "phase": "end", "note": "queue empty: no ready/in_progress items (auto/propose/ask)"}
 {"at": "2026-11-28T05:20:39+00:00", "event": "heartbeat", "agent": "executor", "phase": "start", "note": "scheduled run"}
+{"at": "2026-11-28T05:20:50+00:00", "event": "heartbeat", "agent": "executor", "phase": "end", "note": "queue empty: nothing ready/in_progress"}
